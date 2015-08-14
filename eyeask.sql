@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4
+-- version 4.1.14
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Aug 13, 2015 at 05:54 PM
--- Server version: 5.6.12-log
--- PHP Version: 5.4.12
+-- Host: 127.0.0.1
+-- Generation Time: Aug 14, 2015 at 06:50 PM
+-- Server version: 5.6.17
+-- PHP Version: 5.5.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `eyeask`
 --
-CREATE DATABASE IF NOT EXISTS `eyeask` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `eyeask`;
 
 -- --------------------------------------------------------
 
@@ -214,11 +212,21 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   `question` text NOT NULL,
   `other` text NOT NULL,
   `attachment_id` varchar(100) NOT NULL COMMENT 'comma separated values',
+  `exp_reschedule` enum('0','1') NOT NULL DEFAULT '0' COMMENT '''0''=>NO,''1''=>YES',
+  `user_reschedule` enum('0','1') NOT NULL DEFAULT '0' COMMENT '''0''=>NO,''1''=>YES',
   `status` enum('0','1','2','3') NOT NULL COMMENT '''0''=>inactive,''1''=>active,''2''=>applied,''3''=>completed',
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `sessions`
+--
+
+INSERT INTO `sessions` (`id`, `user_id`, `exp_applied_id`, `type`, `duration`, `session_datetime`, `category_id`, `tag_id`, `language_id`, `title`, `description`, `question`, `other`, `attachment_id`, `exp_reschedule`, `user_reschedule`, `status`, `created`, `modified`) VALUES
+(3, 1, 2, 'schedule', 20, '0000-00-00 00:00:00', 0, '', '', 'test', 'test', 'test', 'test', '', '0', '0', '1', '2015-08-13 07:34:11', '0000-00-00 00:00:00'),
+(4, 1, 2, 'schedule', 10, '0000-00-00 00:00:00', 0, '', '', 'new new ', 'new new new new new new new new new new new new new new new new new ', 'new new new new ', 'new new new new ', '', '0', '0', '1', '2015-08-14 06:30:07', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -251,7 +259,15 @@ CREATE TABLE IF NOT EXISTS `session_time` (
   `session_id` int(11) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `session_time`
+--
+
+INSERT INTO `session_time` (`id`, `user_id`, `session_id`, `datetime`) VALUES
+(1, 1, 3, '2015-08-21 04:30:00'),
+(2, 1, 4, '2015-08-14 03:30:00');
 
 -- --------------------------------------------------------
 
@@ -340,6 +356,124 @@ INSERT INTO `tags` (`id`, `name`, `short_name`, `status`, `created`, `modified`)
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `timezone`
+--
+
+CREATE TABLE IF NOT EXISTS `timezone` (
+  `id` int(11) NOT NULL,
+  `country_id` int(11) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `timezone` time DEFAULT NULL,
+  `timezone_dst` varchar(100) DEFAULT NULL,
+  `abbrevation` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+--
+-- Dumping data for table `timezone`
+--
+
+INSERT INTO `timezone` (`id`, `country_id`, `name`, `timezone`, `timezone_dst`, `abbrevation`) VALUES
+(2, NULL, 'Adelaide', '09:30:00', NULL, 'Australia/Adelaide'),
+(3, NULL, 'Beijing, Chonging, Hong Kong, Urumqi', '08:00:00', NULL, 'Asia/Hong_Kong'),
+(4, NULL, 'Brasilia', '-03:00:00', NULL, 'America/Sao_Paulo'),
+(6, NULL, 'Brisbane', '10:00:00', NULL, 'Australia/Brisbane'),
+(7, NULL, 'Kabul', '04:30:00', NULL, 'Asia/Kabul'),
+(8, NULL, 'Baja California', '-08:00:00', NULL, 'America/Ensenada'),
+(9, NULL, 'Alaska', '-09:00:00', NULL, 'US/Alaska'),
+(10, NULL, 'Buenos Airies', '-03:00:00', NULL, 'America/Buenos_Aires'),
+(11, NULL, 'Ashgabat, Tashkent', '05:00:00', NULL, 'Asia/Ashgabat'),
+(12, NULL, 'Asuncion', '-04:00:00', NULL, 'America/Asuncion'),
+(13, NULL, 'Abu Dhabi, Muscat', '04:00:00', NULL, 'Asia/Muscat'),
+(14, NULL, 'Cayenne, Fortaleza', '-03:00:00', NULL, 'America/Cayenne'),
+(15, NULL, 'Baghdad', '03:00:00', NULL, 'Asia/Baghdad'),
+(16, NULL, 'Atlantic Time (Canada)', '-04:00:00', NULL, 'Canada/Atlantic'),
+(17, NULL, 'Osaka, Sapparo, Tokyo', '09:00:00', NULL, 'Asia/Tokyo'),
+(18, NULL, 'Irkutsk (RT 7)', '08:00:00', NULL, 'Asia/Irkutsk'),
+(19, NULL, 'Azores', '-01:00:00', NULL, 'Atlantic/Azores'),
+(20, NULL, 'Baku', '04:00:00', NULL, 'Asia/Baku'),
+(21, NULL, 'Kuala Lumpur, Singapore', '08:00:00', NULL, 'Asia/Kuala_Lumpur'),
+(22, NULL, 'Astana', '06:00:00', NULL, 'Asia/Dhaka'),
+(24, NULL, 'Cuiaba', '-04:00:00', NULL, 'America/Cuiaba'),
+(25, NULL, 'Greenland', '-03:00:00', NULL, 'America/Godthab'),
+(26, NULL, 'Dhaka', '06:00:00', NULL, 'Asia/Dhaka'),
+(27, NULL, 'Amsterdam, Berlin, Bern, Rome, Stockholm', '01:00:00', NULL, 'Europe/Amsterdam'),
+(28, NULL, 'Novosibirsk (RTZ 5)', '06:00:00', NULL, 'Asia/Novosibirsk'),
+(29, NULL, 'Amman', '02:00:00', NULL, 'Asia/Amman'),
+(30, NULL, 'Yangon (Rangoon)', '06:30:00', NULL, 'Asia/Rangoon'),
+(31, NULL, 'Bogota, Lima, Quito, Rio Branco', '-05:00:00', NULL, 'America/Bogota'),
+(32, NULL, 'Georgetown, La Paz, Manaus, San Juan', '-04:00:00', NULL, 'America/Manaus'),
+(33, NULL, 'Athens, Bucharest', '02:00:00', NULL, 'Europe/Athens'),
+(34, NULL, 'Beirut', '02:00:00', NULL, 'Asia/Beirut'),
+(35, NULL, 'Beldgrade, Bradislava, Budapest, Prague', '01:00:00', NULL, 'Europe/Budapest'),
+(37, NULL, 'CHAST', '12:45:00', NULL, 'Pacific/Chatham'),
+(38, NULL, 'Perth', '08:00:00', NULL, 'Australia/Perth'),
+(39, NULL, 'Canberra, Melbourne, Sydney', '10:00:00', NULL, 'Australia/Canberra'),
+(40, NULL, 'Guam, Port Moresby', '10:00:00', NULL, 'Pacific/Guam'),
+(42, NULL, 'Taipei', '08:00:00', NULL, 'Asia/Taipei'),
+(44, NULL, 'Montevideo', '-03:00:00', NULL, 'America/Montevideo'),
+(45, NULL, 'Santiago', '-04:00:00', NULL, 'America/Santiago'),
+(48, NULL, 'Central America', '-06:00:00', NULL, 'US/Central'),
+(49, NULL, 'Ulaanbaatar', '08:00:00', NULL, 'Asia/Ulaanbaatar'),
+(50, NULL, 'Darwin', '09:30:00', NULL, 'Australia/Darwin'),
+(52, NULL, 'Indiana (East)', '-05:00:00', NULL, 'US/East-Indiana'),
+(54, NULL, 'Cape Verde Is.', '-01:00:00', NULL, 'Atlantic/Cape_Verde'),
+(56, NULL, 'Bangkok, Hanoi, Jakarta', '07:00:00', NULL, 'Asia/Bangkok'),
+(57, NULL, 'Krasnoyarsk, (RTZ 6)', '07:00:00', NULL, 'Asia/Krasnoyarsk'),
+(58, NULL, 'Hobart', '10:00:00', NULL, 'Australia/Hobart'),
+(59, NULL, 'Brussels, Copenhagen, Madrid, Paris', '01:00:00', NULL, 'Europe/Brussels'),
+(61, NULL, 'Central Time (US & Canada)', '-06:00:00', NULL, 'US/Central'),
+(62, NULL, 'Kuwait, Riyadh', '03:00:00', NULL, 'Asia/Kuwait'),
+(66, NULL, 'Minsk', '03:00:00', NULL, 'Europe/Minsk'),
+(67, NULL, 'Moscow, St. Petersburg, Volgograd (RTZ 2)', '03:00:00', NULL, 'Europe/Moscow'),
+(68, NULL, 'Cairo', '02:00:00', NULL, 'Africa/Cairo'),
+(71, NULL, 'Seoul', '09:00:00', NULL, 'Asia/Seoul'),
+(72, NULL, 'Eastern Time (US and Canada)', '-05:00:00', NULL, 'US/Eastern'),
+(73, NULL, 'Magadan', '10:00:00', NULL, 'Asia/Magadan'),
+(74, NULL, 'Nairobi', '03:00:00', NULL, 'Africa/Nairobi'),
+(75, NULL, 'Anadyr, Petropavlovsk - Kamchatsky (RTZ 11)', '12:00:00', NULL, 'Asia/Anadyr'),
+(76, NULL, 'Salvador', '-03:00:00', NULL, 'America/El_Salvador'),
+(80, NULL, 'Guadalajara, Mexico City, Monterry', '-06:00:00', NULL, 'America/Mexico_City'),
+(82, NULL, 'Izhevsk, Samara (RTZ 3)', '04:00:00', NULL, 'Europe/Samara'),
+(84, NULL, 'Auckland, Wellington', '12:00:00', NULL, 'Pacific/Auckland'),
+(86, NULL, 'Casablanca', '00:00:00', NULL, 'Africa/Casablanca'),
+(88, NULL, 'Port Louis', '04:00:00', NULL, NULL),
+(91, NULL, 'Damascus', '02:00:00', NULL, 'Asia/Damascus'),
+(94, NULL, 'Ekaterinburg (RTZ 4)', '05:00:00', NULL, 'Asia/Yekaterinburg'),
+(96, NULL, 'Hawaii', '-10:00:00', NULL, 'US/Hawaii'),
+(101, NULL, 'Yakutsk (RTZ 8)', '09:00:00', NULL, 'Asia/Yakutsk'),
+(102, NULL, 'Tehran', '03:30:00', NULL, 'Asia/Tehran'),
+(103, NULL, 'Chennai, Kolkata, Mumbai, New Delhi', '05:30:00', NULL, 'Asia/Kolkata'),
+(104, NULL, 'Sarejavo, Skopje, Warsaw, Zagreb', '01:00:00', NULL, 'Europe/Skopje'),
+(105, NULL, 'East Europe', '02:00:00', NULL, NULL),
+(108, NULL, 'Solomon Is, New Caledonia', '11:00:00', NULL, 'Asia/Magadan'),
+(113, NULL, 'Kritimati Island', '00:00:00', NULL, NULL),
+(116, NULL, 'Islamabad, Karachi', '05:00:00', NULL, 'Asia/Karachi'),
+(117, NULL, 'Saskatchewan', '-06:00:00', NULL, 'Canada/Saskatchewan'),
+(118, NULL, 'West Central Africa', '01:00:00', NULL, 'Africa/Lagos'),
+(119, NULL, 'Harare, Pretoria', '02:00:00', NULL, 'Africa/Harare'),
+(120, NULL, 'Fiji', '12:00:00', NULL, 'Pacific/Fiji'),
+(124, NULL, 'Tbilisi', '04:00:00', NULL, 'Asia/Tbilisi'),
+(126, NULL, 'Mountain Time (US and Canada)', '-07:00:00', NULL, 'US/Mountain'),
+(128, NULL, 'Yerevan', '04:00:00', NULL, 'Asia/Yerevan'),
+(134, NULL, 'Kathmandu', '05:45:00', NULL, 'Asia/Kathmandu'),
+(135, NULL, 'Newfoundland', '-03:30:00', NULL, 'Canada/Newfoundland'),
+(138, NULL, 'Nuku''alofa', '13:00:00', NULL, 'Pacific/Tongatapu'),
+(142, NULL, 'Arizona', '-07:00:00', NULL, 'US/Arizona'),
+(145, NULL, 'Vladivostok, Magadan (RTZ 9)', '10:00:00', NULL, 'Asia/Vladivostok'),
+(146, NULL, 'Samoa', '13:00:00', NULL, 'Pacific/Samoa'),
+(151, NULL, 'Pacific Time (US and Canada)', '-08:00:00', NULL, 'US/pacific'),
+(159, NULL, 'Helsinki, Kyiv, Riga, Sofia, Talinn, Vilnius', '02:00:00', NULL, 'Europe/Helsinki'),
+(163, NULL, 'Sri Jayawardenepura', '05:30:00', NULL, 'Asia/Colombo'),
+(179, NULL, 'Dublin, Edinburgh, Lisbon, London', '00:00:00', NULL, 'Europe/Dublin'),
+(183, NULL, 'Caracas', '-04:30:00', NULL, 'America/Caracas'),
+(189, NULL, 'Istanbul', '02:00:00', NULL, 'Asia/Istanbul'),
+(190, NULL, 'Windhoek', '01:00:00', NULL, 'Africa/Windhoek'),
+(193, NULL, 'Monrovia, Reykjavik', '00:00:00', NULL, 'Africa/Monrovia');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -375,7 +509,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `linkedin_id`, `email`, `password`, `fname`, `lname`, `profile_image`, `city`, `country_id`, `timezone_id`, `language_id`, `dob`, `phone`, `linkedin_url`, `twitter_url`, `google_url`, `facebook_url`, `is_expert`, `exp_description`, `exp_help`, `exp_expertise`, `exp_rate`, `exp_about`, `exp_experience`, `exp_education`, `exp_interest`, `exp_award`, `status`, `created`, `modified`) VALUES
+(1, '', 'test@mail.com', '123456', 'test', 'test', 'test', 'test', 1, 103, '1', '2015-08-03', '123', '', '', '', '', '0', '', '', '', '', '', '', '', '', '', '0', '2015-08-04 00:00:00', '0000-00-00 00:00:00'),
+(2, '', 'exp@mail.com', '123456', 'exp', 'exp', 'exp', 'exp', 1, 103, '1', '2015-08-04', '123', '', '', '', '', '1', 'exp', 'exp', 'exp', '20', 'exp', 'exp', 'exp', 'exp', 'exp', '1', '2015-08-12 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -391,7 +533,17 @@ CREATE TABLE IF NOT EXISTS `user_availability` (
   `status` enum('0','1') NOT NULL DEFAULT '1' COMMENT '''0''=>inactive,''1''=>active',
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+
+--
+-- Dumping data for table `user_availability`
+--
+
+INSERT INTO `user_availability` (`id`, `user_id`, `from`, `to`, `status`, `created`) VALUES
+(6, 2, '2015-08-21 04:30:00', '2015-08-21 05:30:00', '1', '2015-08-13 04:57:18'),
+(7, 2, '2015-08-14 03:30:00', '2015-08-14 11:30:00', '1', '2015-08-14 06:17:32'),
+(8, 2, '2015-08-14 03:30:00', '2015-08-14 11:30:00', '1', '2015-08-14 06:17:55'),
+(9, 2, '2015-08-21 03:30:00', '2015-08-21 11:30:00', '1', '2015-08-14 16:44:27');
 
 -- --------------------------------------------------------
 

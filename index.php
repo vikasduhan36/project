@@ -1,11 +1,5 @@
 <?php
-require_once 'config/dbconnection.php';
-db_open();
-if(!isset($_SESSION))
-{
- session_start();		
-}
- 
+require_once 'phpInclude/header.php';
 ?>
 
 
