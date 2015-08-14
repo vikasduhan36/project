@@ -84,7 +84,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_user_avail')
 	$available = array();
 
 	$userTimezone = getUserTimezone($user_id);
-	
+	$all = array();
 	foreach($get_avail as  $datetime)
 	{
 		$from_dtime = $datetime['from'];
@@ -92,7 +92,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_user_avail')
 
 		$from = convertTimezone($from_dtime,$default_tz,$userTimezone['timezone']);
 		$to = convertTimezone($to_dtime,$default_tz,$userTimezone['timezone']);
-$all = array();
+
 		foreach($default_availability as $time_val)
 		{
 			$time = $date_selected." ".$time_val;
@@ -100,10 +100,15 @@ $all = array();
 			{
 				$available[] = date("Y-m-d H:i:s",strtotime($time));
 			}
-			$all[] = date("Y-m-d H:i:s",strtotime($time));
 		}
 	}
 	
+	foreach($default_availability as $time_val)
+	{
+		$time = $date_selected." ".$time_val;
+		$all[] = date("Y-m-d H:i:s",strtotime($time));
+	}
+		
 	echo json_encode(array('all'=>array_unique($all),'available'=>array_unique($available)));
 }
 else if(isset($_POST['action']) && $_POST['action'] == 'submit_book_schedule')
@@ -157,7 +162,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_session')
 	//$slot
 	if($type == 'accept')
 	{
-		$sql= " UPDATE sessions SET session_datetime='".$slot."', status='2' WHERE id='".$session_id."' ";
+		$sql= " UPDATE sessions SET session_datetime='".$slot."',exp_reschedule='0',user_reschedule='0', status='2' WHERE id='".$session_id."' ";
 		$query = mysql_query($sql);
 	}
 	else if($type == 'request')
@@ -206,6 +211,19 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_session')
 		echo "error";exit();
 	}
 }
-
+else if(isset($_POST['action']) && $_POST['action'] == 'submit_cancel_session')
+{
+	$session_id = $_POST['session_id'];
+	$sql = " UPDATE sessions SET status='0' WHERE id='".$session_id."' ";
+	$query = mysql_query($sql);
+	if($query)
+	{
+		echo "success";exit();
+	}
+	else
+	{
+		echo "error";exit();
+	}
+}
 
 

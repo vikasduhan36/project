@@ -36,4 +36,5 @@ Date:
 
 <input type="hidden" name="type" value="accept">
 <input type="hidden" name="action" value="submit_accept_session">
+<input type="hidden" name="session_id" value="<?php echo $session_id;?>">
 </form>

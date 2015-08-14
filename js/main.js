@@ -174,6 +174,29 @@ $(document).ready(function(){
 		
 	});
 	
+	$("#cancel_request").click(function(){
+	var datastring = $('#form_cancel_request').serialize();
+			$.ajax({
+			url:root+'handler.php',
+			type:'post',
+			data:datastring,
+			dataType:'json',
+			beforeSend:function(){
+				
+			},
+			success:function(response){
+				if(response.status == 'success')
+				{
+					alert('success');
+				}
+				else
+				{
+					alert('error');
+				}
+			}
+		})
+	});
+	
 });
 
 function getUserAvailability(user_id,date)
