@@ -197,6 +197,193 @@ $(document).ready(function(){
 		})
 	});
 	
+	
+	$("#tag_search").keyup(function(){
+	var tag = $.trim($(this).val());
+	var tag_result = $("#tag_result");
+	if(tag == '')
+	{
+		tag_result.html('');
+		return false;
+	}
+	else if(tag.length < 2)
+	{
+		tag_result.html('<li>Keep typing ... </li>');
+		return false;
+	}
+	var datastring = "action=tag_search&keyword="+tag;
+			$.ajax({
+			url:root+'handler.php',
+			type:'post',
+			data:datastring,
+			dataType:'json',
+			beforeSend:function(){
+				
+			},
+			success:function(response){
+				if(response.status == 'success')
+				{
+					var html = '';
+					$.each(response.result,function(key,value){
+						
+						html += '<li><a href="javascript:void(0);" class="select_tag" data-id="'+value.id+'" >'+value.name+'</a></li>';
+					});
+					
+					tag_result.html(html);
+				}
+				else
+				{
+					tag_result.html('<li>No tags found.</li>');
+				}
+			}
+		})
+	});
+	
+	
+	$("#language_search").keyup(function(){
+	var language = $.trim($(this).val());
+	var language_result = $("#language_result");
+	if(language == '')
+	{
+		language_result.html('');
+		return false;
+	}
+	else if(language.length < 2)
+	{
+		language_result.html('<li>Keep typing ... </li>');
+		return false;
+	}
+	var datastring = "action=language_search&keyword="+language;
+			$.ajax({
+			url:root+'handler.php',
+			type:'post',
+			data:datastring,
+			dataType:'json',
+			beforeSend:function(){
+				
+			},
+			success:function(response){
+				if(response.status == 'success')
+				{
+					var html = '';
+					$.each(response.result,function(key,value){
+						
+						html += '<li ><a href="javascript:void(0);" class="select_language" data-id="'+value.id+'" >'+value.name+'</a></li>';
+					});
+					
+					language_result.html(html);
+				}
+				else
+				{
+					language_result.html('<li>No language found.</li>');
+				}
+			}
+		})
+	});
+	
+	$("body").on("click",".select_tag",function(){
+		var value=$(this).attr("data-id");
+		$("#tag_selected").append("<input type='hidden' name='tag_selected[]' value='"+value+"'>");
+		$("#tag_result").html("");
+	});
+	
+	
+	$("body").on("click",".select_language",function(){
+		var value=$(this).attr("data-id");
+		$("#language_selected").append("<input type='hidden' name='language_selected[]' value='"+value+"'>");
+		$("#language_result").html("");
+	});
+	
+	
+	$("#book_schedule_public").click(function(){
+	var error = 0;
+	var category = $("#category");
+	var tag = $("[name='tag_selected[]']").length;
+	var language = $("[name='language_selected[]']").length;
+	var type = $(".select_date:checked").val();
+	
+	var duration = $('#duration');
+	var date_schedule = $('#date_schedule');
+	var title = $('#title');
+	var description = $('#description');
+	var question = $('#question');
+	var other = $('#other');
+	var slot_selected = $(".slot_selected:checked");
+	
+	if(category.val() == '')
+	{
+		error = 1;
+	}
+	if(tag == 0)
+	{
+		error = 1;
+	}
+	if(language == 0)
+	{
+		error = 1;
+	}
+	
+	if(type == 1)
+	{
+		if(date_schedule.val() == '')
+		{
+			error = 1;
+		}
+		if(slot_selected.length == 0)
+		{
+			error = 1;
+		}
+	}
+	if(duration.val() == '')
+	{
+		error = 1;
+	}
+	
+	if(title.val() == '')
+	{
+		error = 1;
+	}
+	if(description.val() == '')
+	{
+		error = 1;
+	}
+	if(question.val() == '')
+	{
+		error = 1;
+	}
+	if(other.val() == '')
+	{
+		error = 1;
+	}
+	
+	if(error == 1)
+	{
+		return false;
+	}
+	
+	var datastring = $('#form_book_schedule_public').serialize();
+			$.ajax({
+			url:root+'handler.php',
+			type:'post',
+			data:datastring,
+			dataType:'json',
+			beforeSend:function(){
+				
+			},
+			success:function(response){
+				if(response.status == 'success')
+				{
+					alert('success');
+				}
+				else
+				{
+					alert('error');
+				}
+			}
+		})
+	});
+	
+	
 });
 
 function getUserAvailability(user_id,date)

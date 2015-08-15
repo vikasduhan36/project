@@ -225,5 +225,84 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_cancel_session')
 		echo "error";exit();
 	}
 }
+else if(isset($_POST['action']) && $_POST['action'] == 'tag_search')
+{
+	$keyword = mysql_real_escape_string(trim($_POST['keyword']));
+	
+	$field = "id,name";
+	$table = "tags";
+	$condition 	= " and name LIKE '%".$keyword."%' and status='1' ";
+	$tags = getDetail($field,$table,$condition);
+	
+	$status = 'success';
+	if(count($tags) == 0)
+	{
+		$status = 'no_record';
+	}
+	echo json_encode(array('status'=>$status,'result'=>$tags));
+	exit();
+	
+}
+else if(isset($_POST['action']) && $_POST['action'] == 'language_search')
+{
+	$keyword = mysql_real_escape_string(trim($_POST['keyword']));
+	
+	$field = "id,name";
+	$table = "languages";
+	$condition 	= " and name LIKE '%".$keyword."%' and status='1' ";
+	$tags = getDetail($field,$table,$condition);
+	
+	$status = 'success';
+	if(count($tags) == 0)
+	{
+		$status = 'no_record';
+	}
+	echo json_encode(array('status'=>$status,'result'=>$tags));
+	exit();
+	
+}
+else if(isset($_POST['action']) && $_POST['action'] == 'submit_book_schedule_public')
+{
 
+	$error = array();
+	foreach($_POST as $key => $value)
+	{
+		$$key = $value;
+	}
+	$userTimezone = getUserTimezone($user_id);
+	//exp_id
+	
+	$sql = " INSERT INTO sessions SET user_id='".$user_id."',category_id='".$category_id."', tag_id='".implode($tag_selected,',')."',language_id='".implode($language_selected,',')."', type='request',duration='".$duration."',title='".$title."',description='".$description."',question='".$question."',other='".$other."',status='1',created='".$date."' ";
+	$query = mysql_query($sql);
+	if($query)
+	{
+		$session_id = mysql_insert_id();
+		
+		foreach($slot_selected as $slot_val)
+		{
+			$slot = convertTimezone($slot_val,$userTimezone['timezone'],$default_tz);
+			$sql = " INSERT INTO session_time SET user_id='".$user_id."', session_id='".$session_id."', datetime='".$slot."' ";
+			$query = mysql_query($sql);
+			if(!$query)
+			{
+				$error[] = '1';
+			}
+		}
+	}
+	else
+	{
+		$error[] = '1';
+	}
+	
+	if(in_array(1,$error))
+	{
+		echo "error";exit();
+	}
+	else
+	{
+		echo "success";exit();
+	}
+	
+	
 
+}
