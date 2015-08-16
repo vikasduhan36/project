@@ -21,17 +21,6 @@
     font-style: normal;
 }
 @font-face {
-    font-family:'proxima_novalight_italic';
-    src: url('proximanova-lightit_1-webfont.eot');
-    src: url('proximanova-lightit_1-webfont.eot?#iefix') format('embedded-opentype'),
-         url('proximanova-lightit_1-webfont.woff2') format('woff2'),
-         url('proximanova-lightit_1-webfont.woff') format('woff'),
-         url('proximanova-lightit_1-webfont.ttf') format('truetype'),
-         url('proximanova-lightit_1-webfont.svg#proxima_novalight_italic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
     font-family:'proxima_novasemibold';
     src: url('proximanova-sbold_1-webfont.eot');
     src: url('proximanova-sbold_1-webfont.eot?#iefix') format('embedded-opentype'),
@@ -39,17 +28,6 @@
          url('proximanova-sbold_1-webfont.woff') format('woff'),
          url('proximanova-sbold_1-webfont.ttf') format('truetype'),
          url('proximanova-sbold_1-webfont.svg#proxima_novasemibold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family:'proxima_novasemibold_italic';
-    src: url('proximanova-sboldit_1-webfont.eot');
-    src: url('proximanova-sboldit_1-webfont.eot?#iefix') format('embedded-opentype'),
-         url('proximanova-sboldit_1-webfont.woff2') format('woff2'),
-         url('proximanova-sboldit_1-webfont.woff') format('woff'),
-         url('proximanova-sboldit_1-webfont.ttf') format('truetype'),
-         url('proximanova-sboldit_1-webfont.svg#proxima_novasemibold_italic') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -63,7 +41,6 @@
          url('robotocondensed-italic-webfont.svg#roboto_condenseditalic') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
 @font-face {
     font-family:'roboto_condensedlight';
@@ -73,17 +50,6 @@
          url('robotocondensed-light-webfont.woff') format('woff'),
          url('robotocondensed-light-webfont.ttf') format('truetype'),
          url('robotocondensed-light-webfont.svg#roboto_condensedlight') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family:'roboto_condensedlight_italic';
-    src: url('robotocondensed-lightitalic-webfont.eot');
-    src: url('robotocondensed-lightitalic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('robotocondensed-lightitalic-webfont.woff2') format('woff2'),
-         url('robotocondensed-lightitalic-webfont.woff') format('woff'),
-         url('robotocondensed-lightitalic-webfont.ttf') format('truetype'),
-         url('robotocondensed-lightitalic-webfont.svg#roboto_condensedlight_italic') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -106,17 +72,6 @@
          url('robotocondensed-bold-webfont.woff') format('woff'),
          url('robotocondensed-bold-webfont.ttf') format('truetype'),
          url('robotocondensed-bold-webfont.svg#roboto_condensedbold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family:'roboto_condensedbold_italic';
-    src: url('robotocondensed-bolditalic-webfont.eot');
-    src: url('robotocondensed-bolditalic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('robotocondensed-bolditalic-webfont.woff2') format('woff2'),
-         url('robotocondensed-bolditalic-webfont.woff') format('woff'),
-         url('robotocondensed-bolditalic-webfont.ttf') format('truetype'),
-         url('robotocondensed-bolditalic-webfont.svg#roboto_condensedbold_italic') format('svg');
     font-weight: normal;
     font-style: normal;
 }

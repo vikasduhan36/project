@@ -27,7 +27,7 @@ ul,ol{margin:0;margin-top:0;padding:0;list-style:none;}
 .col-xs-6{width:50%;} .col-xs-5{width:41.66666667%;} .col-xs-4{width:33.33333333%;} .col-xs-3{width:25%;} .col-xs-2{width:16.66666667%;} .col-xs-1{width:8.33333333%;} .col-xs-offset-12{margin-left:100%;} .col-xs-offset-11{margin-left:91.66666667%;} .col-xs-offset-10{margin-left:83.33333333%;} .col-xs-offset-9{margin-left:75%;} .col-xs-offset-8{margin-left:66.66666667%;} .col-xs-offset-7{margin-left:58.33333333%;} .col-xs-offset-6{margin-left:50%;} .col-xs-offset-5{margin-left:41.66666667%;} .col-xs-offset-4{margin-left:33.33333333%;} .col-xs-offset-3{margin-left:25%;} .col-xs-offset-2{margin-left:16.66666667%;} .col-xs-offset-1{margin-left:8.33333333%;}  .col-xs-offset-0{margin-left:0%;}
 
 .form-group{position:relative; margin-bottom:18px;}
-.form-control{display:block; width:100%; background-color:#ffffff; border:1px solid #cccccc; -webkit-transition:border-color ease-in-out .15s, box-shadow ease-in-out .15s; transition:border-color ease-in-out .15s, box-shadow ease-in-out .15s; height:40px; padding:0 12px; border-radius:4px; -moz-border-radius:4px; -o-border-radius:4px; -ms-border-radius:4px; -webkit-border-radius:4px; font-size:14px; color:#666666;}
+.form-control{display:block; width:100%; background-color:#ffffff; border:1px solid #cccccc; -webkit-transition:border-color ease-in-out .15s, box-shadow ease-in-out .15s; transition:border-color ease-in-out .15s, box-shadow ease-in-out .15s; height:40px; padding:0 12px; border-radius:4px; -moz-border-radius:4px; -o-border-radius:4px; -ms-border-radius:4px; -webkit-border-radius:4px; font-size:15px; color:#666666;}
 select.form-control{line-height:38px; text-indent:10px; padding-left:0;}
 @-moz-document url-prefix(){select.form-control{text-indent:5px;}}
 textarea.form-control{padding:10px;}
@@ -142,9 +142,9 @@ background-color:#ffffff; border-color:#ddd;}
 .pager .disabled > a,.pager .disabled > a:hover,.pager .disabled > a:focus,.pager .disabled > span{color:#777; cursor:not-allowed; background-color:#fff;}
 /*-------------------------- PAGINATION --------------------------*/
 /*-------------------------- BREADUCRUMB --------------------------*/
-.breadcrumb{padding:8px 15px; margin-bottom:20px; list-style:none; background-color:#f5f5f5; border-radius:4px;}
+.breadcrumb{padding:8px 15px; margin-bottom:10px; list-style:none; background-color:#f5f5f5; border-radius:4px;}
 .breadcrumb > li{display:inline-block;}
-.breadcrumb > li > a{color:#2eb6d1;}
+.breadcrumb > li > a{color:#58bde7;}
 .breadcrumb > li + li:before{padding:0 5px; color:#ccc; content:"/\00a0";}
 .breadcrumb > .active{color:#777;}
 /*-------------------------- BREADUCRUMB --------------------------*/
@@ -172,3 +172,22 @@ background-color:#ffffff; border-color:#ddd;}
 .progress-bar-info{background-color:#5bc0de;}
 .progress-striped .progress-bar-info{background-image:-webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);  background-image:-o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);  background-image:linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);}
 /*-------------------------- PROGRESS BAR --------------------------*/
+/*-------------------------- TOOLTIP --------------------------*/
+.tooltip{position:absolute; z-index:1070; display:block; font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; font-size:12px; font-style:normal; font-weight:normal; line-height:1.42857143; text-align:left; text-align:start; text-decoration:none; text-shadow:none; text-transform:none; letter-spacing:normal; word-break:normal; word-spacing:normal; word-wrap:normal; white-space:normal; filter:alpha(opacity=0); opacity:0;
+ line-break:auto;}
+.tooltip.in{filter:alpha(opacity=90); opacity:.9;}
+.tooltip.top{padding:5px 0; margin-top:-3px;}
+.tooltip.right{padding:0 5px; margin-left:3px;}
+.tooltip.bottom{padding:5px 0; margin-top:3px;}
+.tooltip.left{padding:0 5px; margin-left:-3px;}
+.tooltip-inner{max-width:200px; padding:3px 8px; color:#fff; text-align:center; background-color:#000; border-radius:4px;}
+.tooltip-arrow{position:absolute; width:0; height:0; border-color:transparent; border-style:solid;}
+.tooltip.top .tooltip-arrow{bottom:0; left:50%; margin-left:-5px; border-width:5px 5px 0; border-top-color:#000;}
+.tooltip.top-left .tooltip-arrow{right:5px; bottom:0; margin-bottom:-5px; border-width:5px 5px 0; border-top-color:#000;}
+.tooltip.top-right .tooltip-arrow{bottom:0; left:5px; margin-bottom:-5px; border-width:5px 5px 0; border-top-color:#000;}
+.tooltip.right .tooltip-arrow{top:50%; left:0; margin-top:-5px; border-width:5px 5px 5px 0; border-right-color:#000;}
+.tooltip.left .tooltip-arrow{top:50%; right:0; margin-top:-5px; border-width:5px 0 5px 5px; border-left-color:#000;}
+.tooltip.bottom .tooltip-arrow{top:0; left:50%; margin-left:-5px; border-width:0 5px 5px; border-bottom-color:#000;}
+.tooltip.bottom-left .tooltip-arrow{top:0; right:5px; margin-top:-5px; border-width:0 5px 5px; border-bottom-color:#000;}
+.tooltip.bottom-right .tooltip-arrow{top:0; left:5px; margin-top:-5px; border-width:0 5px 5px; border-bottom-color:#000;}
+/*-------------------------- TOOLTIP --------------------------*/
