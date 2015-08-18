@@ -145,11 +145,11 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_book_schedule')
 	
 	if(in_array(1,$error))
 	{
-		echo "error";exit();
+		echo json_encode(array("status"=>"error"));exit();
 	}
 	else
 	{
-		echo "success";exit();
+		echo json_encode(array("status"=>"success","id"=>$session_id));exit();
 	}
 }
 else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_session')

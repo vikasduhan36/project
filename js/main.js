@@ -16,6 +16,7 @@ $(document).ready(function(){
 		minDate: new Date(),
 		onSelect: function(dateText, inst) {
 			var date = $(this).val();
+			$("#hidden_date_schedule").val(date);
 			var user_id = $("#exp_id").val();
 			getUserAvailability(user_id,date)
 		}
@@ -71,51 +72,118 @@ $(document).ready(function(){
 		
 	});
 
+	$("#validate_step1").click(function(){
 	
-	$("#book_schedule").click(function(){
-		
+		var message = '';
 		var error = 0;
 		var duration = $('#duration');
-		var date_schedule = $('#date_schedule');
-		var title = $('#title');
-		var description = $('#description');
-		var question = $('#question');
-		var other = $('#other');
+		var date_schedule = $('#hidden_date_schedule');
 		var slot_selected = $(".slot_selected:checked");
 		
 		if(duration.val() == '')
 		{
+			message = "Please select session duration.";
 			error = 1;
+			//duration.focus();
 		}
-		if(date_schedule.val() == '')
+		else if(date_schedule.val() == '')
 		{
+			message = "Please select session date.";
 			error = 1;
+			$("#date_schedule").focus();
 		}
-		if(slot_selected.length == 0)
+		else if(slot_selected.length == 0)
 		{
+			message = "Please select session time.";
 			error = 1;
+			//slot_selected.focus();
 		}
+		if(error == 1)
+		{
+			$("#notification").addClass("error").removeClass("success").text(message).show();
+			//window.scroll(0,0);
+			$('html, body').animate({
+				scrollTop: $("#notification").offset().top
+			}, 800);
+		}
+		else
+		{
+			$("#notification").removeClass("error success").text('').hide();
+			$(".progresslist li:eq(0)").addClass("stepcomp");
+			
+		}
+	});
+	
+	$("#validate_step2").click(function(){
+	
+		var message = '';
+		var error = 0;
+		var title = $('#title');
+		var description = $('#description');
+		var question = $('#question');
+		var other = $('#other');
+		
 		if(title.val() == '')
 		{
+			message = "Please enter session title.";
+			//title.focus();
 			error = 1;
 		}
-		if(description.val() == '')
+		else if(description.val() == '')
 		{
+			message = "Please enter session description.";
+			//description.focus();
 			error = 1;
 		}
-		if(question.val() == '')
+		else if(question.val() == '')
 		{
-			error = 1;
-		}
-		if(other.val() == '')
-		{
+			message = "Please enter session question.";
+			//question.focus();
 			error = 1;
 		}
 		
-		if(error == 1)
+		
+	
+	if(error == 1)
 		{
-			return false;
+			$("#notification").addClass("error").removeClass("success").text(message).show();
+			//window.scroll(0,0);
+				$('html, body').animate({
+				scrollTop: $("#notification").offset().top
+			}, 800);
 		}
+		else
+		{
+			$("#notification").removeClass("error success").text('').hide();
+			$(".progresslist li:eq(1)").addClass("stepcomp");
+			var datetime_html = '';
+			$.each($(".slot_selected:checked"),function(){
+				
+				datetime_html += '<li>'+$(this).val()+'<li>';
+				
+			});
+			
+			$("#display_title").text(title.val());
+			$("#display_description").text(description.val());
+			$("#display_question").text(question.val());
+			$("#display_datetime").html(datetime_html);
+			
+			$("#step2").fadeOut(function(){$("#step3").fadeIn()});
+			
+		}
+	});
+	
+	$("#edit_step1").click(function(){
+		$("#step3").fadeOut(function(){$("#step1").fadeIn()});
+	});
+	
+	$("#edit_step2").click(function(){
+		$("#step3").fadeOut(function(){$("#step2").fadeIn()});
+	});
+	
+	
+	$("#book_schedule").click(function(){
+		
 		var datastring = $('#form_book_schedule').serialize();
 		$.ajax({
 			url:root+'handler.php',
@@ -128,7 +196,7 @@ $(document).ready(function(){
 			success:function(response){
 				if(response.status == 'success')
 				{
-					alert('success');
+					window.location.href = root+'schedule_confirmed.php?id='+response.id;
 				}
 				else
 				{
@@ -398,8 +466,10 @@ function getUserAvailability(user_id,date)
 				
 			},
 			success:function(response){
-				var html = '';
+				var html = '<ul class="timelist" >';
 				var avail_class = '';
+				var i=0;
+				
 				$.each(response.all,function(key,value){
 					if($.inArray(value,response.available) != '-1')
 					{
@@ -409,10 +479,31 @@ function getUserAvailability(user_id,date)
 					{
 						avail_class = '';
 					}
-					html += "<div class='"+avail_class+"'><input type='checkbox' name='slot_selected[]' class='slot_selected' value='"+value+"'>"+value+"</div>"
+					//console.log(i+' | '+i%6);
+					if(i%6 == 0 && i > 0)
+					{
+						html += '</ul><ul class="timelist" >';
+					}
+					//html += "<div class='"+avail_class+"'><input type='checkbox' name='slot_selected[]' class='slot_selected' value='"+value+"'>"+value+"</div>"
+					html += '<li><input type="checkbox" id="t'+i+'"  name="slot_selected[]" class="slot_selected" value="'+value+'"/>';
+                    html += '<label class="checkbox '+avail_class+'" for="t'+i+'">';
+					html += '<img src="images/check.png" alt="check" />'+formatAMPM(value)+'</label></li>';
+					i++;
 				});
-				
-				$('#display_slot').html(html);
+				html += "</ul>";
+				$('#display_slot').fadeOut(function(){$(this).html(html).fadeIn()});
 			}
 		})
+}
+
+function formatAMPM(date) {
+	var date = new Date(date);
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return strTime;
 }

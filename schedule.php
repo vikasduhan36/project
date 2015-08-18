@@ -1,40 +1,51 @@
 <?php 
 	require_once('phpInclude/header.php');
-	
-	$exp_id = $_GET['id'];
+		$exp_id = $_GET['id'];
 ?>
-<style>
-.available{background-color:green;}
-</style>
-<form id="form_book_schedule">
-<input type="hidden" id="exp_id" name="exp_id" value="<?php echo $exp_id;?>">
-Duration:
-<select name="duration" id="duration">
-<option>Select</option>
+
+<section class="midsection accountsection"><!-- // MID MAIN SECTION // -->
+	<div class="container">
+    	<div class="row">
+        	<div class="col-xs-12 col-sm-10 col-sm-offset-1">
+            	<ul class="progresslist">
+				<!-- stepcomp -->
+                    <li class=""><span class="stepblk"><span class="count"><i class="fa fa-check"></i></span></span><h6>Schedule session</h6></li>
+                    <li class=""><span class="stepblk"><span class="count"><i class="fa fa-check"></i></span></span><h6>Add details</h6></li>
+                    <li class=""><span class="stepblk"><span class="count">3</span></span><h6>Confirm</h6></li>
+                </ul>
+            </div>
+        </div>
+    	<div class="row">
+        	<div class="col-xs-12 col-sm-4 col-md-3">
+            <?php
+			require_once("phpInclude/sidebar_schedule.php");
+			?>
+            </div>
+            
+            <div class="col-xs-12 col-sm-8 col-md-9">
+            	<section class="right_main"><!-- // RIGHT MAIN // -->
+				<div id="notification" style="display:none;"></div>
+                <form id="form_book_schedule">
+					<input type="hidden" id="exp_id" name="exp_id" value="<?php echo $exp_id;?>">
+                <?php
+				require_once("schedule_step1.php");
+				?>
+                    
+                <?php
+				require_once("schedule_step2.php");
+				?>				
+                    
+                <?php
+				require_once("schedule_step3.php");
+				?>
+				<input type="hidden" name="action" value="submit_book_schedule">
+              </form>
+                </section><!-- // RIGHT MAIN // -->
+            </div>
+        </div>
+    </div>
+</section><!-- // MID MAIN SECTION // -->
+
 <?php
-for($i=1;$i<=12;$i++)
-{
-	echo "<option>".($i*10)." min</option>";
-}
+require_once('phpInclude/footer.php');
 ?>
-</select>
-
-Date:
-<input type="text" name="date_schedule" id="date_schedule" readonly="readonly"  class="date_schedule" value=""/>
-
-<div id="display_slot">
-
-</div>
-
-
-title:
-<input type="text" name="title" id="title">
-description:
-<textarea name="description" id="description"></textarea>
-question:
-<textarea name="question" id="question"></textarea>
-other:
-<textarea name="other" id="other"></textarea>
-<input type="hidden" name="action" value="submit_book_schedule">
-<input type="button" name="submit" value="submit" id="book_schedule">
-</form>
