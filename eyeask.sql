@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 14, 2015 at 06:50 PM
+-- Generation Time: Aug 20, 2015 at 07:21 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -83,113 +83,113 @@ CREATE TABLE IF NOT EXISTS `languages` (
 --
 
 INSERT INTO `languages` (`id`, `status`, `name`, `short_code`) VALUES
-(1, '0', 'English', 'en'),
-(2, '0', 'German', 'de'),
-(3, '0', 'French', 'fr'),
-(4, '0', 'Dutch', 'nl'),
-(5, '0', 'Italian', 'it'),
-(6, '0', 'Spanish', 'es'),
-(7, '0', 'Polish', 'pl'),
-(8, '0', 'Russian', 'ru'),
-(9, '0', 'Japanese', 'ja'),
-(10, '0', 'Portuguese', 'pt'),
-(11, '0', 'Swedish', 'sv'),
-(12, '0', 'Chinese', 'zh'),
-(13, '0', 'Catalan', 'ca'),
-(14, '0', 'Ukrainian', 'uk'),
-(15, '0', 'Norwegian (Bokmål)', 'no'),
-(16, '0', 'Finnish', 'fi'),
-(17, '0', 'Vietnamese', 'vi'),
-(18, '0', 'Czech', 'cs'),
-(19, '0', 'Hungarian', 'hu'),
-(20, '0', 'Korean', 'ko'),
-(21, '0', 'Indonesian', 'id'),
-(22, '0', 'Turkish', 'tr'),
-(23, '0', 'Romanian', 'ro'),
-(24, '0', 'Persian', 'fa'),
-(25, '0', 'Arabic', 'ar'),
-(26, '0', 'Danish', 'da'),
-(27, '0', 'Esperanto', 'eo'),
-(28, '0', 'Serbian', 'sr'),
-(29, '0', 'Lithuanian', 'lt'),
-(30, '0', 'Slovak', 'sk'),
-(31, '0', 'Malay', 'ms'),
-(32, '0', 'Hebrew', 'he'),
-(33, '0', 'Bulgarian', 'bg'),
-(34, '0', 'Slovenian', 'sl'),
-(35, '0', 'Volapük', 'vo'),
-(36, '0', 'Kazakh', 'kk'),
-(37, '0', 'Waray-Waray', 'war'),
-(38, '0', 'Basque', 'eu'),
-(39, '0', 'Croatian', 'hr'),
-(40, '0', 'Hindi', 'hi'),
-(41, '0', 'Estonian', 'et'),
-(42, '0', 'Azerbaijani', 'az'),
-(43, '0', 'Galician', 'gl'),
-(44, '0', 'Simple English', 'simple'),
-(45, '0', 'Norwegian (Nynorsk)', 'nn'),
-(46, '0', 'Thai', 'th'),
-(47, '0', 'Newar / Nepal Bhasa', 'new'),
-(48, '0', 'Greek', 'el'),
-(49, '0', 'Aromanian', 'roa-rup'),
-(50, '0', 'Latin', 'la'),
-(51, '0', 'Occitan', 'oc'),
-(52, '0', 'Tagalog', 'tl'),
-(53, '0', 'Haitian', 'ht'),
-(54, '0', 'Macedonian', 'mk'),
-(55, '0', 'Georgian', 'ka'),
-(56, '0', 'Serbo-Croatian', 'sh'),
-(57, '0', 'Telugu', 'te'),
-(58, '0', 'Piedmontese', 'pms'),
-(59, '0', 'Cebuano', 'ceb'),
-(60, '0', 'Tamil', 'ta'),
-(61, '0', 'Belarusian (Taraškievica)', 'be-x-old'),
-(62, '0', 'Breton', 'br'),
-(63, '0', 'Latvian', 'lv'),
-(64, '0', 'Javanese', 'jv'),
-(65, '0', 'Albanian', 'sq'),
-(66, '0', 'Belarusian', 'be'),
-(67, '0', 'Marathi', 'mr'),
-(68, '0', 'Welsh', 'cy'),
-(69, '0', 'Luxembourgish', 'lb'),
-(70, '0', 'Icelandic', 'is'),
-(71, '0', 'Bosnian', 'bs'),
-(72, '0', 'Yoruba', 'yo'),
-(73, '0', 'Malagasy', 'mg'),
-(74, '0', 'Aragonese', 'an'),
-(75, '0', 'Bishnupriya Manipuri', 'bpy'),
-(76, '0', 'Lombard', 'lmo'),
-(77, '0', 'West Frisian', 'fy'),
-(78, '0', 'Bengali', 'bn'),
-(79, '0', 'Ido', 'io'),
-(80, '0', 'Swahili', 'sw'),
-(81, '0', 'Gujarati', 'gu'),
-(82, '0', 'Malayalam', 'ml'),
-(83, '0', 'Western Panjabi', 'pnb'),
-(84, '0', 'Afrikaans', 'af'),
-(85, '0', 'Low Saxon', 'nds'),
-(86, '0', 'Sicilian', 'scn'),
-(87, '0', 'Urdu', 'ur'),
-(88, '0', 'Kurdish', 'ku'),
-(89, '0', 'Cantonese', 'zh-yue'),
-(90, '0', 'Armenian', 'hy'),
-(91, '0', 'Quechua', 'qu'),
-(92, '0', 'Sundanese', 'su'),
-(93, '0', 'Nepali', 'ne'),
-(94, '0', 'Zazaki', 'diq'),
-(95, '0', 'Asturian', 'ast'),
-(96, '0', 'Tatar', 'tt'),
-(97, '0', 'Neapolitan', 'nap'),
-(98, '0', 'Irish', 'ga'),
-(99, '0', 'Chuvash', 'cv'),
-(100, '0', 'Samogitian', 'bat-smg'),
-(101, '0', 'Walloon', 'wa'),
-(102, '0', 'Amharic', 'am'),
-(103, '0', 'Kannada', 'kn'),
-(104, '0', 'Alemannic', 'als'),
-(105, '0', 'Buginese', 'bug'),
-(106, '0', 'Burmese', 'my'),
-(107, '0', 'Interlingua', 'ia');
+(1, '1', 'English', 'en'),
+(2, '1', 'German', 'de'),
+(3, '1', 'French', 'fr'),
+(4, '1', 'Dutch', 'nl'),
+(5, '1', 'Italian', 'it'),
+(6, '1', 'Spanish', 'es'),
+(7, '1', 'Polish', 'pl'),
+(8, '1', 'Russian', 'ru'),
+(9, '1', 'Japanese', 'ja'),
+(10, '1', 'Portuguese', 'pt'),
+(11, '1', 'Swedish', 'sv'),
+(12, '1', 'Chinese', 'zh'),
+(13, '1', 'Catalan', 'ca'),
+(14, '1', 'Ukrainian', 'uk'),
+(15, '1', 'Norwegian (Bokmål)', 'no'),
+(16, '1', 'Finnish', 'fi'),
+(17, '1', 'Vietnamese', 'vi'),
+(18, '1', 'Czech', 'cs'),
+(19, '1', 'Hungarian', 'hu'),
+(20, '1', 'Korean', 'ko'),
+(21, '1', 'Indonesian', 'id'),
+(22, '1', 'Turkish', 'tr'),
+(23, '1', 'Romanian', 'ro'),
+(24, '1', 'Persian', 'fa'),
+(25, '1', 'Arabic', 'ar'),
+(26, '1', 'Danish', 'da'),
+(27, '1', 'Esperanto', 'eo'),
+(28, '1', 'Serbian', 'sr'),
+(29, '1', 'Lithuanian', 'lt'),
+(30, '1', 'Slovak', 'sk'),
+(31, '1', 'Malay', 'ms'),
+(32, '1', 'Hebrew', 'he'),
+(33, '1', 'Bulgarian', 'bg'),
+(34, '1', 'Slovenian', 'sl'),
+(35, '1', 'Volapük', 'vo'),
+(36, '1', 'Kazakh', 'kk'),
+(37, '1', 'Waray-Waray', 'war'),
+(38, '1', 'Basque', 'eu'),
+(39, '1', 'Croatian', 'hr'),
+(40, '1', 'Hindi', 'hi'),
+(41, '1', 'Estonian', 'et'),
+(42, '1', 'Azerbaijani', 'az'),
+(43, '1', 'Galician', 'gl'),
+(44, '1', 'Simple English', 'simple'),
+(45, '1', 'Norwegian (Nynorsk)', 'nn'),
+(46, '1', 'Thai', 'th'),
+(47, '1', 'Newar / Nepal Bhasa', 'new'),
+(48, '1', 'Greek', 'el'),
+(49, '1', 'Aromanian', 'roa-rup'),
+(50, '1', 'Latin', 'la'),
+(51, '1', 'Occitan', 'oc'),
+(52, '1', 'Tagalog', 'tl'),
+(53, '1', 'Haitian', 'ht'),
+(54, '1', 'Macedonian', 'mk'),
+(55, '1', 'Georgian', 'ka'),
+(56, '1', 'Serbo-Croatian', 'sh'),
+(57, '1', 'Telugu', 'te'),
+(58, '1', 'Piedmontese', 'pms'),
+(59, '1', 'Cebuano', 'ceb'),
+(60, '1', 'Tamil', 'ta'),
+(61, '1', 'Belarusian (Taraškievica)', 'be-x-old'),
+(62, '1', 'Breton', 'br'),
+(63, '1', 'Latvian', 'lv'),
+(64, '1', 'Javanese', 'jv'),
+(65, '1', 'Albanian', 'sq'),
+(66, '1', 'Belarusian', 'be'),
+(67, '1', 'Marathi', 'mr'),
+(68, '1', 'Welsh', 'cy'),
+(69, '1', 'Luxembourgish', 'lb'),
+(70, '1', 'Icelandic', 'is'),
+(71, '1', 'Bosnian', 'bs'),
+(72, '1', 'Yoruba', 'yo'),
+(73, '1', 'Malagasy', 'mg'),
+(74, '1', 'Aragonese', 'an'),
+(75, '1', 'Bishnupriya Manipuri', 'bpy'),
+(76, '1', 'Lombard', 'lmo'),
+(77, '1', 'West Frisian', 'fy'),
+(78, '1', 'Bengali', 'bn'),
+(79, '1', 'Ido', 'io'),
+(80, '1', 'Swahili', 'sw'),
+(81, '1', 'Gujarati', 'gu'),
+(82, '1', 'Malayalam', 'ml'),
+(83, '1', 'Western Panjabi', 'pnb'),
+(84, '1', 'Afrikaans', 'af'),
+(85, '1', 'Low Saxon', 'nds'),
+(86, '1', 'Sicilian', 'scn'),
+(87, '1', 'Urdu', 'ur'),
+(88, '1', 'Kurdish', 'ku'),
+(89, '1', 'Cantonese', 'zh-yue'),
+(90, '1', 'Armenian', 'hy'),
+(91, '1', 'Quechua', 'qu'),
+(92, '1', 'Sundanese', 'su'),
+(93, '1', 'Nepali', 'ne'),
+(94, '1', 'Zazaki', 'diq'),
+(95, '1', 'Asturian', 'ast'),
+(96, '1', 'Tatar', 'tt'),
+(97, '1', 'Neapolitan', 'nap'),
+(98, '1', 'Irish', 'ga'),
+(99, '1', 'Chuvash', 'cv'),
+(100, '1', 'Samogitian', 'bat-smg'),
+(101, '1', 'Walloon', 'wa'),
+(102, '1', 'Amharic', 'am'),
+(103, '1', 'Kannada', 'kn'),
+(104, '1', 'Alemannic', 'als'),
+(105, '1', 'Buginese', 'bug'),
+(106, '1', 'Burmese', 'my'),
+(107, '1', 'Interlingua', 'ia');
 
 -- --------------------------------------------------------
 
@@ -218,15 +218,15 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `sessions`
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `exp_applied_id`, `type`, `duration`, `session_datetime`, `category_id`, `tag_id`, `language_id`, `title`, `description`, `question`, `other`, `attachment_id`, `exp_reschedule`, `user_reschedule`, `status`, `created`, `modified`) VALUES
-(3, 1, 2, 'schedule', 20, '0000-00-00 00:00:00', 0, '', '', 'test', 'test', 'test', 'test', '', '0', '0', '1', '2015-08-13 07:34:11', '0000-00-00 00:00:00'),
-(4, 1, 2, 'schedule', 10, '0000-00-00 00:00:00', 0, '', '', 'new new ', 'new new new new new new new new new new new new new new new new new ', 'new new new new ', 'new new new new ', '', '0', '0', '1', '2015-08-14 06:30:07', '0000-00-00 00:00:00');
+(5, 1, 2, 'schedule', 20, '2015-08-18 22:30:00', 0, '', '', 'user1', 'user1user1user1', 'user1user1user1', 'user1user1user1', '', '0', '0', '2', '2015-08-19 05:00:55', '0000-00-00 00:00:00'),
+(6, 3, 3, 'schedule', 50, '2015-08-25 01:30:00', 0, '', '', 'user2', 'user2user2', 'user2user2', 'user2user2', '', '0', '0', '2', '2015-08-19 05:03:49', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -259,15 +259,17 @@ CREATE TABLE IF NOT EXISTS `session_time` (
   `session_id` int(11) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `session_time`
 --
 
 INSERT INTO `session_time` (`id`, `user_id`, `session_id`, `datetime`) VALUES
-(1, 1, 3, '2015-08-21 04:30:00'),
-(2, 1, 4, '2015-08-14 03:30:00');
+(3, 1, 5, '2015-08-18 22:30:00'),
+(4, 1, 5, '2015-08-18 23:30:00'),
+(7, 2, 6, '2015-08-25 00:30:00'),
+(8, 2, 6, '2015-08-25 01:30:00');
 
 -- --------------------------------------------------------
 
@@ -498,7 +500,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `is_expert` enum('0','1') NOT NULL COMMENT '''0''=>no,''1''=>yes',
   `exp_description` text NOT NULL,
   `exp_help` text NOT NULL,
-  `exp_expertise` varchar(100) NOT NULL COMMENT 'comma separated category ids',
+  `exp_category_id` varchar(100) NOT NULL COMMENT 'comma separated category ids',
+  `exp_tag_id` varchar(255) NOT NULL COMMENT 'comma separated tag ids',
   `exp_rate` varchar(15) NOT NULL COMMENT '''free'',''int value''',
   `exp_about` text NOT NULL,
   `exp_experience` text NOT NULL,
@@ -509,15 +512,16 @@ CREATE TABLE IF NOT EXISTS `users` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `linkedin_id`, `email`, `password`, `fname`, `lname`, `profile_image`, `city`, `country_id`, `timezone_id`, `language_id`, `dob`, `phone`, `linkedin_url`, `twitter_url`, `google_url`, `facebook_url`, `is_expert`, `exp_description`, `exp_help`, `exp_expertise`, `exp_rate`, `exp_about`, `exp_experience`, `exp_education`, `exp_interest`, `exp_award`, `status`, `created`, `modified`) VALUES
-(1, '', 'test@mail.com', '123456', 'test', 'test', 'test', 'test', 1, 103, '1', '2015-08-03', '123', '', '', '', '', '0', '', '', '', '', '', '', '', '', '', '0', '2015-08-04 00:00:00', '0000-00-00 00:00:00'),
-(2, '', 'exp@mail.com', '123456', 'exp', 'exp', 'exp', 'exp', 1, 103, '1', '2015-08-04', '123', '', '', '', '', '1', 'exp', 'exp', 'exp', '20', 'exp', 'exp', 'exp', 'exp', 'exp', '1', '2015-08-12 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `users` (`id`, `linkedin_id`, `email`, `password`, `fname`, `lname`, `profile_image`, `city`, `country_id`, `timezone_id`, `language_id`, `dob`, `phone`, `linkedin_url`, `twitter_url`, `google_url`, `facebook_url`, `is_expert`, `exp_description`, `exp_help`, `exp_category_id`, `exp_tag_id`, `exp_rate`, `exp_about`, `exp_experience`, `exp_education`, `exp_interest`, `exp_award`, `status`, `created`, `modified`) VALUES
+(1, '', 'test@mail.com', '123456', 'test', 'test', 'test', 'test', 1, 103, '1', '2015-08-03', '123', '', '', '', '', '0', '', '', '', '', '', '', '', '', '', '', '0', '2015-08-04 00:00:00', '0000-00-00 00:00:00'),
+(2, '', 'exp@mail.com', '123456', 'exp', 'exp', 'exp', 'exp', 1, 103, '1', '2015-08-04', '123', '', '', '', '', '1', 'exp', 'exp', 'exp', '', '20', 'exp', 'exp', 'exp', 'exp', 'exp', '1', '2015-08-12 00:00:00', '0000-00-00 00:00:00'),
+(3, '', 'use2@mail.com', 'use2', 'use2', 'use2', '', '', 0, 0, '', '0000-00-00', '', '', '', '', '', '0', '', '', '', '', '', '', '', '', '', '', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
