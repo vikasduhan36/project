@@ -1,4 +1,5 @@
 <?php
+require_once 'config/config.php';
 require_once 'config/dbconnection.php';
 db_open();
 require_once('phpInclude/function.php');
@@ -302,7 +303,66 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_book_schedule_pub
 	{
 		echo "success";exit();
 	}
-	
-	
-
 }
+else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')
+{
+	foreach($_POST as $key => $value)
+	{
+		$$key = $value;
+	}
+	$condition = "";
+	$result = array();
+	$status = "error";
+	
+	if(!empty($category_id))
+	{
+		$condition .= " and u.exp_category_id = '".$category_id."' ";
+	}
+	
+	if(!empty($tag_selected))
+	{
+		$condition .= " and ( 1=1 ";
+		foreach($tag_selected as $id)
+		{
+			$condition .= " OR FIND_IN_SET('u.exp_tag_id','".$id."') ";
+		}
+		$condition .= " ) ";
+	}
+	
+	if(!empty($language_selected))
+	{
+		$condition .= " and ( 1=1 ";
+		foreach($language_selected as $id)
+		{
+			$condition .= " OR FIND_IN_SET('u.language_id','".$id."') ";
+		}
+		$condition .= " ) ";
+	}
+	
+	$sql  = " SELECT u.id, u.fname,u.lname, u.profile_image, u.city,u.country_id,u.exp_about,exp_rate, ";
+	$sql .= " ( SELECT name FROM categories WHERE id = u.exp_category_id) as category, "; 
+	$sql .= " ( SELECT GROUP_CONCAT(name) FROM languages WHERE id IN(u.language_id)) as language, "; 
+	$sql .= " ( SELECT GROUP_CONCAT(name) FROM tags WHERE id IN(u.exp_tag_id)) as tag "; 
+	$sql .= " FROM users as u ";
+	$sql .= " WHERE 1=1 ".$condition." ";
+	
+	$query = mysql_query($sql) or die(mysql_error());
+	if($query)
+	{
+		if(mysql_num_rows($query) > 0)
+		{
+			$status 	= "success";
+			while($fetch = mysql_fetch_assoc($query))
+			{
+				$result[] = $fetch;
+			}
+		}
+		else
+		{
+			$status = "no_record";
+		}
+	}
+	
+	echo json_encode( array('status'=>$status,'result'=>$result) );
+}
+

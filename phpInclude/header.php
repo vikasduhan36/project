@@ -1,4 +1,5 @@
 <?php 
+require_once("config/config.php");
 	require_once 'config/dbconnection.php';
 	db_open();
 ?>
@@ -8,7 +9,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EyeAsk.com</title>
+<title>practise</title>
+
 <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
 <link href="css/lightSlider.css" rel="stylesheet" type="text/css" />
 <link href="css/grid.css" rel="stylesheet" type="text/css" />
@@ -18,6 +20,8 @@
 <link rel="stylesheet" type="text/css" href="css/jquery.datetimepicker.css"/>
 <link href="css/responsive.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $root; ?>css/jquery-ui.css" />
+
+
 <script type="text/javacsript">
 var root = "<?php echo $root;?>";
 </script>
@@ -64,7 +68,9 @@ require_once('phpInclude/function.php');
     	<div class="row">
             <div class="col-xs-12">
             	<a href="javascript:void(0);" class="logo">
+				<!--
                		<img src="images/eyeask2.png" alt="eyeask" class="img-responsive logoimg2" />
+					-->
                 </a>
                 <nav class="nav1">
                 	<a href="javascript:void(0);" class="navtogglebtn visible-xs">

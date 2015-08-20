@@ -2,7 +2,11 @@
 // Code For Open Data Base
 function db_open()
 {
-	require_once("config.php");
+	$DB_HOST     = 'localhost';
+$DB_DATABASE = 'eyeask';
+$DB_USER     = 'root';
+$con = '';
+	
 	if(!isset($_SESSION))
 	{
 		session_start();		

@@ -98,6 +98,7 @@ $(document).ready(function(){
 			error = 1;
 			//slot_selected.focus();
 		}
+		console.log(error);
 		if(error == 1)
 		{
 			$("#notification").addClass("error").removeClass("success").text(message).show();
@@ -110,7 +111,7 @@ $(document).ready(function(){
 		{
 			$("#notification").removeClass("error success").text('').hide();
 			$(".progresslist li:eq(0)").addClass("stepcomp");
-			
+			$("#step1").fadeOut(function(){$("#step2").fadeIn()});
 		}
 	});
 	
@@ -451,7 +452,12 @@ $(document).ready(function(){
 		})
 	});
 	
-	
+	var datastring = $("#form_search_expert").serialize();
+	search_expert(datastring);
+	$("#form_search_expert").change(function(){
+		var datastring = $("#form_search_expert").serialize();
+	search_expert(datastring);
+	});
 });
 
 function getUserAvailability(user_id,date)
@@ -506,4 +512,97 @@ function formatAMPM(date) {
   minutes = minutes < 10 ? '0'+minutes : minutes;
   var strTime = hours + ':' + minutes + ' ' + ampm;
   return strTime;
+}
+
+function search_expert(datastring)
+{
+		$.ajax({
+			url:root+'handler.php',
+			type:'post',
+			data:datastring,
+			dataType:'json',
+			beforeSend:function(){
+				
+			},
+			success:function(response){
+			var html = '';
+				if(response.status == 'success')
+				{
+				
+$.each(response.result,function(key,value){
+html += '<div class="listcont"><div class="row">';
+html += '<div class="col-xs-12"><div class="expertinforow">';
+html += '<div class="socialdrop">';
+html += '<a href="javascript:void(0);" class="dropicon"><i class="fa fa-ellipsis-v"></i></a>';
+
+html += '<div class="hovertip"><ul class="shareTip">';
+html += '<li><a href="javascript:void(0);" data-toggle="tooltip" title="Facebook" class="FB_bg"><i class="fa fa-facebook"></i></a></li>';
+html += '<li><a href="javascript:void(0);" data-toggle="tooltip" title="Twitter" class="TW_bg"><i class="fa fa-twitter"></i></a></li>';
+html += '<li><a href="javascript:void(0);" data-toggle="tooltip" title="Google +" class="GPlus_bg"><i class="fa fa-google-plus"></i></a></li>';
+html += '<li><a href="javascript:void(0);" data-toggle="tooltip" title="Linkedin" class="LKN_bg"><i class="fa fa-linkedin"></i></a></li>';
+html += '<li><a href="javascript:void(0);" data-toggle="tooltip" title="Website" class=""><i class="fa fa-home"></i></a></li>';
+html += '</ul>';
+html += '</div>';
+html += '</div>';
+
+html += '<span class="expertimg">';
+html += '<img src="images/users/default.jpg" alt="expert1" class="img-responsive"/>';
+html += '</span><h4><a href="javascript:void(0);">'+value.fname+' '+value.lname+'</a></h4>';
+html += '<ul>';
+html += '<li><i class="fa fa-map-marker"></i> '+value.city+' '+value.country_id+'</li>';
+html += '<li><i class="fa fa-globe"></i>'+value.language+'</li>';
+html += '</ul></div></div><div class="col-xs-12 col-md-8 col-lg-9">';
+html += '<ul class="tags">';
+html += '<li><a href="javascript:void(0);">'+value.tag+'</a></li>';
+html += '<li><a href="javascript:void(0);">Business Development</a></li>';
+html += '<li><a href="javascript:void(0);">Social Media Marketing</a></li>';
+//html += '<li><a href="javascript:void(0);">+ 3 more...</a></li>';
+html += '</ul>';
+html += '<p>'+value.exp_about+'</p>';
+html += '</div><div class="col-xs-12 col-md-4 col-lg-3">';
+html += '<a href="javascript:void(0);" class="bookme_btn bookfree">Book Me Now! ';
+html += '<span class="free">Always FREE';
+html += '<img src="images/round_arrow_blue.png" alt="arrow" class="img-responsive" /></span></a>';
+html += '<a href="javascript:void(0);" class="wishlistbtn">';
+html += '<i class="fa fa-heart"></i>Add to wishlist</a>';
+html += '</div><div class="col-xs-12 has_reviews">';
+html += '<ul class="haslist">';
+html += '<li><a href="javascript:void(0);" class="haslink" data-toggle="tooltip" title="Number of reviews"><i class="fa fa-thumbs-o-up"></i> <span>50</span></a>';
+html += '</li><li>';
+html += '<a href="javascript:void(0);"  class="haslink" data-toggle="tooltip" title="Average rating"><i class="fa fa-star-o"></i> <span>7.3</span></a>';
+html += '<div class="hasreview_drop"><ul class="shareTip">';
+html += '<li><h3>Reviews of this Expert</h3></li>';
+html += '<li><p>Rutgers is very knowledgable and open. Great entrepreneurial spirit. Very useful! Thanks a lot!</p>';
+html += '<span class="hasrating">';
+html += '<a href="javascript:void(0);" class="filled"><i class="fa fa-star"></i></a>';
+html += '<a href="javascript:void(0);" class="filled"><i class="fa fa-star"></i></a>';
+html += '<a href="javascript:void(0);" class="filled"><i class="fa fa-star-half-empty"></i></a>';
+html += '<a href="javascript:void(0);"><i class="fa fa-star-o"></i></a>';
+html += '<a href="javascript:void(0);"><i class="fa fa-star-o"></i></a>';
+html += '<span>6/10</span></span>';
+html += '<a href="javascript:void(0);" class="hasreview_name">christian Baudry </a>';
+html += '</li><li><p>Rutgers is very knowledgable and open. Great entrepreneurial spirit. Very useful! Thanks a lot!</p>';
+html += '<span class="hasrating">';
+html += '<a href="javascript:void(0);" class="filled"><i class="fa fa-star"></i></a>';
+html += '<a href="javascript:void(0);" class="filled"><i class="fa fa-star"></i></a>';
+html += '<a href="javascript:void(0);" class="filled"><i class="fa fa-star-half-empty"></i></a>';
+html += '<a href="javascript:void(0);"><i class="fa fa-star-o"></i></a>';
+html += '<a href="javascript:void(0);"><i class="fa fa-star-o"></i></a>';
+html += '<span>6/10</span>';
+html += '</span>';
+html += '<a href="javascript:void(0);" class="hasreview_name">christian Baudry </a>';
+html += '</li>';
+html += '<li><a href="javascript:void(0);" class="viewall_link">View All <i class="fa fa-angle-double-right"></i></a></li>';
+html += '</ul></div></li><li>';
+html += '<a href="javascript:void(0);"  class="haslink" data-toggle="tooltip" title="Number of session held"><i class="fa fa-video-camera"></i> <span>50</span></a>';
+html += '</li></ul></div></div></div>';
+});
+$("#serach_expert_result").html(html);
+				}
+				else if(response.status == 'no_record')
+				{
+				
+				}
+			}
+		});
 }
