@@ -560,7 +560,7 @@ html += '<li><a href="javascript:void(0);">Social Media Marketing</a></li>';
 html += '</ul>';
 html += '<p>'+value.exp_about+'</p>';
 html += '</div><div class="col-xs-12 col-md-4 col-lg-3">';
-html += '<a href="javascript:void(0);" class="bookme_btn bookfree">Book Me Now! ';
+html += '<a href="'+root+'schedule.php?id='+value.id+'" class="bookme_btn bookfree">Book Me Now! ';
 html += '<span class="free">Always FREE';
 html += '<img src="images/round_arrow_blue.png" alt="arrow" class="img-responsive" /></span></a>';
 html += '<a href="javascript:void(0);" class="wishlistbtn">';
@@ -606,6 +606,7 @@ html += '</li></ul></div></div></div>';
 					html += '</h3></div></div></div>';
 				}
 				$("#serach_expert_result").html(html);
+				$("#expert_count").text(response.count);
 			}
 		});
 }

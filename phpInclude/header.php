@@ -68,9 +68,9 @@ require_once('phpInclude/function.php');
     	<div class="row">
             <div class="col-xs-12">
             	<a href="javascript:void(0);" class="logo">
-				<!--
+				
                		<img src="images/eyeask2.png" alt="eyeask" class="img-responsive logoimg2" />
-					-->
+				
                 </a>
                 <nav class="nav1">
                 	<a href="javascript:void(0);" class="navtogglebtn visible-xs">
