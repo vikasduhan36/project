@@ -597,12 +597,15 @@ html += '</ul></div></li><li>';
 html += '<a href="javascript:void(0);"  class="haslink" data-toggle="tooltip" title="Number of session held"><i class="fa fa-video-camera"></i> <span>50</span></a>';
 html += '</li></ul></div></div></div>';
 });
-$("#serach_expert_result").html(html);
+
 				}
 				else if(response.status == 'no_record')
 				{
-				
+					html += '<div class="listcont"><div class="row">';
+					html += '<div class="col-xs-12"><h3>No Expert Found.';
+					html += '</h3></div></div></div>';
 				}
+				$("#serach_expert_result").html(html);
 			}
 		});
 }
