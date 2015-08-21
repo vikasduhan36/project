@@ -560,7 +560,7 @@ html += '<li><a href="javascript:void(0);">Social Media Marketing</a></li>';
 html += '</ul>';
 html += '<p>'+value.exp_about+'</p>';
 html += '</div><div class="col-xs-12 col-md-4 col-lg-3">';
-html += '<a href="javascript:void(0);" class="bookme_btn bookfree">Book Me Now! ';
+html += '<a href="'+root+'schedule.php?id='+value.id+'" class="bookme_btn bookfree">Book Me Now! ';
 html += '<span class="free">Always FREE';
 html += '<img src="images/round_arrow_blue.png" alt="arrow" class="img-responsive" /></span></a>';
 html += '<a href="javascript:void(0);" class="wishlistbtn">';
@@ -606,9 +606,11 @@ html += '</li></ul></div></div></div>';
 					html += '</h3></div></div></div>';
 				}
 				$("#serach_expert_result").html(html);
+				$("#expert_count").text(response.count);
 			}
 		});
 }
+<<<<<<< HEAD
 /*sign up */
 $(document).ready(function(){
 ///////// create account////////////
@@ -844,3 +846,48 @@ $("#update_email").validate({
     }
 });
 });
+
+function userTimer()                                                     
+{
+    if(sec > 0){
+        document.getElementById('seconds').innerHTML = sec-1;
+        sec--;
+    }else{
+        sec = 59;
+        document.getElementById('seconds').innerHTML = sec;
+        if(min > 0){
+            document.getElementById('minutes').innerHTML = min-1;
+            min--;
+        }else{
+            min = 59;
+            document.getElementById('minutes').innerHTML = min;
+            if(hrs > 0){
+                document.getElementById('hours').innerHTML = hrs-1;
+                hrs--;
+            }else{
+                hrs = 23;
+                document.getElementById('hours').innerHTML = hrs;
+                if(days > 0){
+                    document.getElementById('days').innerHTML = days-1;
+                    days--;
+                }
+            }
+        }
+    }
+ 
+        if((hrs==0)&&(min==0)&&(sec == 0))                                                                                                                   // session
+        {
+            var r = confirm("Your scheduled duration for this session has been finished. \r\n Do you want to request more time to participate?");
+			if(r)
+			{
+				alert('request expert');
+			}
+			else
+			{
+				alert('session complete');
+			}
+		}	
+		
+     
+}
+

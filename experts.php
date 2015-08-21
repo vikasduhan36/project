@@ -19,7 +19,7 @@
                         <div class="brwstoprow">
                             <div class="row">
                                 <div class="col-xs-12 col-xss-6 col-sm-6">
-                                    <h2>Browse <strong>500</strong> Experts</h2>
+                                    <h2>Browse <strong id="expert_count"></strong> Experts</h2>
                                 </div>
                                 <div class="col-xs-12 col-xss-6 col-sm-6">
                                     <span class="pull-right placereqbtn_otr">..or <a href="javascript:void(0);" class="placereq_btn btn1">Place Public Request</a></span>

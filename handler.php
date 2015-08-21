@@ -313,6 +313,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')
 	$condition = "";
 	$result = array();
 	$status = "error";
+	$count = 0;
 	
 	if(!empty($category_id))
 	{
@@ -339,18 +340,20 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')
 		$condition .= " ) ";
 	}
 	
-	$sql  = " SELECT u.id, u.fname,u.lname, u.profile_image, u.city,u.country_id,u.exp_about,exp_rate, ";
+	$sql  = " SELECT SQL_CALC_FOUND_ROWS u.id, u.fname,u.lname, u.profile_image, u.city,u.country_id,u.exp_about,exp_rate, ";
 	$sql .= " ( SELECT name FROM categories WHERE id = u.exp_category_id) as category, "; 
 	$sql .= " ( SELECT GROUP_CONCAT(name) FROM languages WHERE id IN(u.language_id)) as language, "; 
 	$sql .= " ( SELECT GROUP_CONCAT(name) FROM tags WHERE id IN(u.exp_tag_id)) as tag "; 
 	$sql .= " FROM users as u ";
-	$sql .= " WHERE 1=1 ".$condition." ";
+	$sql .= " WHERE 1=1 and is_expert='1' ".$condition." ";
 	
 	$query = mysql_query($sql) or die(mysql_error());
 	if($query)
 	{
 		if(mysql_num_rows($query) > 0)
 		{
+			$count_row = mysql_fetch_assoc(mysql_query("SELECT FOUND_ROWS() as count"));
+			$count = $count_row['count'];
 			$status 	= "success";
 			while($fetch = mysql_fetch_assoc($query))
 			{
@@ -363,7 +366,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')
 		}
 	}
 	
-	echo json_encode( array('status'=>$status,'result'=>$result) );
+	echo json_encode( array('status'=>$status,'count'=>$count,'result'=>$result) );
 }
 
 if(isset($_POST['action']) && $_POST['action']=="googleLogin")
