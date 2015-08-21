@@ -610,7 +610,6 @@ html += '</li></ul></div></div></div>';
 			}
 		});
 }
-<<<<<<< HEAD
 /*sign up */
 $(document).ready(function(){
 ///////// create account////////////
