@@ -85,7 +85,11 @@ require_once('phpInclude/function.php');
                     	<a href="javascript:void(0);">
                         	<h6><small>Welcome</small> User Name</h6>
                             <i class="fa fa-sort"></i>
-                            <span class="userimg"><img src="images/users/default.jpg" alt="img" class="img-responsive" /></span>
+                            <span class="userimg">
+							
+							<img src="images/users/default.jpg" alt="img" class="img-responsive" />
+						
+							</span>
                         </a>
                         <div class="dropmenu">
                         	<ul>

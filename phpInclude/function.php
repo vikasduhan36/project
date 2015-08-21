@@ -70,4 +70,18 @@ function getWeekday($selected = null)
 	}
 }
 
+function daysRemaining($currentDate,$end,$out_in_array=false){
+ 
+    $intervalo = date_diff(date_create($currentDate), date_create($end));
+    $out = $intervalo->format("Years:%Y,Months:%M,Days:%d,Hours:%H,Minutes:%i,Seconds:%s");
+    if(!$out_in_array)
+        return $out;
+    $a_out = array();
+    array_walk(explode(',',$out),
+            function($val,$key) use(&$a_out){
+        $v=explode(':',$val);
+        $a_out[$v[0]] = $v[1];
+    });
+    return $a_out;
+}
 ?>

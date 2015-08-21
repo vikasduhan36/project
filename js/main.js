@@ -610,3 +610,47 @@ html += '</li></ul></div></div></div>';
 			}
 		});
 }
+
+function userTimer()                                                     
+{
+    if(sec > 0){
+        document.getElementById('seconds').innerHTML = sec-1;
+        sec--;
+    }else{
+        sec = 59;
+        document.getElementById('seconds').innerHTML = sec;
+        if(min > 0){
+            document.getElementById('minutes').innerHTML = min-1;
+            min--;
+        }else{
+            min = 59;
+            document.getElementById('minutes').innerHTML = min;
+            if(hrs > 0){
+                document.getElementById('hours').innerHTML = hrs-1;
+                hrs--;
+            }else{
+                hrs = 23;
+                document.getElementById('hours').innerHTML = hrs;
+                if(days > 0){
+                    document.getElementById('days').innerHTML = days-1;
+                    days--;
+                }
+            }
+        }
+    }
+ 
+        if((hrs==0)&&(min==0)&&(sec == 0))                                                                                                                   // session
+        {
+            var r = confirm("Your scheduled duration for this session has been finished. \r\n Do you want to request more time to participate?");
+			if(r)
+			{
+				alert('request expert');
+			}
+			else
+			{
+				alert('session complete');
+			}
+		}	
+		
+     
+}
