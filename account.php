@@ -1,71 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EyeAsk.com</title>
-<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
-<link href="css/lightSlider.css" rel="stylesheet" type="text/css" />
-<link href="css/grid.css" rel="stylesheet" type="text/css" />
-<link href="css/style.css" rel="stylesheet" type="text/css" />
-<link href="fonts/fonts.css" rel="stylesheet" type="text/css" />
-<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-<link href="css/responsive.css" rel="stylesheet" type="text/css" />
-
-<script src="js/jquery.min.js"></script>
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-  <script src="js/html5shiv.min.js"></script>
-  <script src="js/respond.min.js"></script>
-<![endif]-->
-
-</head>
-<body>
-<section id="main"><!-- // MAIN ID SECTION // -->
-<section id="maininnr"><!-- // MAIN INNER SECTION // -->
-
-<a href="javascript:void(0);" class="btn1 back_to_top"><i class="fa fa-angle-up"></i></a>
-<header class="header innerhead headershadow"><!-- ////// HEADER ////// -->
-	<div class="container">
-    	<div class="row">
-            <div class="col-xs-12">
-            	<a href="javascript:void(0);" class="logo">
-               		<img src="images/eyeask2.png" alt="eyeask" class="img-responsive logoimg2" />
-                </a>
-            	<nav class="nav1">
-                	<a href="javascript:void(0);" class="navtogglebtn visible-xs">
-                    	<span></span><span></span><span></span>
-                    </a>
-                	<ul class="navlist">
-                    	<li><a href="javascript:void(0);">Browse Experts</a></li>
-                        <li><a href="javascript:void(0);">Place Request</a></li>
-                        <li><a href="javascript:void(0);">About</a></li>
-                    </ul>
-                   	<div class="userdropdown">
-                    	<a href="javascript:void(0);">
-                        	<h6><small>Welcome</small> User Name</h6>
-                            <i class="fa fa-sort"></i>
-                            <span class="userimg"><img src="images/users/default.jpg" alt="img" class="img-responsive" /></span>
-                        </a>
-                        <div class="dropmenu">
-                        	<ul>
-                            	<li><a href="javascript:void(0);">My Account</a></li>
-                                <li><a href="javascript:void(0);">My Session</a></li>
-                                <li><a href="javascript:void(0);">Expert Wishlist</a></li>
-                                <li><a href="javascript:void(0);">Finance</a></li>
-                                <li><a href="javascript:void(0);">Help</a></li>
-                                <li><a href="javascript:void(0);">Logout <i class="fa fa-sign-out pull-right"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-        </div>
-    </div>
-</header><!-- ////// HEADER ////// -->
-
-
+<?php 
+ ////// HEADER ////// 
+require_once 'phpInclude/header.php';
+?>
 <section class="midsection accountsection"><!-- // MID MAIN SECTION // -->
 	<div class="container">
     	<div class="row">
@@ -78,13 +14,15 @@
                         </a>
                     </span>
                     <div class="toggle_db"><!-- FOR TOGGLED DASHBOARD -->
+                    <form id="imageform" method="post" enctype="multipart/form-data" action='handler.php'>
                         <div class="accountimgblk">
-                            <span class="imgcont"><img src="images/users/default.jpg" alt="user" class="responsiveimg" /></span>
+                            <span class="imgcont" id='preview'><img src="<?php echo $prof_pic;?>" alt="user" class="responsiveimg" id="output"/></span>
                             <span class="uploadimgotr">
-                                <input type="file" />
+                                <input type="file"  name="photoimg" id="photoimg" />
                                 <span><i class="fa fa-camera"></i> Upload Image</span>
                             </span>
                         </div>
+                        </form>
                         <div class="accountprogress">
                             <h6 class="progresstxt">Profile completeness: <span>55%</span></h6>
                             <div class="progress">
@@ -111,16 +49,17 @@
                         <li>My Account</li>
                     </ul>
                     <h2 class="accountheading"><small>My</small>Account</h2>
-                    
+                    <div id="errors"></div>
                     <div class="myaccountinfo"><!-- // MY ACCOUNT INFORMATION // -->
+                    <form id="update_email">
                         <div class="infoblks clearfix"><!-- Account information -->
                         	<h4>Account Detail</h4>
                         	<ul class="row infolist">
                             	<li>
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Email Address</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
-                                    	<span class="value">Rishipassion7@gmail.com</span>
-                                        <input type="text" Placeholder="Enter your email" class="form-control valuefield" style="display:none;" />
+                                    	<span class="value"><?php echo $email;?></span>
+                                        <input type="text" Placeholder="Enter your email" autocomplete="off" name="email" class="form-control valuefield" style="display:none;" value="<?php echo $email;?>"/>
                                     </div>
                                     <div class="col-xs-12 col-xss-2 col-sm-2">
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
@@ -136,17 +75,21 @@
                                     </div>
                                 </li>
                             </ul>
-                            <a href="javascript:void(0);" class="submitbtn btn1">Submit <i class="fa fa-check"></i></a>
+                           <!--  <a href="javascript:void(0);" class="submitbtn btn1">Submit <i class="fa fa-check"></i></a> -->
+                           <input type="hidden" value="update_email" name="action"/>
+                        <input type="submit" value="Submit" class="submitbtn btn1" />
                         </div><!-- Account information -->
+                        </form>
                         
                         <div class="infoblks clearfix"><!-- Personal information -->
+                        <form id="personal_details">
                         	<h4>Personal Detail</h4>
                         	<ul class="row infolist">
                             	<li>
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Full Name</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
-                                    	<span class="value">Amit Rawat</span>
-                                        <input type="text" Placeholder="Enter Full Name" class="form-control valuefield" style="display:none;" />
+                                    	<span class="value"><?php echo $username;?></span>
+                                        <input type="text" Placeholder="Enter Full Name" autocomplete="off" name="full_name" class="form-control valuefield" style="display:none;" value="<?php echo $username;?>"/>
                                     </div>
                                     <div class="col-xs-12 col-xss-2 col-sm-2">
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
@@ -155,8 +98,8 @@
                                 <li>
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>City</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
-                                    	<span class="value">Dehra Dun Area</span>
-                                        <input type="text" Placeholder="City" class="form-control valuefield" style="display:none;" />
+                                    	<span class="value"><?php echo $city;?></span>
+                                        <input type="text" Placeholder="City" name="city" autocomplete="off" class="form-control valuefield" style="display:none;" value="<?php echo $city;?>"/>
                                     </div>
                                     <div class="col-xs-12 col-xss-2 col-sm-2">
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
@@ -165,8 +108,24 @@
                                 <li>
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Country</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
-                                    	<span class="value">India</span>
-                                        <input type="text" Placeholder="Country" class="form-control valuefield" style="display:none;" />
+                                    	<span class="value" id="country_span">India</span>
+                                        <select class="form-control custom-select valuefield" name="country" id="country" style="display:none;" >
+                                        <option value="">Select Country</option>
+                                        <?php 
+                                        $cond = " ";
+                                        $field=" * ";
+                                        $table=" country ";
+                                        $country = getDetail($field,$table,$cond);
+                                        foreach ($country as $key=>$value){
+                                        	if(trim($value['country_code'])== trim($country_id)){
+                                        		$selected='selected="selected"';
+                                        	} else {
+                                        		$selected='';
+                                        	}
+                                        ?>
+                                        <option value="<?php echo $value['country_code'];?>" <?php echo $selected;?>><?php echo $value['country_name'];?></option>
+                                        <?php } ?>
+                                        </select>
                                     </div>
                                     <div class="col-xs-12 col-xss-2 col-sm-2">
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
@@ -175,8 +134,24 @@
                                 <li class="not_set">
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Timezone</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
-                                    	<span class="value">Not Set</span>
-                                        <input type="text" Placeholder="Country" class="form-control valuefield" style="display:none;" />
+                                    	<span class="value" id="time_span">Not Set</span>
+                                        <select class="form-control custom-select valuefield" name="timezone" id="timezone" style="display:none;" >
+                                        <option value="">Select Timezone</option>
+                                        <?php 
+                                        $cond = " ";
+                                        $field=" * ";
+                                        $table=" timezone ";
+                                        $timezone = getDetail($field,$table,$cond);
+                                        foreach ($timezone as $key=>$value){
+                                        	if(trim($value['id'])== trim($timezone_id)){
+                                        		$selected='selected="selected"';
+                                        	} else {
+                                        		$selected='';
+                                        	}
+                                        ?>
+                                        <option value="<?php echo $value['id'];?>" <?php echo $selected;?>><?php echo $value['name'];?></option>
+                                        <?php } ?>
+                                        </select>
                                     </div>
                                     <div class="col-xs-12 col-xss-2 col-sm-2">
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
@@ -185,8 +160,8 @@
                                 <li class="not_set">
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Languages</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
-                                    	<span class="value">Not Set</span>
-                                        <input type="text" Placeholder="Country" class="form-control valuefield" style="display:none;" />
+                                    	<span class="value"><?php echo $language_id;?></span>
+                                        <input type="text" Placeholder="Choose some languages.." name="languages" class="form-control valuefield" id="language" style="display:none;" value="<?php echo $language_id;?>"/>
                                     </div>
                                     <div class="col-xs-12 col-xss-2 col-sm-2">
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
@@ -195,8 +170,8 @@
                                 <li class="not_set">
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Birthdate</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
-                                    	<span class="value">Not Set</span>
-                                        <input type="text" Placeholder="Country" class="form-control valuefield" style="display:none;" />
+                                    	<span class="value"><?php echo $dob;?></span>
+                                        <input type="text" Placeholder="Birthdate" name="dob" class="form-control valuefield" style="display:none;"  value="<?php echo $dob;?>"  id="datepicker"/>
                                     </div>
                                     <div class="col-xs-12 col-xss-2 col-sm-2">
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
@@ -205,19 +180,23 @@
                                 <li class="not_set">
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Phone</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
-                                    	<span class="value">Not Set</span>
-                                        <input type="text" Placeholder="Country" class="form-control valuefield" style="display:none;" />
+                                    	<span class="value"><?php echo $phone;?></span>
+                                        <input type="text" Placeholder="Phone" autocomplete="off" name="phone" class="form-control valuefield" style="display:none;"  value="<?php echo $phone;?>"/>
                                     </div>
                                     <div class="col-xs-12 col-xss-2 col-sm-2">
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
                                     </div>
                                 </li>
                             </ul>
-                            <a href="javascript:void(0);" class="submitbtn btn1">Submit <i class="fa fa-check"></i></a>
+                            <!-- <a href="javascript:void(0);" class="submitbtn btn1">Submit <i class="fa fa-check"></i></a> -->
+                            <input type="hidden" value="personal_details" name="action"/>
+                        <input type="submit" value="Submit" class="submitbtn btn1" />
+                            </form>
                         </div><!-- Personal information -->
                         
                         <div class="infoblks clearfix"><!-- Social Account information -->
                         	<h4>Social Accounts</h4>
+                        	<form>
                         	<ul class="row infolist">
                             	<li>
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>LinkedIn</label></div>
@@ -257,6 +236,7 @@
                                 </li>
                             </ul>
                             <a href="javascript:void(0);" class="submitbtn btn1">Submit <i class="fa fa-check"></i></a>
+                            </form>
                         </div><!-- Social Account information -->
                         
                         <div class="infoblks clearfix"><!-- Partner sites information -->
@@ -314,7 +294,7 @@
                             <li><a href="javascript:void(0);"><i class="fa fa-linkedin"></i></a></li>
                         </ul>
                     </div>
-                    <p class="copyrighttxt">Â©2015 eyeask.com. All rights reserved.</p>
+                    <p class="copyrighttxt">©2015 eyeask.com. All rights reserved.</p>
                 </div>
             </div>
         </div>
@@ -333,31 +313,33 @@
       	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times"></i></span></button>
       </div>
       <div class="modal-body">
+      <div id="errors"></div>
       	<div class="formOtr">
         	<div id="loginform" style="display:block;">
-                <form>
+                <form id="password_info">
                     <div class="form-group">
                     	<label class="lbl">Current Password</label>
                          <div class="fields">
-                        	<input type="password" class="form-control" placeholder="Enter Current password" />
+                        	<input type="password" class="form-control" placeholder="Enter Current password" name="current_pass" id="current_pass"/>
                         	<i class="fa fa-key icons"></i>
                          </div>
                     </div>
                     <div class="form-group">
                     	<label class="lbl">New Password</label>
                          <div class="fields">
-                        	<input type="password" class="form-control" placeholder="Enter New password" />
+                        	<input type="password" class="form-control" placeholder="Enter New password" name="new_pass" id="new_pass"/>
                         	<i class="fa fa-key icons"></i>
                          </div>
                     </div>
                     <div class="form-group">
                     	<label class="lbl">Confirm New Password</label>
                          <div class="fields">
-                        	<input type="password" class="form-control" placeholder="Confirm password" />
+                        	<input type="password" class="form-control" placeholder="Confirm password" name="pass_again" id="pass_again"/>
                         	<i class="fa fa-key icons"></i>
                          </div>
                     </div>
                     <div class="form-group">
+                    <input type="hidden" name="action" value="change_password" />
                         <input type="submit" value="Update" class="signin_btn updatepassbtn" />
                     </div>
                 </form>
@@ -372,6 +354,21 @@
 <!-- // JQUERY AT BOTTOM // -->
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
 <script src="js/jquery.lightSlider.js"></script> 
+<script type="text/javascript" src="js/jquery.form.js"></script>
+
+<script type="text/javascript" >
+ $(document).ready(function() { 
+		
+            $('#photoimg').on('change', function()			{ 
+			           $("#preview").html('');
+			    $("#preview").html('<img src="images/loader.gif" alt="Uploading...."/>');
+			$("#imageform").ajaxForm({
+						target: '#preview'
+		}).submit();
+		
+			});
+        }); 
+</script>
 <script>
 $(window).scroll(function() {
 	// SCROLL HEADER //
@@ -384,6 +381,18 @@ $(window).scroll(function() {
 	}
 });
 $(document).ready(function() {
+	 $( "#datepicker" ).datepicker({
+	      changeMonth: true,
+	      changeYear: true,
+	      yearRange: '1960:2000',
+	      dateFormat: 'mm-dd-yy'
+	    });
+	    
+	$('.editlink').click(function(){
+		$(this).text('Submit');
+		$(this).parents('li').find('input,select').show();
+		$(this).parents('li').find('span').hide();
+	});
 	// Testimonial //
 	$("#testislide").lightSlider({
 		loop:true,
@@ -437,6 +446,56 @@ $(document).ready(function() {
 		$(this).parent().next('.toggle_db').slideToggle('slow');
 	});
 });
+$(function() {
+    function split( val ) {
+      return val.split( /,\s*/ );
+    }
+    function extractLast( term ) {
+      return split( term ).pop();
+    }
+ 
+    $( "#language" )
+      // don't navigate away from the field on tab when selecting an item
+      .bind( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).autocomplete( "instance" ).menu.active ) {
+          event.preventDefault();
+        }
+      })
+      .autocomplete({
+        source: function( request, response ) {
+          $.getJSON( "handler.php", {
+            term: extractLast( request.term )
+          }, response );
+        },
+        search: function() {
+          // custom minLength
+          var term = extractLast( this.value );
+          if ( term.length < 1 ) {
+            return false;
+          }
+        },
+        focus: function() {
+          // prevent value inserted on focus
+          return false;
+        },
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          // remove the current input
+          terms.pop();
+          // add the selected item
+          terms.push( ui.item.value );
+          // add placeholder to get the comma-and-space at the end
+          terms.push( "" );
+          this.value = terms.join( ", " );
+          return false;
+        }
+      });
+     var selected_time = $('#timezone').val();
+    $('#time_span').text($("#timezone option[value='"+selected_time+"']").text());
+    var selected_country = $('#country').val();
+    $('#country_span').text($("#country option[value='"+selected_country+"']").text());
+  });
 </script>
 </body>
 </html>

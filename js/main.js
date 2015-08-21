@@ -609,3 +609,238 @@ html += '</li></ul></div></div></div>';
 			}
 		});
 }
+/*sign up */
+$(document).ready(function(){
+///////// create account////////////
+	$("#sign_up").validate({
+	
+	    rules: {
+	    	
+	    	email : {
+	    	      required: true,
+	    	      email: true
+	    	    },
+	    	password : "required",
+	    	conf_password: {
+	    	      equalTo: "#password"
+	    	    }
+	    },
+	    messages: {
+	    	
+	    	email :  {
+	    	      required: "Please enter email address",
+	    	      email: "Please enter valid email address"
+	    	    },
+	    	password : "Please enter password",
+	    	conf_password: {
+	    	      equalTo: "Password must be same"
+	    	    } 
+			   
+		   },
+	    submitHandler: function(form) {
+	    	var email = $('#email').val();
+	    	var dataString = $('#sign_up').serialize();
+	    	if($("#terms").prop('checked') == true)
+	    	{
+	    		$('#errors').html('');
+			$.ajax({
+				type: "POST",
+				url: root+"handler.php",
+				data: dataString,
+				beforeSend: function(){
+				$('#showLoder').show();	
+			    },
+				success: function(data){
+					$('#showLoder').hide();	
+					if($.trim(data)=="exists")
+					{
+						$('#errors').html('<span style="color:red;">Email address already exists,please try login.</span>');
+						setTimeout(function() {
+							  // Do something after 5 seconds
+							$('#loginform').css('display','block');
+							$('#signupform').css('display','none');
+							$('#email_address').val($.trim(email));
+						}, 3000);
+						
+					}else 
+					if($.trim(data)=="success")
+					{
+						$('#errors').html('<span style="color:green;">Successfully registered with us. Please login to continue.</span>');
+						setTimeout(function() {
+							  // Do something after 5 seconds
+							$('#loginform').css('display','block');
+							$('#signupform').css('display','none');
+							$('#email_address').val($.trim(email));
+						}, 2000);
+					}else {
+					$('#errors').html('<span style="color:red;">Some error occur ,please try again later.</span>');
+					}
+				}
+					
+				}); 
+	    	} else {
+	    		$('#errors').html('<span style="color:red;">Please accept terms and condition for registration.</span>');
+	    	}
+	    }
+	});
+///////// login user////////////
+	$("#login").validate({
+	
+	    rules: {
+	    	
+			    email_address : "required",
+			    password : "required"
+	    },
+	    messages: {
+	    	
+			    email_address :"Please enter email or username",
+			    password : "Please enter password"
+		   },
+	    submitHandler: function(form) {
+	    	var dataString = $('#login').serialize();
+			$.ajax({
+				type: "POST",
+				url: root+"handler.php",
+				data: dataString,
+				beforeSend: function(){
+				$('#showLoder').show();	
+			    },
+				success: function(data){
+					$('#showLoder').hide();	
+					if($.trim(data)=="not_found")
+					{
+						$('#msg').html('<span style="color:red;">Invalid credential,please check you email or password.</span>');
+					}else 
+					if($.trim(data)=="success")
+					{
+						$('#msg').html('<span style="color:green;">You have been logged in successfully.</span>');
+						setTimeout(function() {
+						  // Do something after 5 seconds
+							window.location.href = 'account.php';
+					}, 2000);
+					}else {
+					$('#msg').html('<span style="color:red;">Some error occur ,please try again later.</span>');
+					}
+				}
+					
+				}); 
+	    }
+	});
+
+///////// change password////////////
+$("#password_info").validate({
+
+    rules: {
+    	current_pass : "required",
+		    new_pass : "required",
+		    pass_again: {
+	    	      equalTo: "#new_pass"
+	    	    }
+    },
+    messages: {
+    	
+    	current_pass :"Please enter current password",
+    	new_pass : "Please enter new password",
+    	pass_again: {
+  	      equalTo: "Password must be same to the new password"
+  	    }
+	   },
+    submitHandler: function(form) {
+    	var dataString = $('#password_info').serialize();
+		$.ajax({
+			type: "POST",
+			url: root+"handler.php",
+			data: dataString,
+			beforeSend: function(){
+			$('#showLoder').show();	
+		    },
+			success: function(data){
+				$('#showLoder').hide();	
+				if($.trim(data)=="wrong_pass")
+				{
+					$('#errors').html('<span style="color:red;">Current password is wrong ,please check again.</span>');
+				}else 
+				if($.trim(data)=="success")
+				{
+					$('#errors').html('<span style="color:green;">Password changed successfully.</span>');
+					setTimeout(function() {
+					  // Do something after 5 seconds
+						window.location.href = 'account.php';
+				}, 2000);
+				}else {
+				$('#errors').html('<span style="color:red;">Some error occur ,please try again later.</span>');
+				}
+			}
+				
+			}); 
+    }
+});
+///////// update personal details////////////
+$("#personal_details").validate({
+
+    submitHandler: function(form) {
+    	var dataString = $('#personal_details').serialize();
+		$.ajax({
+			type: "POST",
+			url: root+"handler.php",
+			data: dataString,
+			beforeSend: function(){
+			$('#showLoder').show();	
+		    },
+			success: function(data){
+				$('#showLoder').hide();	
+				if($.trim(data)=="success")
+				{
+					$('#errors').html('<span style="color:green;">Details updated successfully.</span>');
+					$('html,body').animate({
+				        scrollTop: $(".breadcrumb").offset().top},
+				        'slow');
+					setTimeout(function() {
+					  // Do something after 5 seconds
+						window.location.href = 'account.php';
+				}, 2000);
+				}else {
+				$('#errors').html('<span style="color:red;">Some error occur ,please try again later.</span>');
+				}
+			}
+				
+			}); 
+    }
+});
+///////// update account(email) details////////////
+$("#update_email").validate({
+
+    submitHandler: function(form) {
+    	var dataString = $('#update_email').serialize();
+		$.ajax({
+			type: "POST",
+			url: root+"handler.php",
+			data: dataString,
+			beforeSend: function(){
+			$('#showLoder').show();	
+		    },
+			success: function(data){
+				$('#showLoder').hide();	
+				if($.trim(data)=="exists")
+				{
+					$('#errors').html('<span style="color:red;">Email address already used by other user.</span>');
+				}else
+				if($.trim(data)=="success")
+				{
+					$('#errors').html('<span style="color:green;">Details updated successfully.</span>');
+					setTimeout(function() {
+					  // Do something after 5 seconds
+						window.location.href = 'account.php';
+				}, 2000);
+				}else {
+				$('#errors').html('<span style="color:red;">Some error occur ,please try again later.</span>');
+				}
+				$('html,body').animate({
+			        scrollTop: $(".breadcrumb").offset().top},
+			        'slow');
+			}
+				
+			}); 
+    }
+});
+});

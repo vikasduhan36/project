@@ -366,3 +366,261 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')
 	echo json_encode( array('status'=>$status,'result'=>$result) );
 }
 
+if(isset($_POST['action']) && $_POST['action']=="googleLogin")
+{
+	//print_r($_POST);die;
+	$login_type="google";
+	$condition 		 = " email = '".$_POST['email']."' ";
+	$checkUserExists = UserExists($condition);
+	if($checkUserExists['count'] == 0)									//SIGN UP
+	{
+		$fb_login ="Insert into users set login_type='".mysql_real_escape_string(strip_tags(trim($login_type)))."'  ,username='".mysql_real_escape_string(strip_tags(trim($_POST['name'])))."' ,profile_image='".mysql_real_escape_string(strip_tags(trim($_POST['image'])))."' , ";
+		$fb_login .="email='".mysql_real_escape_string(strip_tags(trim($_POST['email'])))."',gender='".mysql_real_escape_string(strip_tags(trim($_POST['gender'])))."' ,fname='".mysql_real_escape_string(strip_tags(trim($_POST['fname'])))."' ,lname='".mysql_real_escape_string(strip_tags(trim($_POST['lname'])))."' ";
+		$mysql=mysql_query($fb_login) or die(mysql_error());
+		if($mysql)
+		{
+			$id=mysql_insert_id();
+			$_SESSION['message']['user_login'] = "succesfuly Login";
+			$_SESSION['LoginUserId'] = $id;
+			echo "success";
+		}
+		else
+		{
+			echo "error";
+		}
+
+	}
+	else
+	{
+		$condition = " email = '".$_POST['email']."'";
+		$user_login = userExists($condition);
+		$_SESSION['message']['user_login'] = "succesfuly Login";
+		$_SESSION['LoginUserId'] = $user_login['id'];
+		lastVisit($user_login['id']);
+		echo "success";
+	}
+
+}
+/* multiple select autocomplete */
+if (isset($_GET['term']) && $_GET['term']!="")
+{
+	$search_query = mysql_real_escape_string(trim($_GET['term']));
+	$field = " * ";
+	$table = " languages ";
+	$condition = " AND name LIKE '$search_query%' ";
+	$languages = getDetail($field,$table,$condition);
+	$data = array();
+	if(count($languages) > 0)
+	{
+		foreach ($languages as $key=>$value)
+		{
+			$data[] = array("id"=>$value['id'],"label"=>$value['name'],"value"=>$value['name']);
+		}
+	} else 
+	{
+		$data[] = array("id"=>"0","label"=>"No record","value"=>"No record");
+	}
+	echo json_encode($data);
+}
+$path = "profile_pic/";
+
+$valid_formats = array("jpg", "png", "gif", "bmp");
+if(isset($_FILES['photoimg']['name'])&& $_FILES['photoimg']['name']!="" )
+{
+	$name = $_FILES['photoimg']['name'];
+	$size = $_FILES['photoimg']['size'];
+		
+	if(strlen($name))
+	{
+		list($txt, $ext) = explode(".", $name);
+		if(in_array($ext,$valid_formats))
+		{
+			if($size<(1024*1024))
+			{
+				$actual_image_name = time().substr(str_replace(" ", "_", $txt), 5).".".$ext;
+				$tmp = $_FILES['photoimg']['tmp_name'];
+				if(move_uploaded_file($tmp, $path.$actual_image_name))
+				{
+					mysql_query("UPDATE users SET profile_image='".$root."profile_pic/".$actual_image_name."' WHERE id='".$_SESSION['LoginUserId']."'");
+						
+					echo "<img src='profile_pic/".$actual_image_name."'  alt='user' class='responsiveimg' >";
+				}
+				else
+					echo "failed";
+			}
+			else
+				echo "Image file size max 1 MB";
+		}
+		else
+			echo "Invalid file format..";
+	}
+
+	else
+		echo "Please select image..!";
+
+	exit;
+}
+/*user registration*/
+if(isset($_POST['action']) && $_POST['action']=="register")
+{
+	// print_r($_POST);//die;
+	$password   = mysql_real_escape_string(trim($_POST['password']));
+	$email   = mysql_real_escape_string(trim($_POST['email']));
+
+	$condition 		 = " email = '".$_POST['email']."' ";
+	$checkUserExists = UserExists($condition);
+	if($checkUserExists['count'] == 0)									//SIGN UP
+	{
+		$add_user = "Insert into users set password='".$password."' ,email='".$email."' ,created='".$date."',login_type='static' ";
+		$mysql_user = mysql_query($add_user);
+		if ($mysql_user)
+		{
+			$_SESSION['LoginUserId']=mysql_insert_id();
+
+			echo "success";
+		} else
+		{
+			echo "error";
+		}
+	}else
+	{
+		echo "exists";
+	}
+
+}
+/*login*/
+if(isset($_POST['action']) && $_POST['action']=="login")
+{//print_r($_POST);die;
+	$email      = mysql_real_escape_string(trim($_POST['email_address']));
+	$password   = mysql_real_escape_string(trim($_POST['password']));
+
+	$condition = " email='".$email."'   and password = '".$password."' "; //and is_admin='no'
+	/* check if email id is alreadye exists or not */
+	$checkUserExists = UserExists($condition);
+	if($checkUserExists['count'] == 1)									//SIGN UP
+	{
+		if (isset($_POST['remember_me']) && $_POST['remember_me']=="select")
+		{
+			setcookie('email', $email, time()+60*60*24*365);
+			setcookie('password', $password, time()+60*60*24*365);
+			
+		} 
+		$condition = " email = '".$email."'";
+		$user_login = userExists($condition);
+		$_SESSION['message']['user_login'] = "succesfuly Login";
+		$_SESSION['LoginUserId'] = $user_login['id'];
+		echo "success";
+	}
+	else
+	{
+		echo "not_found";
+	}
+}
+/*change password*/
+if(isset($_POST['action']) && $_POST['action']=="change_password")
+{
+	$current_pass      = mysql_real_escape_string(trim($_POST['current_pass']));
+	$new_pass   = mysql_real_escape_string(trim($_POST['new_pass']));
+	$user_id   = trim($_SESSION['db_session_id']);
+
+	$condition = " id='".$user_id."'   and password = '".$current_pass."' "; //and is_admin='no'
+	/* check if email id is alreadye exists or not */
+	$checkUserExists = UserExists($condition);
+	if($checkUserExists['count'] == 1)									//SIGN UP
+	{
+		$update_pass = mysql_query("UPDATE users set password='".$new_pass."' WHERE id='".$user_id."' ");
+		if($update_pass)
+		{
+			echo "success";
+		}
+		else
+		{
+			echo "error";
+		}
+	}else
+	{
+		echo "wrong_pass";
+	}
+}
+/*update personal details*/
+if(isset($_POST['action']) && $_POST['action']=="personal_details")
+{
+	$full_name     	= mysql_real_escape_string(trim($_POST['full_name']));
+	$city   		= mysql_real_escape_string(trim($_POST['city']));
+	$user_id   		= trim($_SESSION['LoginUserId']);
+	$country  		= mysql_real_escape_string(trim($_POST['country']));
+	$phone 			= mysql_real_escape_string(trim($_POST['phone']));
+	$dob  			= mysql_real_escape_string(trim($_POST['dob']));
+	$timezone  		= mysql_real_escape_string(trim($_POST['timezone']));
+	$dateofbirth    = date('Y-m-d', strtotime($dob));
+
+	if (isset($_POST['languages']) && $_POST['languages']!="")
+	{
+		$languages  	= explode(",",mysql_real_escape_string(trim($_POST['languages'])));
+		$id_array = array();
+		foreach ($languages as $lang)
+		{
+			if (trim($lang)!="" && trim($lang)!="No record")
+			{
+				//echo "SELECT id from languages WHERE name='".trim($lang)."' ";
+				$get_id = mysql_query("SELECT id from languages WHERE name='".trim($lang)."' ");
+				$res = mysql_fetch_assoc($get_id);
+				$id_array[]=$res['id'];
+			}
+		}
+		$languages = implode(',',$id_array);
+	}else {
+		$languages = "";
+	}
+	$update_pass = "UPDATE users set username='".$full_name."',city='".$city."',country_id='".$country."' ,phone='".$phone."',";
+	$update_pass .= " dob='".$dateofbirth."',language_id='".$languages."',timezone_id='".$timezone."' WHERE id='".$user_id."' ";
+	$update_query = mysql_query($update_pass);
+	if($update_query)
+	{
+		echo "success";
+	}
+	else
+	{
+		echo "error";
+	}
+}
+///////////user logout///////////////////
+if(isset($_GET['method']) && $_GET['method']==base64_encode("logout"))
+{
+	if(isset($_SESSION))
+	{
+		unset($_SESSION['LoginUserId']);
+	}
+	$_SESSION['msg'] = "success";
+	?>
+		<script>
+		window.location.href="index.php";
+		</script>
+	<?php 
+}
+/*update personal details*/
+if(isset($_POST['action']) && $_POST['action']=="update_email")
+{
+	$email     	= mysql_real_escape_string(trim($_POST['email']));
+	$user_id   	= trim($_SESSION['LoginUserId']);
+	$condition = " id!='".$user_id."'   and email = '".$email."' "; //and is_admin='no'
+	/* check if email id is alreadye exists or not */
+	$checkUserExists = UserExists($condition);
+	if($checkUserExists['count'] == 0)									//SIGN UP
+	{
+		$update_pass = "UPDATE users set email='".$email."' WHERE id='".$user_id."' ";
+		$update_query = mysql_query($update_pass);
+		if($update_query)
+		{
+			echo "success";
+		}
+		else
+		{
+			echo "error";
+		}
+	}	
+	else
+	{
+		echo "exists";
+	}
+}

@@ -69,5 +69,17 @@ function getWeekday($selected = null)
 		echo " >".$value."</option>";
 	}
 }
-
+///// Check user already registered   /////
+function userExists($condition)
+{
+	 $sql = "SELECT count(id) as count,id,status from users where status='0' and ".$condition." group by(id)";
+	if(mysql_num_rows(mysql_query($sql)) > 0)
+	{
+		return mysql_fetch_array(mysql_query($sql));
+	}
+	else
+	{
+		return array("count"=>'0');
+	}
+}
 ?>
