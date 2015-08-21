@@ -117,9 +117,6 @@ if ($user_detail[0]['facebook_url']!=""){	$facebook_url = $user_detail[0]['faceb
                         	<h6><small>Welcome</small> <?php echo $username;?></h6>
                             <i class="fa fa-sort"></i>
                             <span class="userimg"><img src="<?php echo $prof_pic;?>" alt="img" class="img-responsive" /></span>
-                            <span class="userimg">
-							<img src="images/users/default.jpg" alt="img" class="img-responsive" />
-							</span>
                         </a>
                         <div class="dropmenu">
                         	<ul>
