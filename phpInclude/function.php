@@ -82,7 +82,7 @@ function userExists($condition)
 	{
 		return array("count"=>'0');
 	}
-
+}
 function daysRemaining($currentDate,$end,$out_in_array=false){
  
     $intervalo = date_diff(date_create($currentDate), date_create($end));
