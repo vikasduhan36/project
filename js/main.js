@@ -222,6 +222,12 @@ $(document).ready(function(){
 	
 	$(".request_slot").click(function(){
 		
+		if($("[name='slot']:checked").length == 0)
+		{
+		$('html, body').animate({
+				scrollTop: $("#notification").offset().top
+			}, 800);
+		}
 		var datastring = $('#form_accept_session').serialize();
 		$.ajax({
 			url:root+'handler.php',
@@ -318,12 +324,14 @@ $(document).ready(function(){
 	$("#alternative_dates").click(function(){
 		
 		$("[name='type']").val('request');
+		$("#public_select_date").slideDown();
 		
 	});
 	
 	$("#alternative_dates_cancel").click(function(){
 		
 		$("[name='type']").val('accept');
+		$("#public_select_date").slideUp();
 		
 	});
 	

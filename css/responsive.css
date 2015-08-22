@@ -65,11 +65,17 @@ footer.footer .ft_blks .qlinkslist li{margin-bottom:15px;}
 .expertsection .exprtrating h6{clear:left;}
 .expertsection .exprtrating .hasrating{clear:right;}
 .expertsection .exprtrating .totalrating{text-align:left;}
+/*-- MY SESSION --*/
+.MysessionCont .session_list li h5{text-align:left;}
+.MysessionCont .session_list li .sess_btn{float:left;}
 }
 
 @media (max-width:600px){
 /*-- HOME --*/
 .testimonials .commentsblk p{font-size:20px; line-height:32px;}
+/*-- PUBLIC REQUEST --*/
+.browsemain .Req_sections h2{font-size:26px; line-height:normal;}
+.Req_sections h2 .editlink{float:none; clear:both; display:block; max-width:70px; text-align:center;}
 }
 
 @media (min-width:560px) and (max-width:767px){
@@ -126,6 +132,12 @@ footer.footer .ft_blks .qlinkslist li{margin:0 0 15px; width:100%;}
 .expertsection .infocont ul.loc li{font-size:13px;}
 .expertsection .infocont ul.tags li a{font-size:13px; line-height:25px; padding: 0 5px;}
 .expertsection .expertdetail p, .expertsection .expertdetail ul li{font-size:14px; line-height:22px;}
+/*-- WHISLIST --*/
+.browsemain .listcont .expertinforow h4 .cost{clear:both; float:left; margin-left:0; margin-bottom:5px; margin-top:-5px;}
+/*-- PUBLIC REQUEST --*/
+.Req_sections .schedulemain .proceedbtn + p{clear:both;}
+/*-- My SESSION --*/
+.MysessionCont .session_tabs li a{padding:0 15px 15px;}
 }
 
 @media (max-width:380px){
