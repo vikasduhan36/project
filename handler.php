@@ -264,7 +264,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'language_search')
 }
 else if(isset($_POST['action']) && $_POST['action'] == 'submit_book_schedule_public')
 {
-
+	$session_id = "";
 	$error = array();
 	foreach($_POST as $key => $value)
 	{
@@ -297,11 +297,11 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_book_schedule_pub
 	
 	if(in_array(1,$error))
 	{
-		echo "error";exit();
+		echo json_encode(array("status"=>"error"));exit();
 	}
 	else
 	{
-		echo "success";exit();
+		echo json_encode(array("status"=>"success","id"=>$session_id));exit();
 	}
 }
 else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')

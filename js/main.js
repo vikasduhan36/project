@@ -163,6 +163,10 @@ $(document).ready(function(){
 				datetime_html += '<li>'+$(this).val()+'<li>';
 				
 			});
+			if(datetime_html == '')
+			{
+				datetime_html = '<li>Experts will propose possible dates for this session.</li>';
+			}
 			
 			$("#display_title").text(title.val());
 			$("#display_description").text(description.val());
@@ -185,7 +189,16 @@ $(document).ready(function(){
 	
 	$("#book_schedule").click(function(){
 		
+		if($("[name='action']").val() == 'submit_book_schedule' )
+		{
 		var datastring = $('#form_book_schedule').serialize();
+		}
+		else if($("[name='action']").val() == 'submit_book_schedule_public' )
+		{
+		var datastring = $('#form_book_schedule_public').serialize();
+		}
+		
+		
 		$.ajax({
 			url:root+'handler.php',
 			type:'post',
@@ -229,6 +242,77 @@ $(document).ready(function(){
 				}
 			}
 		})
+	});
+	
+	$("#validate_public_step1").click(function(){
+	
+		var message = '';
+		var error = 0;
+		var duration = $('#duration');
+		var date_schedule = $('#hidden_date_schedule');
+		var slot_selected = $(".slot_selected:checked");
+		
+		var category = $("#category");
+		var tag = $("[name='tag_selected[]']").length;
+		var language = $("[name='language_selected[]']").length;
+	
+	
+		if(category.val() == '')
+		{
+			message = "Please select category.";
+			error = 1;
+		}
+		else if(tag == 0)
+		{
+			message = "Please select tag.";
+			error = 1;
+		}
+		else if(language == 0)
+		{
+			message = "Please select language.";
+			error = 1;
+		}
+		else if(duration.val() == '')
+		{
+			message = "Please select session duration.";
+			error = 1;
+			//duration.focus();
+		}
+		else if($(".is_date_selected:checked").length == 0)
+		{
+			message = "Please select a method to schedule session date.";
+			error = 1;
+		}
+		else if($(".is_date_selected:checked").val() == "1")
+		{
+			if(date_schedule.val() == '')
+			{
+				message = "Please select session date.";
+				error = 1;
+				$("#date_schedule").focus();
+			}
+			else if(slot_selected.length == 0)
+			{
+				message = "Please select session time.";
+				error = 1;
+				//slot_selected.focus();
+			}
+		}
+		console.log(error);
+		if(error == 1)
+		{
+			$("#notification").addClass("error").removeClass("success").text(message).show();
+			//window.scroll(0,0);
+			$('html, body').animate({
+				scrollTop: $("#notification").offset().top
+			}, 800);
+		}
+		else
+		{
+			$("#notification").removeClass("error success").text('').hide();
+			$(".progresslist li:eq(0)").addClass("stepcomp");
+			$("#step1").fadeOut(function(){$("#step2").fadeIn()});
+		}
 	});
 	
 	$("#alternative_dates").click(function(){
@@ -363,74 +447,13 @@ $(document).ready(function(){
 		$("#language_result").html("");
 	});
 	
-	
+	/*
 	$("#book_schedule_public").click(function(){
-	var error = 0;
-	var category = $("#category");
-	var tag = $("[name='tag_selected[]']").length;
-	var language = $("[name='language_selected[]']").length;
-	var type = $(".select_date:checked").val();
 	
-	var duration = $('#duration');
-	var date_schedule = $('#date_schedule');
-	var title = $('#title');
-	var description = $('#description');
-	var question = $('#question');
-	var other = $('#other');
-	var slot_selected = $(".slot_selected:checked");
-	
-	if(category.val() == '')
-	{
-		error = 1;
-	}
-	if(tag == 0)
-	{
-		error = 1;
-	}
-	if(language == 0)
-	{
-		error = 1;
-	}
-	
-	if(type == 1)
-	{
-		if(date_schedule.val() == '')
-		{
-			error = 1;
-		}
-		if(slot_selected.length == 0)
-		{
-			error = 1;
-		}
-	}
-	if(duration.val() == '')
-	{
-		error = 1;
-	}
-	
-	if(title.val() == '')
-	{
-		error = 1;
-	}
-	if(description.val() == '')
-	{
-		error = 1;
-	}
-	if(question.val() == '')
-	{
-		error = 1;
-	}
-	if(other.val() == '')
-	{
-		error = 1;
-	}
-	
-	if(error == 1)
-	{
-		return false;
-	}
 	
 	var datastring = $('#form_book_schedule_public').serialize();
+	alert(datastring);
+	
 			$.ajax({
 			url:root+'handler.php',
 			type:'post',
@@ -442,7 +465,7 @@ $(document).ready(function(){
 			success:function(response){
 				if(response.status == 'success')
 				{
-					alert('success');
+					window.location.href = root+'schedule_confirmed.php?id='+response.id;
 				}
 				else
 				{
@@ -451,12 +474,24 @@ $(document).ready(function(){
 			}
 		})
 	});
-	
+	*/
 	var datastring = $("#form_search_expert").serialize();
 	search_expert(datastring);
 	$("#form_search_expert").change(function(){
 		var datastring = $("#form_search_expert").serialize();
 	search_expert(datastring);
+	});
+	
+	
+	$(".is_date_selected").click(function(){
+		if($(this).val() == "1")
+		{
+			$("#public_select_date").slideDown();
+		}
+		else if($(this).val() == "0")
+		{
+			$("#public_select_date").slideUp();
+		}
 	});
 });
 

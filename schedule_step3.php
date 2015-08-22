@@ -27,9 +27,7 @@
                             	<a href="javascript:void(0);" id="edit_step2" class="editlink pull-right"><i class="fa fa-edit"></i> &nbsp;Edit</a>
                             	<h4>Suggested Time</h4>
                                 <ul class="timelist" id="display_datetime">
-								<!--
-                                	<li>August 11, 11:00 am</li>
-                                   --> 
+								
                                 </ul>
                             </div>
                             

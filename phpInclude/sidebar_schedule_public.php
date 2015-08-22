@@ -10,20 +10,36 @@
                             <ul>
                                 <li>
                                     <h5>Category <i class="fa fa-angle-down"></i></h5>
-                                    <select class="form-control custom-select">
-                                        <option>Pick a Category</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
+                                    
+									<select name="category_id" id="category" class="form-control custom-select">
+                                       <option value=''>Select</option>
+										<?php
+										foreach($categories as $category)
+										{
+											echo "<option value='".$category['id']."'>".$category['name']."</option>";
+										}
+										?>
                                     </select>
                                 </li>
                                 <li>
                                     <h5>Tags <i class="fa fa-angle-down"></i></h5>
-                                    <input type="text" placeholder="Add Tags" class="form-control" />
+                                    
+									<input type="text" name="tag_search" id="tag_search" placeholder="Add Tags" class="form-control">
+									<ul id="tag_result">
+									</ul>
+									<div id="tag_selected">
+									</div>
+
                                 </li>
                                 <li>
                                     <h5>Languages <i class="fa fa-angle-down"></i></h5>
-                                    <input type="text" placeholder="Add Languages" class="form-control" />
+                                    
+									<input type="text" name="language_search" id="language_search" placeholder="Add Languages" class="form-control" >
+<ul id="language_result">
+</ul>
+
+<div id="language_selected">
+</div>
                                 </li>
                             </ul>
                         </div>
