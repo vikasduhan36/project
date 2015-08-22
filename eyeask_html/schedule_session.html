@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EyeAsk.com</title>
+<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+<link href="css/lightSlider.css" rel="stylesheet" type="text/css" />
+<link href="css/grid.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="fonts/fonts.css" rel="stylesheet" type="text/css" />
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/jquery.datetimepicker.css"/>
+<link href="css/responsive.css" rel="stylesheet" type="text/css" />
+
+<script src="js/jquery.min.js"></script>
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="js/html5shiv.min.js"></script>
+  <script src="js/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+<section id="main"><!-- // MAIN ID SECTION // -->
+<section id="maininnr"><!-- // MAIN INNER SECTION // -->
+
+<a href="javascript:void(0);" class="btn1 back_to_top"><i class="fa fa-angle-up"></i></a>
+<header class="header innerhead headershadow"><!-- ////// HEADER ////// -->
+	<div class="container">
+    	<div class="row">
+            <div class="col-xs-12">
+            	<a href="javascript:void(0);" class="logo">
+               		<img src="images/eyeask2.png" alt="eyeask" class="img-responsive logoimg2" />
+                </a>
+                <nav class="nav1">
+                	<a href="javascript:void(0);" class="navtogglebtn visible-xs">
+                    	<span></span><span></span><span></span>
+                    </a>
+                    <ul class="navlist">
+                    	<li><a href="javascript:void(0);">Browse Experts</a></li>
+                        <li><a href="javascript:void(0);">Place Request</a></li>
+                        <li><a href="javascript:void(0);">About</a></li>
+                    </ul>
+                   	<div class="userdropdown">
+                    	<a href="javascript:void(0);">
+                        	<h6><small>Welcome</small> User Name</h6>
+                            <i class="fa fa-sort"></i>
+                            <span class="userimg"><img src="images/users/default.jpg" alt="img" class="img-responsive" /></span>
+                        </a>
+                        <div class="dropmenu">
+                        	<ul>
+                            	<li><a href="javascript:void(0);">My Account</a></li>
+                                <li><a href="javascript:void(0);">My Session</a></li>
+                                <li><a href="javascript:void(0);">Expert Wishlist</a></li>
+                                <li><a href="javascript:void(0);">Finance</a></li>
+                                <li><a href="javascript:void(0);">Help</a></li>
+                                <li><a href="javascript:void(0);">Logout <i class="fa fa-sign-out pull-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header><!-- ////// HEADER ////// -->
+
+
+<section class="midsection accountsection"><!-- // MID MAIN SECTION // -->
+	<div class="container">
+    	<div class="row">
+        	<div class="col-xs-12 col-sm-10 col-sm-offset-1">
+            	<ul class="progresslist">
+                    <li class="stepcomp"><span class="stepblk"><span class="count"><i class="fa fa-check"></i></span></span><h6>Schedule session</h6></li>
+                    <li class="stepcomp"><span class="stepblk"><span class="count"><i class="fa fa-check"></i></span></span><h6>Add details</h6></li>
+                    <li class="stepcomp"><span class="stepblk"><span class="count">3</span></span><h6>Confirm</h6></li>
+                </ul>
+            </div>
+        </div>
+    	<div class="row">
+        	<div class="col-xs-12 col-sm-4 col-md-3">
+            	<div class="sidebarnav sidebar2"><!-- // SIDE BAR NAV // -->
+                	<span class="dashbar clearfix">
+                    	<i class="fa fa-gears"></i> Choose Filter
+                        <a href="javascript:void(0);" class="togglebtn2 visible-xs" data-toggle="tooltip" title="Click me">
+                        	<i class="fa fa-circle"></i><i class="fa fa-circle"></i><i class="fa fa-circle"></i>
+                        </a>
+                    </span>
+                 	<div class="toggle_db"><!-- FOR TOGGLED DASHBOARD -->
+                        <div class="sidebarfilter">
+                            <ul>
+                                <li>
+                                    <h5>Category <i class="fa fa-angle-down"></i></h5>
+                                    <select class="form-control custom-select">
+                                        <option>Pick a Category</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <h5>Tags <i class="fa fa-angle-down"></i></h5>
+                                    <input type="text" placeholder="Add Tags" class="form-control" />
+                                </li>
+                                <li>
+                                    <h5>Languages <i class="fa fa-angle-down"></i></h5>
+                                    <input type="text" placeholder="Add Languages" class="form-control" />
+                                </li>
+                            </ul>
+                        </div>
+                    </div><!-- FOR TOGGLED DASHBOARD -->
+                </div><!-- // SIDE BAR NAV // -->
+            </div>
+            
+            <div class="col-xs-12 col-sm-8 col-md-9">
+            	<section class="right_main"><!-- // RIGHT MAIN // -->
+                
+                	<section id="step1" style="display:block;"><!-- // STEP 1 // -->
+                        <ul class="breadcrumb">
+                            <li><a href="javascript:void(0);">Home</a></li>
+                            <li>Schedule Session</li>
+                        </ul>
+                        <h2 class="accountheading">Schedule Session</h2>
+                        
+                        <div class="schedulemain">
+                            <p>YOU are about to post a public session request so we can find you some great experts. Experts will respond to your request so you can choose the expert you pcefer<br/><br/><strong>How long would you like the session to be?</strong><br/><span class="txt_lt_it">You can always extend or shorten the actual sessions as you are in it.</span></p>
+                            <div class="row">
+                                <div class="col-xs-12 col-xss-6 col-sm-6 form-group">
+                                    <select class="form-control custom-select">
+                                        <option>Choose..</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <p><strong>Session date</strong><br/>Should the session take place at a specific date and time?</p>
+                            <ul class="choiselist">
+                                <li><input type="radio" name="sessiondates"/> Yes, please let me select possible dates</li>
+                                <li><input type="radio" name="sessiondates"/> No, let experts propose a date for this session</li>
+                            </ul>
+                            
+                            <section class="ChooseDatesCont"><!-- CHOOSE DATE CONTAINER -->
+                                <p><strong class="txt_lt_it">Select at least 1 (preferably 3) time slots that suit you.</strong><br/><small>(All times are in your local timezone AsialKolkata)</small></p>
+                                
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-5">
+                                        <label class="lbl">Choose Date</label>
+                                        <input type="text" id="datetimepicker3" class="calenderopened"/>
+                                    </div>
+                                    <div class="col-xs-12 col-md-7">
+                                        <label class="lbl">Choose Time</label>
+                                        <ul class="timelist">
+                                            <li>
+                                                <input type="checkbox" id="t1" name="time" />
+                                                <label class="checkbox" for="t1"><img src="images/check.png" alt="check" /> 00:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t2" name="time" />
+                                                <label class="checkbox" for="t2"><img src="images/check.png" alt="check" /> 01:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t3" name="time" />
+                                                <label class="checkbox" for="t3"><img src="images/check.png" alt="check" /> 02:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t4" name="time" />
+                                                <label class="checkbox" for="t4"><img src="images/check.png" alt="check" /> 03:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t5" name="time" />
+                                                <label class="checkbox" for="t5"><img src="images/check.png" alt="check" /> 04:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t6" name="time" />
+                                                <label class="checkbox" for="t6"><img src="images/check.png" alt="check" /> 05:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t7" name="time" />
+                                                <label class="checkbox" for="t7"><img src="images/check.png" alt="check" /> 06:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t8" name="time" />
+                                                <label class="checkbox" for="t8"><img src="images/check.png" alt="check" /> 07:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t9" name="time" />
+                                                <label class="checkbox" for="t9"><img src="images/check.png" alt="check" /> 08:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t10" name="time" />
+                                                <label class="checkbox" for="t10"><img src="images/check.png" alt="check" /> 09:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t11" name="time" />
+                                                <label class="checkbox" for="t11"><img src="images/check.png" alt="check" /> 10:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t12" name="time" />
+                                                <label class="checkbox" for="t12"><img src="images/check.png" alt="check" /> 11:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t13" name="time" />
+                                                <label class="checkbox" for="t13"><img src="images/check.png" alt="check" /> 12:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t14" name="time" />
+                                                <label class="checkbox" for="t14"><img src="images/check.png" alt="check" /> 13:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t15" name="time" />
+                                                <label class="checkbox" for="t15"><img src="images/check.png" alt="check" /> 14:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t16" name="time" />
+                                                <label class="checkbox" for="t16"><img src="images/check.png" alt="check" /> 15:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t17" name="time" />
+                                                <label class="checkbox" for="t17"><img src="images/check.png" alt="check" /> 16:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t18" name="time" />
+                                                <label class="checkbox" for="t18"><img src="images/check.png" alt="check" /> 17:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t19" name="time" />
+                                                <label class="checkbox" for="t19"><img src="images/check.png" alt="check" /> 18:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t20" name="time" />
+                                                <label class="checkbox" for="t20"><img src="images/check.png" alt="check" /> 19:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t21" name="time" />
+                                                <label class="checkbox" for="t21"><img src="images/check.png" alt="check" /> 20:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t22" name="time" />
+                                                <label class="checkbox" for="t22"><img src="images/check.png" alt="check" /> 21:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t23" name="time" />
+                                                <label class="checkbox" for="t23"><img src="images/check.png" alt="check" /> 22:00</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="t24" name="time" />
+                                                <label class="checkbox" for="t24"><img src="images/check.png" alt="check" /> 23:00</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                            </section><!-- CHOOSE DATE CONTAINER -->
+                            
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <a href="javascript:void(0);" class="btn1 proceedbtn">Proceed <i class="fa fa-angle-double-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </section><!-- // STEP 1 // -->
+                    
+                    <section id="step2" style="display:none;"><!-- // STEP 2 // -->
+                        <ul class="breadcrumb">
+                            <li><a href="javascript:void(0);">Home</a></li>
+                            <li>Add Details</li>
+                        </ul>
+                        <h2 class="accountheading">Add Details</h2>
+                        
+                        <div class="schedulemain">
+                            
+                            <div class="frmgrp">
+                            	<form class="form-horizontal">
+                                	<div class="form-group">
+                                    	<label>Title</label>
+                                        <input type="text" class="form-control" placeholder="Summarize what you want to talk about in a few words" />
+                                    </div>
+                                    <div class="form-group">
+                                    	<label>Description and goals</label>
+                                        <textarea type="text" class="form-control" placeholder="Explain your challenge, question or request the best you can" ></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                    	<label>Specific questions</label>
+                                        <textarea type="text" class="form-control" placeholder="What questions do you have for the expert(s)?" ></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                    	<label>Other</label>
+                                        <textarea type="text" class="form-control" placeholder="Any other info, remarks, insights etc that you want to share" ></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                    	<label>Files</label>
+                                        <span class="CustomUpload">
+                                        	<input type="file" />
+                                            <span><i class="fa fa-file"></i> Add files and documents</span>
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <a href="javascript:void(0);" class="btn1 proceedbtn">Proceed <i class="fa fa-angle-double-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </section><!-- // STEP 2 // -->
+                    
+                    <section id="step3" style="display:none;"><!-- // STEP 3 // -->
+                        <ul class="breadcrumb">
+                            <li><a href="javascript:void(0);">Home</a></li>
+                            <li>Confirm</li>
+                        </ul>
+                        <h2 class="accountheading">Confirm</h2>
+                        
+                        <div class="schedulemain">
+                            
+                            <div class="confirmdetail">
+                            	<a href="javascript:void(0);" class="editlink pull-right"><i class="fa fa-edit"></i> &nbsp;Edit</a>
+                            	<h4>Details</h4>
+                                <ul>
+                                	<li>
+                                    	<label>Title</label>
+                                        <p>Here is the title you fill</p>
+                                    </li>
+                                    <li>
+                                    	<label>Description and goals</label>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis leo venenatis, sagittis lacus sit amet, posuere ex. Aliquam sagittis rhoncus erat, sed auctor lacus bibendum non. Aenean dignissim, dolor eget posuere convallis, mauris ex dignissim eros, sit amet commodo neque dolor vitae risus.</p>
+                                    </li>
+                                    <li>
+                                    	<label>Specific questions</label>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis leo venenatis, sagittis lacus sit amet, posuere ex. Aliquam sagittis rhoncus erat, sed auctor lacus bibendum non. Aenean dignissim, dolor eget posuere convallis, mauris ex dignissim eros, sit amet commodo neque dolor vitae risus.</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="confirmdetail">
+                            	<a href="javascript:void(0);" class="editlink pull-right"><i class="fa fa-edit"></i> &nbsp;Edit</a>
+                            	<h4>Suggested Time</h4>
+                                <ul class="timelist">
+                                	<li>August 11, 11:00 am</li>
+                                    <li>August 12, 11:00 am</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="confirmdetail">
+                            	<h4>Payment Method</h4>
+                                <p>experts will provide you with a quote for a session. If you select a paid session, you will need to provide your <a href="javascript:void(0);">creditcard details</a> before accepting the proposal.</p>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <a href="javascript:void(0);" class="btn1 proceedbtn">Submit Request <i class="fa fa-angle-double-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </section><!-- // STEP 3 // -->
+                    
+                </section><!-- // RIGHT MAIN // -->
+            </div>
+        </div>
+    </div>
+</section><!-- // MID MAIN SECTION // -->
+
+
+
+<footer class="footer"><!-- // FOOTER CONTAINER // -->
+	<div class="container">
+    	<div class="row">
+        	<div class="col-xs-12 ft_blks text-center">
+            	<h4>Quick Links</h4>
+                <ul class="qlinkslist">
+                	<li><a href="javascript:void(0);">Home</a></li>
+                    <li><a href="javascript:void(0);">About us</a></li>
+                    <li><a href="javascript:void(0);">The team</a></li>
+                    <li><a href="javascript:void(0);">FAQ and support</a></li>
+                    <li><a href="javascript:void(0);">Partnerships & opportunities</a></li>
+                    <li><a href="javascript:void(0);">Press</a></li>
+                    <li><a href="javascript:void(0);">Our blog</a></li>
+                </ul>
+            </div>
+        </div>
+  	</div>
+    
+    <section class="footerbtm">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="socialblk">
+                        <ul>
+                            <li><a href="javascript:void(0);"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="javascript:void(0);"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="javascript:void(0);"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="javascript:void(0);"><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                    </div>
+                    <p class="copyrighttxt">©2015 eyeask.com. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</footer><!-- // FOOTER CONTAINER // -->
+
+</section><!-- // MAIN INNER SECTION // -->
+</section><!-- // MAIN ID SECTION // -->
+
+
+<div class="modal fade AccountModal" id="passwordmodal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"><!-- // CHANGE PASSWORD // -->
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      	<h4>Change Password</h4>
+      	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times"></i></span></button>
+      </div>
+      <div class="modal-body">
+      	<div class="formOtr">
+        	<div id="loginform" style="display:block;">
+                <form>
+                    <div class="form-group">
+                    	<label class="lbl">Current Password</label>
+                         <div class="fields">
+                        	<input type="password" class="form-control" placeholder="Enter Current password" />
+                        	<i class="fa fa-key icons"></i>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                    	<label class="lbl">New Password</label>
+                         <div class="fields">
+                        	<input type="password" class="form-control" placeholder="Enter New password" />
+                        	<i class="fa fa-key icons"></i>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                    	<label class="lbl">Confirm New Password</label>
+                         <div class="fields">
+                        	<input type="password" class="form-control" placeholder="Confirm password" />
+                        	<i class="fa fa-key icons"></i>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Update" class="signin_btn updatepassbtn" />
+                    </div>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- // CHANGE PASSWORD MODAL // -->
+
+
+<!-- // JQUERY AT BOTTOM // -->
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/jquery.lightSlider.js"></script>
+<script src="js/jquery.datetimepicker.js"></script>
+<script>
+$(window).scroll(function() {
+	// SCROLL HEADER //
+	var scroll = $(window).scrollTop();
+	if(scroll >= 100){
+		$(".back_to_top").addClass("show");
+	}
+	else{
+		$(".back_to_top").removeClass("show");
+	}
+});
+$(document).ready(function() {
+	// Testimonial //
+	$("#testislide").lightSlider({
+		loop:true,
+		keyPress:true,
+		controls:false,
+		item:1,
+	});
+	// Video slider //
+	$("#videoslide").lightSlider({
+		loop:true,
+		keyPress:true,
+		controls:true,
+		prevHtml:'<i class="fa fa-angle-left"></i>',
+    	nextHtml:'<i class="fa fa-angle-right"></i>',
+		item:1,
+		slideMargin:0,
+		pager:false,
+	});
+	// NAVIGATION TOGGLE //
+	$(".navtogglebtn").on("click", function(e) {
+		$(this).toggleClass('active');
+		$('body,html').find('#maininnr').toggleClass('togglemain');
+		$(this).next().toggleClass('expendnav');
+		e.stopPropagation()
+	});
+	$(document).on("click", function(e) {
+		if ($(e.target).is("ul.navlist, ul.navlist li a") === false) {
+		  $('.navtogglebtn').removeClass('active');
+		  $('body,html').find('#maininnr').removeClass('togglemain');
+		  $('.navtogglebtn').next().removeClass('expendnav');
+		}
+	});
+	// LOGIN SIGN UP FORM //
+	$('.singinlink').click(function(){
+		$('#loginform').css('display','block');
+		$('#signupform').css('display','none');
+	});
+	$('.signuplink').click(function(){
+		$('#loginform').css('display','none');
+		$('#signupform').css('display','block');
+	});
+	// Animate scroll Top //
+	$(".back_to_top").click(function(){
+		$("html, body").animate({ scrollTop: 0 }, 600);
+		return true;
+	});
+	// TOOL TIP //
+	$('[data-toggle="tooltip"]').tooltip();
+	// SIDEBAR TOGGLE IN 767px //
+	$(".sidebarnav .togglebtn2").click(function(){
+		$(this).parent().next('.toggle_db').slideToggle('slow');
+	});
+	// CUSTOME SELECT //
+	$(".custom-select").each(function(){
+		$(this).wrap("<span class='select-wrapper'></span>");
+		$(this).after("<span class='holder'></span>");
+	});
+	$(".custom-select").change(function(){
+		var selectedOption = $(this).find(":selected").text();
+		$(this).next(".holder").text(selectedOption);
+	}).trigger('change');
+	// CALENDER //
+	$('#datetimepicker3').datetimepicker({
+		inline:true,
+		timepicker:false,
+	});
+});
+
+</script>
+</body>
+</html>

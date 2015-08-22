@@ -1,0 +1,146 @@
+@media (min-width:992px) and (max-width:1199px){
+/*-- ACCOUNT PAGE --*/
+.midsection .right_main{padding-left:0;}
+}
+
+@media (max-width:991px){
+/*-- HOME PAGE --*/
+.svg-triangle{height:75px;}
+header nav.nav1 ul.navlist li a{padding:0 8px;}
+.bannercont{min-height:600px;}
+.aboutvideo{max-height:715px;}
+.aboutvideo .mac_frame .lSSlideOuter{height:315px; top:29px; width:511px;}
+.aboutvideo .mac_frame .lSSlideOuter .lSSlideWrapper ul li img{min-height:100%;}
+footer.footer .ft_blks .qlinkslist li{margin:0 20px;}
+/*-- ACCOUNT PAGE --*/
+.midsection .right_main{padding-left:0;}
+.myaccountinfo .infoblks .infolist li span.value{text-overflow:ellipsis; white-space:nowrap; overflow:hidden;}
+.myaccountinfo .infoblks .infolist li .editlink{font-size:11px; white-space:nowrap;}
+/*-- BROWSE EXPERT PAGE --*/
+.browsemain .listcont .bookfree{margin-top:25px;}
+}
+
+@media (min-width:768px){
+/*-- ACCOUNT PAGE --*/
+.sidebarnav .toggle_db{display:block !important;}
+}
+@media (max-width:767px){
+/*-- HOME PAGE --*/
+.svg-triangle{height:50px;}
+header nav.nav1 ul.navlist{position:fixed; top:0; bottom:0; right:-220px; width:220px; background:#222; padding:15px 0 0; overflow:auto; }
+header nav.nav1 ul.navlist li{width:100%; margin:0; border-bottom:1px solid #1e1e1e;}
+header nav.nav1 ul.navlist li:first-child{border-top:1px solid #1e1e1e;}
+header nav.nav1 ul.navlist li a, header.innerhead nav.nav1 ul.navlist li a{padding:0 20px; color:#bbb; line-height:40px;}
+header nav.nav1 ul.navlist li a:hover, header nav.nav1 ul.navlist li a.active, header.innerhead nav.nav1 ul.navlist li a:hover, header.innerhead nav.nav1 ul.navlist li a.active{background:#1e1e1e; color:#eee;}
+header nav.nav1 ul.navlist li a:after, header nav.nav1 ul.navlist li a:before{border:none;}
+header nav.nav1 ul.expendnav{right:0;}
+.bannercont{min-height:auto; padding-bottom:50px;}
+.bannercont .searchbox .form-control{width:100%; margin-bottom:10px;}
+.bannercont .searchbox .searchbtn{width:100%;}
+.bannercont .tagslist li{width:100%; text-align:left; margin:0 0 5px;}
+.bannercont .bannertxt{font-size:35px; line-height:normal; margin-top:25px;}
+.bannercont .searchbox{margin-top:20px;}
+.aboutvideo .svg-triangle{margin-bottom:0;}
+.svg-triangle.bottom, .svg-triangle.top{margin:0;}
+.stepscont h3, .aboutvideo h3, .corefeatures h3, .testimonials h3{font-size:30px;}
+.corefeatures h3 small{font-size:13px;}
+.aboutvideo{max-height:inherit; padding-top:60px;}
+.corefeatures{padding:70px 0 10px;}
+.corefeatures .featureblk{max-width:400px; margin:0 auto 20px;}
+.stepscont .stepslist li{width:100%; margin-bottom:20px;}
+.stepscont .stepslist li:after,.stepscont .stepslist li:before{border:none;}
+.stepscont .stepslist li .num{width:80px; height:80px; line-height:80px; margin-bottom:0;}
+.stepscont .stepslist li h6{font-size:20px; margin-bottom:5px;}
+footer.footer .ft_blks .qlinkslist{width:75%;}
+footer.footer .ft_blks .qlinkslist li{margin-bottom:15px;}
+/*-- ACCOUNT PAGE --*/
+.sidebarnav .toggle_db{display:none;}
+.myaccountinfo .infoblks .infolist li{padding:5px 0; line-height:normal;}
+.myaccountinfo .infoblks .infolist li label, .myaccountinfo .infoblks .infolist li span.value{line-height:normal; display:block; margin-bottom:5px;}
+.myaccountinfo .infoblks .infolist li .valuefield{margin:0 0 5px;}
+/*-- SCHEDULE PAGE --*/
+.sidebar2{min-height:auto;}
+/*-- EXPERT PROFILE --*/
+.expertsection .exprtrating{padding-left:105px;}
+.expertsection .exprtrating h6{clear:left;}
+.expertsection .exprtrating .hasrating{clear:right;}
+.expertsection .exprtrating .totalrating{text-align:left;}
+/*-- MY SESSION --*/
+.MysessionCont .session_list li h5{text-align:left;}
+.MysessionCont .session_list li .sess_btn{float:left;}
+}
+
+@media (max-width:600px){
+/*-- HOME --*/
+.testimonials .commentsblk p{font-size:20px; line-height:32px;}
+/*-- PUBLIC REQUEST --*/
+.browsemain .Req_sections h2{font-size:26px; line-height:normal;}
+.Req_sections h2 .editlink{float:none; clear:both; display:block; max-width:70px; text-align:center;}
+}
+
+@media (min-width:560px) and (max-width:767px){
+/*-- HOME PAGE --*/
+.aboutvideo .mac_frame{max-width:520px; margin-bottom: -35px;}
+.aboutvideo .mac_frame .lSSlideOuter{height:223px; top:20px; width:360px;}
+.aboutvideo .mac_frame .lSSlideOuter .lSSlideWrapper ul{height:223px !important;}
+}
+
+@media (max-width:560px){
+/*-- EXPERT PROFILE PAGE --*/
+.expertsection .expertreviews .reviewblk{padding-left:0;}
+.expertsection .expertreviews .reviewblk .imgblk{position:relative; display:block; height:50px; width:50px;}
+.expertsection .expertreviews .reviewblk .imgblk img{min-height:50px; min-width:50px;}
+.expertsection .exprtrating{padding-left:15px;}
+}
+
+@media (min-width:480px) and (max-width:559px){
+/*-- HOME PAGE --*/
+.aboutvideo .mac_frame{max-width:450px; margin-bottom:-30px; margin-top:0;}
+.aboutvideo .mac_frame .lSSlideOuter{height:193px; top:18px; width:312px;}
+.aboutvideo .mac_frame .lSSlideOuter .lSSlideWrapper ul{height:100% !important;}
+}
+
+@media (max-width:480px){
+/*-- BROWSE EXPERT PAGE --*/
+.browsemain .placereqbtn_otr{width:100%;}
+.browsemain .placereq_btn{float:none; display:inline-block; margin-top:15px;}
+}
+
+@media (max-width:479px){
+/*-- HOME PAGE --*/
+header.header .logo{width:150px; margin-top:7px;}
+.bannercont .bannertxt{font-size:24px; margin-top:0;}
+.aboutvideo .mac_frame{max-width:290px; margin-bottom:-20px; margin-top:0;}
+.aboutvideo .mac_frame .lSSlideOuter{height:125px; top:11px; width:200px;}
+.aboutvideo .mac_frame .lSSlideOuter .lSSlideWrapper ul{height:100% !important;}
+footer.footer .ft_blks .qlinkslist{width:100%;}
+footer.footer .ft_blks .qlinkslist li{margin:0 0 15px; width:100%;}
+/*-- ACCOUNT PAGE --*/
+.userdropdown h6{display:none;}
+/*-- SCHEDULE PAGE --*/
+.schedulemain .ChooseDatesCont .timelist li{width:33.33%;}
+.schedulemain .confirmedCont h2{font-size:30px;}
+.schedulemain .confirmedCont h2 i{font-size:40px;}
+/*-- BROWSE EXPERT PAGE --*/
+.browsemain .listcont .expertinforow{min-height:50px; padding-left:55px;}
+.browsemain .listcont .expertinforow .expertimg{width:45px; height:45px;}
+.browsemain .listcont .expertinforow h4{font-size:16px; margin-bottom:5px;}
+.browsemain .listcont .expertinforow ul li{font-size:13px;} 
+.browsemain .has_reviews .hasreview_drop{width:100%; left:0;}
+/*-- EXPERT PROFILE --*/
+.expertsection .infocont h2, .expertsection .expertdetail h3{font-size:20px;}
+.expertsection .infocont ul.loc li{font-size:13px;}
+.expertsection .infocont ul.tags li a{font-size:13px; line-height:25px; padding: 0 5px;}
+.expertsection .expertdetail p, .expertsection .expertdetail ul li{font-size:14px; line-height:22px;}
+/*-- WHISLIST --*/
+.browsemain .listcont .expertinforow h4 .cost{clear:both; float:left; margin-left:0; margin-bottom:5px; margin-top:-5px;}
+/*-- PUBLIC REQUEST --*/
+.Req_sections .schedulemain .proceedbtn + p{clear:both;}
+/*-- My SESSION --*/
+.MysessionCont .session_tabs li a{padding:0 15px 15px;}
+}
+
+@media (max-width:380px){
+/*-- ACCOUNT MODAL --*/
+.AccountModal .modal-dialog{width:310px; margin-top:10px;}
+}
