@@ -5,7 +5,10 @@ db_open();
 require_once('phpInclude/function.php');
 //require_once 'phpInclude/functions.php';
 
-$user_id = $_SESSION['user_id'];
+if(!empty($_SESSION['LoginUserId']))
+{
+	$user_id = $_SESSION['LoginUserId'];
+}
 
 /*add advertisement */
  if(isset($_POST['action']) && $_POST['action']=="tags")

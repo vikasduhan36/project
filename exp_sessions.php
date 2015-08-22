@@ -3,7 +3,7 @@
 	
 	echo "<h1>Scheduled</h1><hr>";
 	$sql = " SELECT s.title,s.session_datetime,u.fname,u.lname FROM sessions as s LEFT JOIN users as u ";
-	$sql .= " ON(s.user_id = u.id) WHERE exp_applied_id='".$_SESSION['user_id']."' and s.status='2' ";
+	$sql .= " ON(s.user_id = u.id) WHERE exp_applied_id='".$_SESSION['LoginUserId']."' and s.status='2' ";
 
 	$query = mysql_query($sql) or die(mysql_error());
 	
@@ -29,8 +29,10 @@
 	
 	echo "<hr><h1>Open</h1><hr>";
 	
-$sql = " SELECT s.id as s_id,s.exp_reschedule,s.user_reschedule,s.title,s.session_datetime,u.fname,u.lname FROM sessions as s LEFT JOIN users as u ";
-	$sql .= " ON(s.user_id = u.id) WHERE exp_applied_id='".$_SESSION['user_id']."' and s.status='1' ";
+$sql = " SELECT s.exp_applied_id,s.id as s_id,s.exp_reschedule,s.user_reschedule,s.title,s.session_datetime,u.fname,u.lname ";
+$sql .= " FROM session_time as st LEFT JOIN sessions as s ON(st.session_id = s.id) ";
+$sql .= " LEFT JOIN users as u ON(s.user_id = u.id) ";
+$sql .= " WHERE st.user_id='".$_SESSION['LoginUserId']."' and s.status='1' group BY st.session_id ";
 
 	$query = mysql_query($sql) or die(mysql_error());
 	
@@ -44,7 +46,11 @@ $sql = " SELECT s.id as s_id,s.exp_reschedule,s.user_reschedule,s.title,s.sessio
 			{
 				echo "<div>".$fetch['title']." Client: ".$fetch['fname']." ".$fetch['lname']."</div>";
 				
-				if($fetch['exp_reschedule'] == 1)
+				if($fetch['exp_applied_id'] == 0)
+				{
+					echo "Waiting for reply.";
+				}
+				else if($fetch['exp_reschedule'] == 1)
 				{
 					echo "Waiting for reply.";
 				}
@@ -69,7 +75,7 @@ $sql = " SELECT s.id as s_id,s.exp_reschedule,s.user_reschedule,s.title,s.sessio
 	echo "<hr><h1>Closed</h1><hr>";
 	
 	$sql = " SELECT s.session_datetime,u.fname,u.lname FROM sessions as s LEFT JOIN users as u ";
-	$sql .= " ON(s.user_id = u.id) WHERE exp_applied_id='".$_SESSION['user_id']."' and s.status='0' ";
+	$sql .= " ON(s.user_id = u.id) WHERE exp_applied_id='".$_SESSION['LoginUserId']."' and s.status='0' ";
 
 	$query = mysql_query($sql) or die(mysql_error());
 	

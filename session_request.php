@@ -6,7 +6,7 @@ $field = " *, (select GROUP_CONCAT(datetime) FROM session_time WHERE session_tim
 $table = "sessions";
 $condition 	= "and id='".$session_id."' ";
 $session_detail = getDetail($field,$table,$condition);
-$userTimezone = getUserTimezone($_SESSION['user_id']);
+$userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 ?>
 <form id="form_accept_session">
 <?php
@@ -27,7 +27,7 @@ if($session_detail[0]['status'] == '0')
 		<input type='button' name='cancel_session' value='Canceleled'>
 	<?php
 }
-else if($session_detail[0]['type'] == 'schedule' && $session_detail[0]['exp_applied_id'] == $_SESSION['user_id'])
+else if($session_detail[0]['type'] == 'schedule' && $session_detail[0]['exp_applied_id'] == $_SESSION['LoginUserId'])
 {
 	if($session_detail[0]['status'] == '2')
 	{
@@ -50,7 +50,7 @@ else if($session_detail[0]['type'] == 'schedule' && $session_detail[0]['exp_appl
 		<?php
 	}
 }
-else if($session_detail[0]['type'] == 'schedule' && $session_detail[0]['user_id'] == $_SESSION['user_id'])
+else if($session_detail[0]['type'] == 'schedule' && $session_detail[0]['user_id'] == $_SESSION['LoginUserId'])
 {
 	if($session_detail[0]['status'] == '2')
 	{

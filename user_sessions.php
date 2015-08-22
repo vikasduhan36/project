@@ -4,7 +4,7 @@
 	echo "<h1>Scheduled</h1><hr>";
 	
 	$sql = " SELECT s.session_datetime,u.fname,u.lname,s.exp_applied_id FROM sessions as s LEFT JOIN users as u ";
-	$sql .= " ON(s.exp_applied_id = u.id) WHERE user_id='".$_SESSION['user_id']."' and s.status='2' ";
+	$sql .= " ON(s.exp_applied_id = u.id) WHERE user_id='".$_SESSION['LoginUserId']."' and s.status='2' ";
 
 	$query = mysql_query($sql) or die(mysql_error());
 	
@@ -30,7 +30,7 @@
 	echo "<hr><h1>Open</h1><hr>";
 	
 	$sql = " SELECT s.exp_applied_id,s.id as s_id,s.user_reschedule,s.exp_reschedule,s.title,s.session_datetime,u.fname,u.lname,s.exp_applied_id FROM sessions as s LEFT JOIN users as u ";
-	$sql .= " ON(s.exp_applied_id = u.id) WHERE user_id='".$_SESSION['user_id']."' and s.status='1' ";
+	$sql .= " ON(s.exp_applied_id = u.id) WHERE user_id='".$_SESSION['LoginUserId']."' and s.status='1' ";
 
 	$query = mysql_query($sql) or die(mysql_error());
 	
@@ -82,7 +82,7 @@
 	echo "<hr><h1>Closed</h1><hr>";
 	
 	$sql = " SELECT s.session_datetime,u.fname,u.lname,s.exp_applied_id FROM sessions as s LEFT JOIN users as u ";
-	$sql .= " ON(s.exp_applied_id = u.id) WHERE user_id='".$_SESSION['user_id']."' and s.status='0' ";
+	$sql .= " ON(s.exp_applied_id = u.id) WHERE user_id='".$_SESSION['LoginUserId']."' and s.status='0' ";
 
 	$query = mysql_query($sql) or die(mysql_error());
 	

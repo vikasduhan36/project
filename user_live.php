@@ -4,7 +4,7 @@
 	$sql  = " SELECT s.session_datetime,s.duration,s.title,s.description,s.question, ";
 	$sql .= " u.fname,u.lname,u.id ";
 	$sql .= " FROM sessions as s LEFT JOIN users as u ON(s.user_id = u.id) ";
-	$sql .= " WHERE s.exp_applied_id='".$exp_id."' and s.status='2' and s.user_id='".$_SESSION['user_id']."' ";
+	$sql .= " WHERE s.exp_applied_id='".$exp_id."' and s.status='2' and s.user_id='".$_SESSION['LoginUserId']."' ";
 	$sql .= " and '".$date."' >= s.session_datetime and '".$date."' <= DATE_ADD(s.session_datetime, INTERVAL s.duration MINUTE)";
 	$query = mysql_query($sql) or die(mysql_error());
 	if($query)

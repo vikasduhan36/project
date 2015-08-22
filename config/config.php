@@ -5,7 +5,6 @@ if(!isset($_SESSION))
 }
 global $root, $con,$adminRoot, $defaultProfileImage, $date, $pagename, $default_tz;
 
-$_SESSION['user_id'] = '1';	
 $con = '';
 //local database configuration ////////////
 $DB_HOST     = 'localhost';

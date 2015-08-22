@@ -9,7 +9,7 @@ $condition = "and id='".$session_id."' ";
 $session_detail = getDetail($field,$table,$condition);
 ?>
 <form id="form_accept_session">
-<input type="hidden" id="exp_id" name="exp_id" value="<?php echo $_SESSION['user_id'];?>">
+<input type="hidden" id="exp_id" name="exp_id" value="<?php echo $_SESSION['LoginUserId'];?>">
 <?php
 echo "<h3>".$session_detail[0]['title']."</h3>";
 echo "<h4>".$session_detail[0]['description']."</h4>";
