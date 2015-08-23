@@ -88,6 +88,7 @@
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
 <script src="js/jquery.lightSlider.js"></script>
 <script src="js/jquery.datetimepicker.js"></script>
+<script src="js/ion.rangeSlider.min.js" type="text/javascript"></script>
 <script>
 $(window).scroll(function() {
 	// SCROLL HEADER //
@@ -166,6 +167,26 @@ $(document).ready(function() {
 		inline:true,
 		timepicker:false,
 	});
+	
+	$("#range_03").ionRangeSlider({
+		type: "double",
+		grid: false,
+		min: 0,
+		max: 500,
+		from: 0,
+		to: 500,
+		prefix: "<i class='fa fa-euro'></i> ",
+		onFinish: function (data) {
+        console.log(data);
+		$("#price_from").val(data.from);
+		$("#price_to").val(data.to);
+		
+		var datastring = $("#form_search_expert").serialize();
+		search_expert(datastring);
+		
+    },
+	});
+	
 });
 
 </script>

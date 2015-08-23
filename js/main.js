@@ -444,7 +444,7 @@ $(document).ready(function(){
 	}
 	else if(tag.length < 2)
 	{
-		tag_result.html('<li>Keep typing ... </li>');
+		tag_result.html('<li><a href="javascript:void(0);">Keep typing ...</a></li>');
 		return false;
 	}
 	var datastring = "action=tag_search&keyword="+tag;
@@ -469,7 +469,7 @@ $(document).ready(function(){
 				}
 				else
 				{
-					tag_result.html('<li>No tags found.</li>');
+					tag_result.html('<li><a href="javascript:void(0);">No tags found.</a></li>');
 				}
 			}
 		})
@@ -486,7 +486,7 @@ $(document).ready(function(){
 	}
 	else if(language.length < 2)
 	{
-		language_result.html('<li>Keep typing ... </li>');
+		language_result.html('<li><a href="javascript:void(0);">Keep typing ...</a></li>');
 		return false;
 	}
 	var datastring = "action=language_search&keyword="+language;
@@ -511,7 +511,7 @@ $(document).ready(function(){
 				}
 				else
 				{
-					language_result.html('<li>No language found.</li>');
+					language_result.html('<li><a href="javascript:void(0);">No language found.</a></li>');
 				}
 			}
 		})
@@ -520,14 +520,46 @@ $(document).ready(function(){
 	$("body").on("click",".select_tag",function(){
 		var value=$(this).attr("data-id");
 		$("#tag_selected").append("<input type='hidden' name='tag_selected[]' value='"+value+"'>");
+		$("#tag_search_ui").append('<li>'+$(this).text()+'<a href="javascript:void(0);" class="remove_tag" alt="'+value+'"><i class="fa fa-times"></i></a></li>');
 		$("#tag_result").html("");
+		$("#tag_search").val('');
+		
+		var datastring = $("#form_search_expert").serialize();
+		search_expert(datastring);
+		
 	});
 	
 	
 	$("body").on("click",".select_language",function(){
 		var value=$(this).attr("data-id");
 		$("#language_selected").append("<input type='hidden' name='language_selected[]' value='"+value+"'>");
+		$("#language_search_ui").append('<li>'+$(this).text()+'<a href="javascript:void(0);" class="remove_language" alt="'+value+'"><i class="fa fa-times"></i></a></li>');
 		$("#language_result").html("");
+		$("#language_search").val('');
+		
+		var datastring = $("#form_search_expert").serialize();
+		search_expert(datastring);
+		
+	});
+	
+	$("body").on("click",".remove_tag",function(){
+		var value=$(this).attr("alt");
+		$("[name='tag_selected[]'][value='"+value+"']").remove();
+		$(this).parent().remove();
+		
+		var datastring = $("#form_search_expert").serialize();
+		search_expert(datastring);
+		
+	});
+	
+	$("body").on("click",".remove_language",function(){
+		var value=$(this).attr("alt");
+		$("[name='language_selected[]'][value='"+value+"']").remove();
+		$(this).parent().remove();
+		
+		var datastring = $("#form_search_expert").serialize();
+		search_expert(datastring);
+		
 	});
 	
 	/*
@@ -560,10 +592,12 @@ $(document).ready(function(){
 	*/
 	var datastring = $("#form_search_expert").serialize();
 	search_expert(datastring);
-	$("#form_search_expert").change(function(){
+
+	$("#category").change(function(){
 		var datastring = $("#form_search_expert").serialize();
-	search_expert(datastring);
+		search_expert(datastring);
 	});
+	
 	
 	
 	$(".is_date_selected").click(function(){

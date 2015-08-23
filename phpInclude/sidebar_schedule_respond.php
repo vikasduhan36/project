@@ -35,7 +35,7 @@
 								   if($session_detail[0]['status'] == '1')
 									{
 										?>
-											<a href="javascript:void(0);" class="sess_btn canceled_btn" id="cancel_session" alt="<?php echo $session_id;?>">Cancel</a>
+											<a href="javascript:void(0);" class="apply_btn cancel_req_btn" id="cancel_session" alt="<?php echo $session_id;?>">Cancel</a>
 										<?php
 									}
 								   ?>

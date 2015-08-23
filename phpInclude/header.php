@@ -20,7 +20,7 @@ require_once("config/config.php");
 <link rel="stylesheet" type="text/css" href="css/jquery.datetimepicker.css"/>
 <link href="css/responsive.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $root; ?>css/jquery-ui.css" />
-
+<link href="css/ion.rangeSlider.css" type="text/css" rel="stylesheet" />
 
 <script type="text/javacsript">
 var root = "<?php echo $root;?>";

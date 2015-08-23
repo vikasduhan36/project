@@ -352,6 +352,13 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')
 		$condition .= " ) ";
 	}
 	
+	if(!empty($price_from) || !empty($price_to))
+	{
+		$price_from = (empty($price_from))?0:$price_from;
+		$price_to = (empty($price_to))?500:$price_to;
+		$condition .= " and (u.exp_rate >= '".$price_from."' and u.exp_rate <= '".$price_to."') ";
+	}
+	
 	$sql  = " SELECT SQL_CALC_FOUND_ROWS u.id, u.fname,u.lname, u.profile_image, u.city,u.country_id,u.exp_about,exp_rate, ";
 	$sql .= " ( SELECT name FROM categories WHERE id = u.exp_category_id) as category, "; 
 	$sql .= " ( SELECT GROUP_CONCAT(name) FROM languages WHERE id IN(u.language_id)) as language, "; 

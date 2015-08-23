@@ -29,20 +29,30 @@ $categories = getDetail($field,$table,$condition);
                                 </li>
                                 <li>
                                     <h5>Tags <i class="fa fa-angle-down"></i></h5>
-									<input type="text" name="tag_search" id="tag_search" placeholder="Add Tags" class="form-control">
-									<ul id="tag_result">
+									<ul class="taglist" id="tag_search_ui">
 									</ul>
+									<div class="autocomp_blk">
+									<input type="text" name="tag_search" id="tag_search" placeholder="Add Tags" class="form-control">
+									
+									<ul id="tag_result" class="autocomp_list">
+									</ul>
+									</div>
                                 </li>
                                 <li>
                                     <h5>Languages <i class="fa fa-angle-down"></i></h5>
-                                    
-									<input type="text" name="language_search" id="language_search" placeholder="Add Languages" class="form-control">
-									<ul id="language_result">
+									<ul class="taglist" id="language_search_ui">
 									</ul>
+                                    <div class="autocomp_blk">
+									<input type="text" name="language_search" id="language_search" placeholder="Add Languages" class="form-control">
+									<ul id="language_result" class="autocomp_list">
+									</ul>
+									</div>
                                 </li>
                                 <li>
                                     <h5>PRICE PER HOUR <i class="fa fa-angle-down"></i></h5>
                                     <input type="range" class="" id="range_03" />
+									<input type="hidden" name="price_from" id="price_from" value="">
+									<input type="hidden" name="price_to" id="price_to" value="">
                                 </li>
                             </ul>
                         </div>
