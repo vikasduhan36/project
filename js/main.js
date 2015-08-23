@@ -610,6 +610,51 @@ $(document).ready(function(){
 			$("#public_select_date").slideUp();
 		}
 	});
+	
+	$("body").on("click",".wishlist",function(){
+		var $this = $(this);
+		var id = $this.attr("data-id");
+		var type = $this.attr("data-type");
+		
+		var datastring = {'action':'submit_wishlist','id':id,'type':type};
+		$.ajax({
+			url:root+'handler.php',
+			type:'post',
+			data:datastring,
+			//dataType:'json',
+			beforeSend:function(){
+				
+			},
+			success:function(response){
+				if(response == 'success')
+				{
+					if(type == 'add')
+					{
+					
+						$this.html('<i class="fa fa-heart"></i>wishlist').addClass('remove_list_btn').attr('data-type','remove');
+					}
+					else if(type == 'remove')
+					{
+						
+						$this.html('<i class="fa fa-heart"></i>Add to wishlist').removeClass('remove_list_btn').attr('data-type','add');
+						if($('#page_type').text() == 'wishlist')
+						{
+							$this.parents().eq(2).slideUp();
+						}
+					}
+					
+					
+				
+				}
+				else
+				{
+					alert('error');
+				}
+			}
+		});
+	
+	});
+	
 });
 
 function getUserAvailability(user_id,date)
@@ -704,19 +749,41 @@ html += '<ul>';
 html += '<li><i class="fa fa-map-marker"></i> '+value.city+' '+value.country_id+'</li>';
 html += '<li><i class="fa fa-globe"></i>'+value.language+'</li>';
 html += '</ul></div></div><div class="col-xs-12 col-md-8 col-lg-9">';
+if(value.tag != '')
+{
 html += '<ul class="tags">';
-html += '<li><a href="javascript:void(0);">'+value.tag+'</a></li>';
-html += '<li><a href="javascript:void(0);">Business Development</a></li>';
-html += '<li><a href="javascript:void(0);">Social Media Marketing</a></li>';
+var tags = (value.tag).split(",");
+$.each(tags,function(key,tag_val){
+html += '<li><a href="javascript:void(0);">'+tag_val+'</a></li>';
+});
 //html += '<li><a href="javascript:void(0);">+ 3 more...</a></li>';
 html += '</ul>';
+}
 html += '<p>'+value.exp_about+'</p>';
 html += '</div><div class="col-xs-12 col-md-4 col-lg-3">';
-html += '<a href="'+root+'schedule.php?id='+value.id+'" class="bookme_btn bookfree">Book Me Now! ';
-html += '<span class="free">Always FREE';
-html += '<img src="images/round_arrow_blue.png" alt="arrow" class="img-responsive" /></span></a>';
-html += '<a href="javascript:void(0);" class="wishlistbtn">';
-html += '<i class="fa fa-heart"></i>Add to wishlist</a>';
+html += '<a href="'+root+'schedule.php?id='+value.id+'" class="bookme_btn bookfree">';
+
+if(value.exp_rate == '0')
+{
+html += '<span class="free">Always FREE<img src="images/round_arrow_blue.png" alt="arrow" class="img-responsive" /></span>';
+}
+else
+{
+html += '<span><i class="fa fa-euro"></i> '+value.exp_rate+'</span>';
+}
+html += 'Book Me Now!</a>';
+
+if(value.wished == null)
+{
+	html += '<a href="javascript:void(0);" class="wishlistbtn wishlist" data-type="add" data-id="'+value.id+'">';
+	html += '<i class="fa fa-heart"></i>Add to wishlist</a>';
+}
+else
+{
+html += '<a href="javascript:void(0);" class="wishlistbtn wishlist remove_list_btn" data-type="remove" data-id="'+value.id+'" title="Remove From wishlist">';
+	html += '<i class="fa fa-heart"></i>wishlist</a>';
+}
+
 html += '</div><div class="col-xs-12 has_reviews">';
 html += '<ul class="haslist">';
 html += '<li><a href="javascript:void(0);" class="haslink" data-toggle="tooltip" title="Number of reviews"><i class="fa fa-thumbs-o-up"></i> <span>50</span></a>';

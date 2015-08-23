@@ -2,6 +2,7 @@
 	require_once('phpInclude/header.php');
 	
 ?>
+<div style="display:none;" id="page_type">expert</div>
 <section class="midsection accountsection"><!-- // MID MAIN SECTION // -->
 	<div class="container">
     	<div class="row">

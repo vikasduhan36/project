@@ -334,22 +334,24 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')
 	
 	if(!empty($tag_selected))
 	{
-		$condition .= " and ( 1=1 ";
+		$condition .= " and ( ";
 		foreach($tag_selected as $id)
 		{
-			$condition .= " OR FIND_IN_SET('u.exp_tag_id','".$id."') ";
+			$condition .= " FIND_IN_SET('".$id."',u.exp_tag_id) > 0 OR";
 		}
-		$condition .= " ) ";
+		$condition = substr($condition,0,-2);
+		$condition = $condition." ) ";
 	}
 	
 	if(!empty($language_selected))
 	{
-		$condition .= " and ( 1=1 ";
+		$condition .= " and ( ";
 		foreach($language_selected as $id)
 		{
-			$condition .= " OR FIND_IN_SET('u.language_id','".$id."') ";
+			$condition .= " FIND_IN_SET('".$id."',u.language_id) > 0 OR";
 		}
-		$condition .= " ) ";
+		$condition = substr($condition,0,-2);
+		$condition = $condition." ) ";
 	}
 	
 	if(!empty($price_from) || !empty($price_to))
@@ -358,12 +360,21 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')
 		$price_to = (empty($price_to))?500:$price_to;
 		$condition .= " and (u.exp_rate >= '".$price_from."' and u.exp_rate <= '".$price_to."') ";
 	}
+	if(!empty($search_type))
+	{
+		$condition .= " and w.user_id = '".$user_id."' ";
+	}
 	
-	$sql  = " SELECT SQL_CALC_FOUND_ROWS u.id, u.fname,u.lname, u.profile_image, u.city,u.country_id,u.exp_about,exp_rate, ";
-	$sql .= " ( SELECT name FROM categories WHERE id = u.exp_category_id) as category, "; 
-	$sql .= " ( SELECT GROUP_CONCAT(name) FROM languages WHERE id IN(u.language_id)) as language, "; 
-	$sql .= " ( SELECT GROUP_CONCAT(name) FROM tags WHERE id IN(u.exp_tag_id)) as tag "; 
-	$sql .= " FROM users as u ";
+	
+	$sql  = " SELECT SQL_CALC_FOUND_ROWS u.exp_tag_id,u.id,u.language_id, u.fname,u.lname, u.profile_image, u.city,u.country_id,u.exp_about,u.exp_rate, ";
+	$sql .= " ( SELECT name FROM categories WHERE id = u.exp_category_id) as category "; 
+	//$sql .= " ( SELECT GROUP_CONCAT(name) FROM languages WHERE id IN(l_id)) as language, "; 
+	$sql .= " , ( SELECT wished_id FROM wishlist WHERE  user_id='".$user_id."' and wishlist.wished_id=u.id)as wished "; 
+	$sql .= " FROM users as u";
+	if(!empty($search_type))
+	{
+		$sql .= " LEFT JOIN wishlist as w ON(w.wished_id = u.id)";
+	}
 	$sql .= " WHERE 1=1 and is_expert='1' ".$condition." ";
 	
 	$query = mysql_query($sql) or die(mysql_error());
@@ -376,7 +387,24 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')
 			$status 	= "success";
 			while($fetch = mysql_fetch_assoc($query))
 			{
+				
+				
+				$field = " GROUP_CONCAT(name) as name ";
+				$table = "tags";
+				$condition 	= " and id IN(".$fetch['exp_tag_id'].") ";
+				$tags = getDetail($field,$table,$condition);
+				
+				$field = " GROUP_CONCAT(name) as name ";
+				$table = "languages";
+				$condition 	= " and id IN(".$fetch['language_id'].") ";
+				$languages = getDetail($field,$table,$condition);
+				
+				
+				$fetch['tag'] = (!empty($tags[0]['name']))?$tags[0]['name']:'';
+				$fetch['language'] = (!empty($languages[0]['name']))?$languages[0]['name']:'';
 				$result[] = $fetch;
+				//$result[]
+	
 			}
 		}
 		else
@@ -387,6 +415,32 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')
 	
 	echo json_encode( array('status'=>$status,'count'=>$count,'result'=>$result) );
 }
+else if(isset($_POST['action']) && $_POST['action'] == 'submit_wishlist')
+{
+	$id = $_POST['id'];
+	$type = $_POST['type'];
+	if($type == 'add')
+	{
+		$sql = " INSERT into wishlist SET user_id='".$user_id."', wished_id='".$id."', created='' ";
+		$query = mysql_query($sql);
+	}
+	else if($type == 'remove')
+	{
+		$sql = " DELETE from wishlist WHERE user_id='".$user_id."' and wished_id='".$id."' ";
+		$query = mysql_query($sql);
+	}
+	if($query)
+	{
+		echo "success";exit();
+	}
+	else
+	{
+		echo "error";exit();
+	}
+	
+	
+}
+
 
 if(isset($_POST['action']) && $_POST['action']=="googleLogin")
 {
