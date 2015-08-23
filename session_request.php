@@ -83,7 +83,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 									if($session_detail[0]['status'] == '2')
 									{
 										?>
-										<input type='button'  value='Scheduled'>
+										
 										<a href="javascript:void(0);" class="sess_btn">Scheduled</a>
 										<?php
 									}
@@ -101,8 +101,9 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 									}
 								}
 								?>
-                                    
+                                    <!--
                                     <p>Are you interested <br/>in this public request?</p>
+									-->
                                 </div>
                             </div>
                         </div>

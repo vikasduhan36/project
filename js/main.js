@@ -265,10 +265,18 @@ $(document).ready(function(){
 				
 			},
 			success:function(response){
-				if(response == 'success')
+				if(response.status == 'success')
 				{
-					alert('success');
-					//window.location.href = root+'exp_sessions.php';
+					if(response.is_expert == '1')
+					{
+						var url = 'exp_sessions.php';
+					}
+					else
+					{
+						var url = 'exp_sessions.php';
+					}
+					
+					window.location.href = root+url+"?tab="+response.tab;
 				}
 				else
 				{
@@ -276,6 +284,45 @@ $(document).ready(function(){
 				}
 			}
 		})
+	});
+	
+	$("#cancel_session").click(function(){
+
+	var r = confirm("Are you sure you want to cancel this session.");
+	if(!r)
+	{
+		return false;
+	}
+		var datastring = {'action':'submit_cancel_session','id':$(this).attr('alt')};
+		$.ajax({
+			url:root+'handler.php',
+			type:'post',
+			data:datastring,
+			dataType:'json',
+			beforeSend:function(){
+				
+			},
+			success:function(response){
+				if(response.status == 'success')
+				{
+					if(response.is_expert == '1')
+					{
+						window.location.href = root+'exp_sessions.php?tab=close';
+					}
+					else
+					{
+						window.location.href = root+'user_sessions.php?tab=close';
+					}
+					
+				}
+				else
+				{
+					alert('error');
+				}
+			}
+		})
+	
+	
 	});
 	
 	$("#validate_public_step1").click(function(){

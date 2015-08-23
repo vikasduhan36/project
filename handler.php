@@ -4,10 +4,15 @@ require_once 'config/dbconnection.php';
 db_open();
 require_once('phpInclude/function.php');
 //require_once 'phpInclude/functions.php';
-
+$is_expert = 0;
 if(!empty($_SESSION['LoginUserId']))
 {
 	$user_id = $_SESSION['LoginUserId'];
+	$field = " is_expert ";
+	$table = "users ";
+	$condition 	= "and id='".$user_id."' ";
+	$user_detail = getDetail($field,$table,$condition);
+	$is_expert = $user_detail['0']['is_expert'];
 }
 
 /*add advertisement */
@@ -164,6 +169,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_session')
 		$$key = $value;
 	}
 	//$slot
+	$tab = "schedule";
 	if($type == 'accept')
 	{
 		$sql= " UPDATE sessions SET session_datetime='".$slot."',exp_reschedule='0',user_reschedule='0', status='2' WHERE id='".$session_id."' ";
@@ -171,6 +177,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_session')
 	}
 	else if($type == 'request')
 	{
+	$tab = "open";
 		$field = "is_expert";
 		$table = "users";
 		$condition = "and id = '".$user_id."' ";
@@ -208,26 +215,28 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_session')
 	
 	if($query)
 	{
-		echo "success";exit();
+		$status = "success";
 	}
 	else
 	{
-		echo "error";exit();
+		$status = "error";
 	}
+	echo json_encode(array('status'=>$status,'is_expert'=>$is_expert,'tab'=>$tab));
 }
 else if(isset($_POST['action']) && $_POST['action'] == 'submit_cancel_session')
 {
-	$session_id = $_POST['session_id'];
+	$session_id = $_POST['id'];
 	$sql = " UPDATE sessions SET status='0' WHERE id='".$session_id."' ";
 	$query = mysql_query($sql);
 	if($query)
 	{
-		echo "success";exit();
+		$status = 'success';
 	}
 	else
 	{
-		echo "error";exit();
+		$status = 'error';
 	}
+	echo json_encode(array('status'=>$status,'is_expert'=>$is_expert));exit();
 }
 else if(isset($_POST['action']) && $_POST['action'] == 'tag_search')
 {

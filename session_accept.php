@@ -52,7 +52,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 								?>
 								
 								<a class="bookme_btn apply_btn request_slot" href="javascript:void(0);">Accept </a>
-								<a href="javascript:void(0);" class="sess_btn canceled_btn" >Cancel</a>
+								
 								<br>
 								
 								<a class="bookme_btn apply_btn" id="alternative_dates" href="javascript:void(0);">Request Alternative time</a>

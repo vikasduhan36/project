@@ -61,7 +61,7 @@ require_once 'phpInclude/header.php';
 						<?php 
 						if(empty($_GET['tab']) || (isset($_GET['tab']) && $_GET['tab'] == 'schedule'))
 						{
-							$sql = " SELECT s.title,s.session_datetime,u.fname,u.lname,s.exp_applied_id FROM sessions as s LEFT JOIN users as u ";
+							$sql = " SELECT s.id as s_id,s.title,s.session_datetime,u.fname,u.lname,s.exp_applied_id FROM sessions as s LEFT JOIN users as u ";
 	$sql .= " ON(s.exp_applied_id = u.id) WHERE user_id='".$_SESSION['LoginUserId']."' and s.status='2' ";
 
 							$query = mysql_query($sql) or die(mysql_error());
@@ -78,7 +78,11 @@ require_once 'phpInclude/header.php';
 									<li>
 									<div class="row">
 										<div class="col-xs-12 col-sm-2 col-xss-2"><h5><?php echo $fetch['session_datetime'];?></h5></div>
-										<div class="col-xs-12 col-sm-7 col-xss-10"><h3><?php echo $fetch['title'];?><span>Expert: <?php $fetch['fname']." ".$fetch['lname'];?></span></h3></div>
+										<div class="col-xs-12 col-sm-7 col-xss-10"><h3>
+										<a href="<?php echo $root.'session_request.php?id='.$fetch['s_id'];?>">
+										<?php echo $fetch['title'];?>
+										</a>
+										<span>Expert: <?php $fetch['fname']." ".$fetch['lname'];?></span></h3></div>
 										<div class="col-xs-12 col-sm-3 date">
 										
 										<?php
@@ -129,7 +133,11 @@ require_once 'phpInclude/header.php';
 		
 									<div class="col-xs-12 col-sm-2 col-xss-2"><h5>--</h5></div>
 								
-										<div class="col-xs-12 col-sm-7 col-xss-10"><h3><?php echo $fetch['title'];?><span>Expert: <?php $fetch['fname']." ".$fetch['lname'];?></span></h3></div>
+										<div class="col-xs-12 col-sm-7 col-xss-10"><h3>
+										<a href="<?php echo $root.'session_request.php?id='.$fetch['s_id'];?>">
+										<?php echo $fetch['title'];?>
+										</a>
+										<span>Expert: <?php $fetch['fname']." ".$fetch['lname'];?></span></h3></div>
 										<div class="col-xs-12 col-sm-3 date">
 										
 										<?php
@@ -205,7 +213,11 @@ require_once 'phpInclude/header.php';
 		
 									<div class="col-xs-12 col-sm-2 col-xss-2"><h5><?php echo $fetch['session_datetime'];?></h5></div>
 								
-										<div class="col-xs-12 col-sm-7 col-xss-10"><h3><?php echo $fetch['title'];?><span>Expert: <?php $fetch['fname']." ".$fetch['lname'];?></span></h3></div>
+										<div class="col-xs-12 col-sm-7 col-xss-10"><h3>
+										<a href="<?php echo $root.'session_request.php?id='.$fetch['s_id'];?>">
+										<?php echo $fetch['title'];?>
+										</a>
+										<span>Expert: <?php $fetch['fname']." ".$fetch['lname'];?></span></h3></div>
 										<div class="col-xs-12 col-sm-3 date">
 										
 										<a href="javascript:void(0);" class="sess_btn canceled_btn">Cancelled</a>
