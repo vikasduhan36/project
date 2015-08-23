@@ -23,10 +23,20 @@ require_once 'phpInclude/header.php';
                             </span>
                         </div>
                         </form>
+                         <?php 
+                            $count=0;
+                            //print_r($user_detail[0]);
+                            foreach($user_detail[0] as $key => $value){//echo $key;
+                           	if($value!=""){
+                            	 $count+=5;
+                            	}
+                            } $count=$count-30;
+                             ?>
                         <div class="accountprogress">
-                            <h6 class="progresstxt">Profile completeness: <span>55%</span></h6>
+                            <h6 class="progresstxt">Profile completeness: <span><?php echo trim($count);?>%</span></h6>
                             <div class="progress">
-                              <div class="progress-bar progress-bar-striped active progress-bar-info" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                           
+                            	<div class="progress-bar progress-bar-striped active progress-bar-info" role="progressbar" aria-valuenow="<?php echo trim($count);?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo trim($count);?>%">
                                 <span class="sr-only"></span>
                               </div>
                             </div>
@@ -77,7 +87,7 @@ require_once 'phpInclude/header.php';
                             </ul>
                            <!--  <a href="javascript:void(0);" class="submitbtn btn1">Submit <i class="fa fa-check"></i></a> -->
                            <input type="hidden" value="update_email" name="action"/>
-                        <input type="submit" value="Submit" class="submitbtn btn1" />
+                        <button type="submit" class="submitbtn btn1">Submit <i class="fa fa-check"></i></button>
                         </div><!-- Account information -->
                         </form>
                         
@@ -190,13 +200,13 @@ require_once 'phpInclude/header.php';
                             </ul>
                             <!-- <a href="javascript:void(0);" class="submitbtn btn1">Submit <i class="fa fa-check"></i></a> -->
                             <input type="hidden" value="personal_details" name="action"/>
-                        <input type="submit" value="Submit" class="submitbtn btn1" />
+                        <button type="submit" class="submitbtn btn1">Submit <i class="fa fa-check"></i></button>
                             </form>
                         </div><!-- Personal information -->
                         
                         <div class="infoblks clearfix"><!-- Social Account information -->
                         	<h4>Social Accounts</h4>
-                        	<form>
+                        	<form id="social_acc">
                         	<ul class="row infolist">
                             	<li>
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>LinkedIn</label></div>
@@ -235,7 +245,9 @@ require_once 'phpInclude/header.php';
                                     </div>
                                 </li>
                             </ul>
-                            <a href="javascript:void(0);" class="submitbtn btn1">Submit <i class="fa fa-check"></i></a>
+                            <!-- <a href="javascript:void(0);" class="submitbtn btn1">Submit <i class="fa fa-check"></i></a> -->
+                            <input type="hidden" value="social_accounts" name="action"/>
+                        <button type="submit" class="submitbtn btn1">Submit <i class="fa fa-check"></i></button>
                             </form>
                         </div><!-- Social Account information -->
                         
@@ -248,13 +260,19 @@ require_once 'phpInclude/header.php';
                             </ul>
                             <a href="javascript:void(0);" class="submitbtn btn1">Submit <i class="fa fa-check"></i></a>
                         </div><!-- Partner sites information -->
-                        
+                        <?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="0"){?>
                         <div class="infoblks clearfix"><!-- Are you an expert -->
                         	<h4>Are you an expert?</h4>
                         	
-                            <a href="javascript:void(0);" class="submitbtn btn1 pull-left applyexpertbtn">Apply to be an expert <i class="fa fa-check"></i></a>
+                            <a href="<?php echo $root;?>handler.php?sid=<?php echo base64_encode($_SESSION['LoginUserId']);?>&set=<?php echo base64_encode("apply_expert");?>" class="submitbtn btn1 pull-left applyexpertbtn">Apply to be an expert <i class="fa fa-check"></i></a>
                         </div><!-- Are you an expert -->
-                        
+                        <?php }else { ?>
+                         <div class="infoblks clearfix"><!-- Are you an expert -->
+                        	
+                        	
+                        <a href="<?php echo $root;?>handler.php?sid=<?php echo base64_encode($_SESSION['LoginUserId']);?>&set=<?php echo base64_encode("disable_expert");?>" class="submitbtn btn1 pull-left applyexpertbtn disableexpertbtn">Disable expert status <i class="fa fa-times"></i></a>
+                        </div><!-- Are you an expert -->
+                        <?php } ?>
                     </div><!-- // MY ACCOUNT INFORMATION // -->
                 </section><!-- // RIGHT MAIN // -->
             </div>

@@ -387,6 +387,7 @@ if(isset($_POST['action']) && $_POST['action']=="googleLogin")
 	$login_type="google";
 	$condition 		 = " email = '".$_POST['email']."' ";
 	$checkUserExists = UserExists($condition);
+	$randomString = generateRandomString();
 	if($checkUserExists['count'] == 0)									//SIGN UP
 	{
 		$fb_login ="Insert into users set login_type='".mysql_real_escape_string(strip_tags(trim($login_type)))."'  ,username='".mysql_real_escape_string(strip_tags(trim($_POST['name'])))."' ,profile_image='".mysql_real_escape_string(strip_tags(trim($_POST['image'])))."' , ";
@@ -395,6 +396,12 @@ if(isset($_POST['action']) && $_POST['action']=="googleLogin")
 		if($mysql)
 		{
 			$id=mysql_insert_id();
+			/* if (isset($checkUserExists['password']) && ($checkUserExists['password']=="")
+			{ */
+				mysql_query("Update users set password='".$randomString."' WHERE id='".$id."' ");
+			/* send mail to user at registration time */
+				registrationMail($fromMail,  trim($_POST['email'])  ,$randomString,$root);
+			//}
 			$_SESSION['message']['user_login'] = "succesfuly Login";
 			$_SESSION['LoginUserId'] = $id;
 			echo "success";
@@ -411,7 +418,6 @@ if(isset($_POST['action']) && $_POST['action']=="googleLogin")
 		$user_login = userExists($condition);
 		$_SESSION['message']['user_login'] = "succesfuly Login";
 		$_SESSION['LoginUserId'] = $user_login['id'];
-		lastVisit($user_login['id']);
 		echo "success";
 	}
 
@@ -490,7 +496,9 @@ if(isset($_POST['action']) && $_POST['action']=="register")
 		$mysql_user = mysql_query($add_user);
 		if ($mysql_user)
 		{
-			$_SESSION['LoginUserId']=mysql_insert_id();
+			$id=mysql_insert_id();
+			registrationMail($fromMail, $email  ,$password,$root);
+			$_SESSION['LoginUserId']=$id;
 
 			echo "success";
 		} else
@@ -637,5 +645,98 @@ if(isset($_POST['action']) && $_POST['action']=="update_email")
 	else
 	{
 		echo "exists";
+	}
+}
+/* apply as expert */
+if (isset($_GET['set']) && $_GET['set']==base64_encode("apply_expert"))
+{
+	$update_user = "UPDATE users set is_expert='1' WHERE id='".trim(base64_decode($_GET['sid']))."' ";
+	$update_query = mysql_query($update_user);
+	if($update_query)
+	{
+		?>
+		<script>
+		window.location.href="<?php echo $root;?>account.php";
+		</script>
+	<?php
+	}
+}
+/* disable as expert */
+if (isset($_GET['set']) && $_GET['set']==base64_encode("disable_expert"))
+{
+	$update_user = "UPDATE users set is_expert='0' WHERE id='".trim(base64_decode($_GET['sid']))."' ";
+	$update_query = mysql_query($update_user);
+	if($update_query)
+	{
+		?>
+		<script>
+		window.location.href="<?php echo $root;?>account.php";
+		</script>
+	<?php
+	}
+}
+/* multiple select autocomplete */
+if (isset($_GET['tags']) && $_GET['tags']!="")
+{
+	$search_query = mysql_real_escape_string(trim($_GET['tags']));
+	$field = " * ";
+	$table = " tags ";
+	$condition = " AND name LIKE '$search_query%' ";
+	$languages = getDetail($field,$table,$condition);
+	$data = array();
+	if(count($languages) > 0)
+	{
+		foreach ($languages as $key=>$value)
+		{
+			$data[] = array("id"=>$value['id'],"label"=>$value['name'],"value"=>$value['name']);
+		}
+	} else
+	{
+		$data[] = array("id"=>"0","label"=>"No record","value"=>"No record");
+	}
+	echo json_encode($data);
+}
+/*update personal details*/
+if(isset($_POST['action']) && $_POST['action']=="expert_info")
+{
+	$short_description     	= mysql_real_escape_string(trim($_POST['short_description']));
+	$help_offered   		= mysql_real_escape_string(trim($_POST['help_offered']));
+	$user_id   				= trim($_SESSION['LoginUserId']);
+	$category  				= mysql_real_escape_string(trim($_POST['category']));
+	$hourly_rate			= mysql_real_escape_string(trim($_POST['hourly_rate']));
+	$profile_url  			= mysql_real_escape_string(trim($_POST['profile_url']));
+
+	if($hourly_rate=="free")
+	{
+		$hourly_rate="0";
+	}
+	if (isset($_POST['tags']) && $_POST['tags']!="")
+	{
+		$languages  	= explode(",",mysql_real_escape_string(trim($_POST['tags'])));
+		$id_array = array();
+		foreach ($languages as $lang)
+		{
+			if (trim($lang)!="" && trim($lang)!="No record")
+			{
+				//echo "SELECT id from languages WHERE name='".trim($lang)."' ";
+				$get_id = mysql_query("SELECT id from tags WHERE name='".trim($lang)."' ");
+				$res = mysql_fetch_assoc($get_id);
+				$id_array[]=$res['id'];
+			}
+		}
+		$languages = implode(',',$id_array);
+	}else {
+		$languages = "";
+	}
+	$update_pass = "UPDATE users set exp_description='".$short_description."',exp_help='".$help_offered."',exp_category_id='".$category."' ,";
+	$update_pass .= " exp_tag_id='".$languages."',exp_rate='".$hourly_rate."' WHERE id='".$user_id."' ";
+	$update_query = mysql_query($update_pass);
+	if($update_query)
+	{
+		echo "success";
+	}
+	else
+	{
+		echo "error";
 	}
 }

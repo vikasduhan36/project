@@ -65,7 +65,10 @@ $table = " users ";
 $condition = " AND id='".trim($_SESSION['LoginUserId'])."' ";
 $user_detail = getDetail($field,$table,$condition);
 //print_r($user_detail);
-if($user_detail[0]['profile_image']!=""){ $prof_pic=$user_detail[0]['profile_image']; } else { $prof_pic= "images/users/default.jpg"; }/* profile image */
+if($user_detail[0]['profile_image']!=""){ 
+	$prof_pic=$user_detail[0]['profile_image']; 
+	if (parse_url($prof_pic, PHP_URL_QUERY)){ $rep_query=explode("?",$prof_pic);$prof_pic=$rep_query['0']."?sz=200";}else {echo "no";}
+} else { $prof_pic= "images/users/default.jpg"; }/* profile image */
 if($user_detail[0]['username']!=""){$username=$user_detail[0]['username'];} else { $username= "";}/*user name*/
 if ($user_detail[0]['email']!=""){ $email=$user_detail[0]['email']; } else { $email=""; } /* user email */
 if ($user_detail[0]['city']!=""){	$city =$user_detail[0]['city'];} else { $city =""; } /* user city */

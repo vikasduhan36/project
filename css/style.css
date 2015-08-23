@@ -22,7 +22,7 @@ a{outline:none; text-decoration:none; transition:all 0.4s ease-in-out 0s; color:
 a:focus{outline:none; text-decoration:none;}
 a:after,a:before{transition:all 0.4s ease-in-out 0s;}
 h1,h2,h3,h4,h5,h6,p,ul,ol,li,img,a{border:none; outline:none; font-weight:normal; list-style:none; margin:0; padding:0;}
-input[type="button"], input[type="submit"], input[type="file"], button{cursor:pointer;}
+input[type="button"], input[type="submit"], input[type="file"], button{cursor:pointer; border:none;}
 input, textarea, select{outline:none; border:none;}
 .responsiveimg{display:block; max-width:100%; margin:0 auto; height:auto;}
 .clearfix,.clearfix:after,.clearfix:before{clear:both;}
@@ -309,9 +309,19 @@ input.cmn-toggle-round:checked + label .fa-check{display:block;}
 .myaccountinfo .infoblks .infolist li span.value{font-size:16px; display:block; line-height:50px; color:#666666;}
 .myaccountinfo .infoblks .infolist li .valuefield{height:36px; margin-top:7px;}
 .myaccountinfo .infoblks .infolist li .editlink{float:right; color:#00bffe; font-size:12px; text-transform:uppercase; font-family:'proxima_nova_ltlight';}
-.myaccountinfo .infoblks .submitbtn{height:40px; line-height:40px; color:#ffffff; font-family:'roboto_condensedregular'; font-size:16px; text-align:center; text-transform:uppercase; border-radius:2px; position:relative; float:right; width:150px;}
-.myaccountinfo .infoblks .submitbtn i{width:40px; line-height:40px; float:right; text-align:center; border-left:1px solid #4ecaf4; box-shadow:-2px 0 4px rgba(0,0,0,0.1);}
-.myaccountinfo .infoblks .applyexpertbtn{width:auto; min-width:250px;}
+.myaccountinfo .infoblks .infolist textarea.form-control{height:100px; resize:none; margin-bottom:7px; font-family:'roboto_condensedregular';}
+.myaccountinfo .infoblks .infolist li .h_rate{margin:10px 0 15px; font-size:14px; color:#777; line-height:normal; display:table; width:100%;}
+.myaccountinfo .infoblks .infolist li .h_rate input[type="radio"]{}
+.myaccountinfo .infoblks .infolist li .h_rate input{float:left; margin-right:10px;}
+.myaccountinfo .infoblks .infolist li .h_rate + .h_rate{line-height:36px;}
+.myaccountinfo .infoblks .infolist li .h_rate + .h_rate input[type="radio"]{margin-top:10px;}
+.myaccountinfo .infoblks .infolist li .h_rate + .h_rate .valuefield{margin-top:0;}
+.myaccountinfo .infoblks .submitbtn{height:40px; line-height:40px; color:#ffffff; font-family:'roboto_condensedregular'; font-size:16px; text-align:center; text-transform:uppercase; border-radius:2px; position:relative; float:right; width:150px; padding:0 0 0 5px; overflow:hidden;}
+.myaccountinfo .infoblks .submitbtn i{width:40px; line-height:40px; float:right; text-align:center; border-left:1px solid #39b5df; box-shadow:-2px 0 3px rgba(0,0,0,0.08);}
+.myaccountinfo .infoblks .applyexpertbtn{width:auto; min-width:250px; margin:0 10px 10px 0;}
+.myaccountinfo .infoblks .disableexpertbtn{background:#f49397;}
+.myaccountinfo .infoblks .disableexpertbtn:hover{background:#e36e73;}
+.myaccountinfo .infoblks .disableexpertbtn i{border-left:1px solid #e36e73;}
 #passwordmodal .modal-header{margin-bottom:15px;}
 #passwordmodal .modal-header h4{font-size:18px; float:left; font-family:'roboto_condensedregular'; color:#58bde7;}
 #passwordmodal .updatepassbtn{font-size:17px; padding:7px 20px; width:auto; height:auto;}

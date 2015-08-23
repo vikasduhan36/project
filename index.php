@@ -340,7 +340,7 @@ label.error{
                         	<input type="password" class="form-control" placeholder="Enter password" name="password" value="<?php if (isset($_COOKIE['password']) && $_COOKIE['password']!=""){echo trim($_COOKIE['password']);}?>"/>
                         	<i class="fa fa-key icons"></i>
                          </div>
-                        <a href="javascript:void(0);" class="forgot_pass">Forgot your password?</a>
+                        <a href="javascript:void(0);" class="forgot_pass" id="send_pass">Forgot your password?</a>
                     </div>
                     <div class="form-group">
                         <div class="switch">
@@ -398,6 +398,28 @@ label.error{
                 </form>
                 <p class="content-text-outr">Already have an account?  &nbsp;&nbsp;<a href="javascript:void(0);" class="singinlink"> Login now!</a></p>
             </div>
+            <div id="forgot_password" style="display:none;"><!-- FORGOT PASSWORD FORM -->
+                <form id="get_password">
+                    <h5>Forgot Password</h5>
+                    <div id="message"></div>
+                    <div class="form-group">
+                    	<p>Enter your email address below and we'll send you instructions on how to change your password.</p>
+                    </div>
+                    <div class="form-group">
+                    	<label class="lbl">Email address</label>
+                        <div class="fields">
+                        	<input type="text" class="form-control" placeholder="Enter you email here" name="email_address"/>
+                        	<i class="fa fa-user icons"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    <input type="hidden" name="action" value="send_password" />
+                        <input type="submit" value="Send" class="signin_btn" style="width:100%;" />
+                    </div>
+                    <span class="or_seprator"><span>OR</span></span>
+                </form>
+                <p class="content-text-outr">Already have password?  &nbsp;&nbsp;<a href="javascript:void(0);" class="singinlink"> Login now!</a></p>
+            </div><!-- FORGOT PASSWORD FORM -->
         </div>
       </div>
     </div>
@@ -409,6 +431,13 @@ label.error{
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
 <script src="js/jquery.lightSlider.js"></script> 
 <script>
+$(document).ready(function() {
+	$("body").on("click",".forgot_pass",function(){
+		$('#loginform').css('display','none');
+		$('#forgot_password').css('display','block');
+		$('#signupform').css('display','none');
+	});
+});
 $(window).scroll(function() {
 	// SCROLL HEADER //
 	var scroll = $(window).scrollTop();
@@ -420,6 +449,7 @@ $(window).scroll(function() {
 	}
 });
 $(document).ready(function() {
+	
 	// Testimonial //
 	$("#testislide").lightSlider({
 		loop:true,
@@ -471,6 +501,7 @@ $(document).ready(function() {
 		$("html, body").animate({ scrollTop: 0 }, 600);
 		return true;
 	});
+	
 });
 </script>
 </body>

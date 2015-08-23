@@ -845,7 +845,48 @@ $(document).ready(function(){
 				}); 
 	    }
 	});
+////forgot password////
+///////// login user////////////
+$("#get_password").validate({
 
+    rules: {
+    	
+    	email_address : "required"
+    },
+    messages: {
+    	
+    	email_address :"Please enter email or username"
+	   },
+    submitHandler: function(form) {
+    	var dataString = $('#get_password').serialize();
+		$.ajax({
+			type: "POST",
+			url: root+"handler_next.php",
+			data: dataString,
+			beforeSend: function(){
+			$('#showLoder').show();	
+		    },
+			success: function(data){
+				$('#showLoder').hide();	
+				if($.trim(data)=="not_found")
+				{
+					$('#message').html('<span style="color:red;">Invalid email ,please check you email address.</span>');
+				}else 
+				if($.trim(data)=="success")
+				{
+					$('#message').html('<span style="color:green;">Please check your email ,password has been send successfully.</span>');
+					setTimeout(function() {
+					  // Do something after 5 seconds
+						$('.modal').modal('toggle');
+				}, 2000);
+				}else {
+				$('#message').html('<span style="color:red;">Some error occur ,please try again later.</span>');
+				}
+			}
+				
+			}); 
+    }
+});
 ///////// change password////////////
 $("#password_info").validate({
 
@@ -957,6 +998,38 @@ $("#update_email").validate({
 				$('html,body').animate({
 			        scrollTop: $(".breadcrumb").offset().top},
 			        'slow');
+			}
+				
+			}); 
+    }
+});
+///////// update expert details////////////
+$("#expert_info").validate({
+
+    submitHandler: function(form) {
+    	var dataString = $('#expert_info').serialize();
+		$.ajax({
+			type: "POST",
+			url: root+"handler.php",
+			data: dataString,
+			beforeSend: function(){
+			$('#showLoder').show();	
+		    },
+			success: function(data){
+				$('#showLoder').hide();	
+				if($.trim(data)=="success")
+				{
+					$('#errors').html('<span style="color:green;">Details updated successfully.</span>');
+					$('html,body').animate({
+				        scrollTop: $(".breadcrumb").offset().top},
+				        'slow');
+					setTimeout(function() {
+					  // Do something after 5 seconds
+						window.location.href = 'expert_info.php';
+				}, 2000);
+				}else {
+				$('#errors').html('<span style="color:red;">Some error occur ,please try again later.</span>');
+				}
 			}
 				
 			}); 
