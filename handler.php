@@ -415,6 +415,87 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')
 	
 	echo json_encode( array('status'=>$status,'count'=>$count,'result'=>$result) );
 }
+else if(isset($_POST['action']) && $_POST['action'] == 'get_public_request')
+{
+	foreach($_POST as $key => $value)
+	{
+		$$key = $value;
+	}
+	$condition = "";
+	$result = array();
+	$status = "error";
+	$count = 0;
+	
+	if(!empty($category_id))
+	{
+		$condition .= " and s.category_id = '".$category_id."' ";
+	}
+	
+	if(!empty($tag_selected))
+	{
+		$condition .= " and ( ";
+		foreach($tag_selected as $id)
+		{
+			$condition .= " FIND_IN_SET('".$id."',s.tag_id) > 0 OR";
+		}
+		$condition = substr($condition,0,-2);
+		$condition = $condition." ) ";
+	}
+	
+	if(!empty($language_selected))
+	{
+		$condition .= " and ( ";
+		foreach($language_selected as $id)
+		{
+			$condition .= " FIND_IN_SET('".$id."',s.language_id) > 0 OR";
+		}
+		$condition = substr($condition,0,-2);
+		$condition = $condition." ) ";
+	}
+	
+	$sql   = " SELECT SQL_CALC_FOUND_ROWS s.id,s.title,s.created,s.description,s.language_id, ";
+	$sql  .= " s.tag_id,u.fname,u.lname,u.profile_image ";
+	$sql  .= ", ( SELECT name FROM categories WHERE id = s.category_id) as category "; 
+	$sql  .= " FROM sessions as s LEFT JOIN users as u ON(s.user_id = u.id)";
+	$sql  .= " WHERE s.status = '1' and s.type='request' ".$condition." ";
+
+	$query = mysql_query($sql) or die(mysql_error());
+	if($query)
+	{
+		if(mysql_num_rows($query) > 0)
+		{
+			$count_row = mysql_fetch_assoc(mysql_query("SELECT FOUND_ROWS() as count"));
+			$count = $count_row['count'];
+			$status 	= "success";
+			while($fetch = mysql_fetch_assoc($query))
+			{
+				
+				$field = " GROUP_CONCAT(name) as name ";
+				$table = "tags";
+				$condition 	= " and id IN(".$fetch['tag_id'].") ";
+				$tags = getDetail($field,$table,$condition);
+				
+				$field = " GROUP_CONCAT(name) as name ";
+				$table = "languages";
+				$condition 	= " and id IN(".$fetch['language_id'].") ";
+				$languages = getDetail($field,$table,$condition);
+				
+				
+				$fetch['tag'] = (!empty($tags[0]['name']))?$tags[0]['name']:'';
+				$fetch['language'] = (!empty($languages[0]['name']))?$languages[0]['name']:'';
+				$result[] = $fetch;
+				//$result[]
+	
+			}
+		}
+		else
+		{
+			$status = "no_record";
+		}
+	}
+	
+	echo json_encode( array('status'=>$status,'count'=>$count,'result'=>$result) );
+}
 else if(isset($_POST['action']) && $_POST['action'] == 'submit_wishlist')
 {
 	$id = $_POST['id'];

@@ -435,6 +435,11 @@ $(document).ready(function(){
 	
 	
 	$("#tag_search").keyup(function(){
+	var session_public=''
+	if($(this).hasClass('session_public'))
+	{
+		session_public = 'session_public';
+	}
 	var tag = $.trim($(this).val());
 	var tag_result = $("#tag_result");
 	if(tag == '')
@@ -462,7 +467,7 @@ $(document).ready(function(){
 					var html = '';
 					$.each(response.result,function(key,value){
 						
-						html += '<li><a href="javascript:void(0);" class="select_tag" data-id="'+value.id+'" >'+value.name+'</a></li>';
+						html += '<li><a href="javascript:void(0);" class="select_tag '+session_public+'" data-id="'+value.id+'" >'+value.name+'</a></li>';
 					});
 					
 					tag_result.html(html);
@@ -477,6 +482,11 @@ $(document).ready(function(){
 	
 	
 	$("#language_search").keyup(function(){
+	var session_public=''
+	if($(this).hasClass('session_public'))
+	{
+		session_public = 'session_public';
+	}
 	var language = $.trim($(this).val());
 	var language_result = $("#language_result");
 	if(language == '')
@@ -504,7 +514,7 @@ $(document).ready(function(){
 					var html = '';
 					$.each(response.result,function(key,value){
 						
-						html += '<li ><a href="javascript:void(0);" class="select_language" data-id="'+value.id+'" >'+value.name+'</a></li>';
+						html += '<li ><a href="javascript:void(0);" class="select_language '+session_public+'" data-id="'+value.id+'" >'+value.name+'</a></li>';
 					});
 					
 					language_result.html(html);
@@ -518,28 +528,53 @@ $(document).ready(function(){
 	});
 	
 	$("body").on("click",".select_tag",function(){
+		var session_public=''
+		if($(this).hasClass('session_public'))
+		{
+			session_public = 'session_public';
+		}
 		var value=$(this).attr("data-id");
 		$("#tag_selected").append("<input type='hidden' name='tag_selected[]' value='"+value+"'>");
-		$("#tag_search_ui").append('<li>'+$(this).text()+'<a href="javascript:void(0);" class="remove_tag" alt="'+value+'"><i class="fa fa-times"></i></a></li>');
+		$("#tag_search_ui").append('<li>'+$(this).text()+'<a href="javascript:void(0);" class="remove_tag '+session_public+'" alt="'+value+'"><i class="fa fa-times"></i></a></li>');
 		$("#tag_result").html("");
 		$("#tag_search").val('');
 		
-		var datastring = $("#form_search_expert").serialize();
-		search_expert(datastring);
+		if($(this).hasClass('session_public'))
+		{
+			var datastring = $("#form_search_public_session").serialize();
+			search_public_request(datastring);
+		}
+		else
+		{
+			var datastring = $("#form_search_expert").serialize();
+			search_expert(datastring);
+		}
 		
 	});
 	
 	
 	$("body").on("click",".select_language",function(){
+		var session_public=''
+		if($(this).hasClass('session_public'))
+		{
+			session_public = 'session_public';
+		}
 		var value=$(this).attr("data-id");
 		$("#language_selected").append("<input type='hidden' name='language_selected[]' value='"+value+"'>");
-		$("#language_search_ui").append('<li>'+$(this).text()+'<a href="javascript:void(0);" class="remove_language" alt="'+value+'"><i class="fa fa-times"></i></a></li>');
+		$("#language_search_ui").append('<li>'+$(this).text()+'<a href="javascript:void(0);" class="remove_language '+session_public+'" alt="'+value+'"><i class="fa fa-times"></i></a></li>');
 		$("#language_result").html("");
 		$("#language_search").val('');
 		
-		var datastring = $("#form_search_expert").serialize();
-		search_expert(datastring);
-		
+		if($(this).hasClass('session_public'))
+		{
+			var datastring = $("#form_search_public_session").serialize();
+			search_public_request(datastring);
+		}
+		else
+		{
+			var datastring = $("#form_search_expert").serialize();
+			search_expert(datastring);
+		}
 	});
 	
 	$("body").on("click",".remove_tag",function(){
@@ -547,9 +582,16 @@ $(document).ready(function(){
 		$("[name='tag_selected[]'][value='"+value+"']").remove();
 		$(this).parent().remove();
 		
-		var datastring = $("#form_search_expert").serialize();
-		search_expert(datastring);
-		
+		if($(this).hasClass('session_public'))
+		{
+			var datastring = $("#form_search_public_session").serialize();
+			search_public_request(datastring);
+		}
+		else
+		{
+			var datastring = $("#form_search_expert").serialize();
+			search_expert(datastring);
+		}		
 	});
 	
 	$("body").on("click",".remove_language",function(){
@@ -557,9 +599,16 @@ $(document).ready(function(){
 		$("[name='language_selected[]'][value='"+value+"']").remove();
 		$(this).parent().remove();
 		
-		var datastring = $("#form_search_expert").serialize();
-		search_expert(datastring);
-		
+		if($(this).hasClass('session_public'))
+		{
+			var datastring = $("#form_search_public_session").serialize();
+			search_public_request(datastring);
+		}
+		else
+		{
+			var datastring = $("#form_search_expert").serialize();
+			search_expert(datastring);
+		}		
 	});
 	
 	/*
@@ -590,12 +639,22 @@ $(document).ready(function(){
 		})
 	});
 	*/
-	var datastring = $("#form_search_expert").serialize();
-	search_expert(datastring);
+//	var datastring = $("#form_search_expert").serialize();
+	//search_expert(datastring);
 
 	$("#category").change(function(){
+	
+	if($(this).hasClass('session_public'))
+	{
+		var datastring = $("#form_search_public_session").serialize();
+		search_public_request(datastring);
+	}
+	else
+	{
 		var datastring = $("#form_search_expert").serialize();
 		search_expert(datastring);
+	}	
+		
 	});
 	
 	
@@ -826,6 +885,66 @@ html += '</li></ul></div></div></div>';
 				}
 				$("#serach_expert_result").html(html);
 				$("#expert_count").text(response.count);
+			}
+		});
+}
+
+
+function search_public_request(datastring)
+{
+		$.ajax({
+			url:root+'handler.php',
+			type:'post',
+			data:datastring,
+			dataType:'json',
+			beforeSend:function(){
+				
+			},
+			success:function(response){
+			var html = '';
+				if(response.status == 'success')
+				{
+				
+				$.each(response.result,function(key,value){
+					
+                        html += '<div class="listcont browserreqlist"><div class="row">';
+                        html += '<div class="col-xs-12"><h2>'+value.title+'</h2>';
+						html += '<p>'+value.description+'</p>';
+												
+						if(value.tag != '')
+						{
+						html += '<ul class="tags">';
+						var tags = (value.tag).split(",");
+						$.each(tags,function(key,tag_val){
+						html += '<li><a href="javascript:void(0);">'+tag_val+'</a></li>';
+						});
+						html += '</ul>';
+						}
+
+						html += '<div class="expertinforow"><span class="expertimg">';
+						html += '<img src="'+value.profile_image+'" alt="expert1" class="img-responsive"/></span>';
+						html += '<ul>';
+						html += '<li><i class="fa fa-user"></i> Requested by : <span>'+value.fname+' '+value.lname+'</span> '+value.created+'</li>';
+						html += '<li><i class="fa fa-globe"></i>'+value.language+'</li>';
+						html += '</ul>';
+						html += '<a href="'+root+'session_accept.php?id='+value.id+'" class="bookme_btn apply_btn">Apply </a>';
+						html += '<a href="'+root+'session_request.php?id='+value.id+'" class="wishlistbtn details_btn">See Details</a>';
+						html += '</div>';
+						html += '</div>';
+						html += '<div class="col-xs-12 col-md-4 col-lg-3">';
+						html += '</div></div></div>';
+						
+				});
+
+				}
+				else if(response.status == 'no_record')
+				{
+					html += '<div class="listcont"><div class="row">';
+					html += '<div class="col-xs-12"><h3>No Public request Found.';
+					html += '</h3></div></div></div>';
+				}
+				$("#serach_public_result").html(html);
+				$("#request_count").text(response.count);
 			}
 		});
 }

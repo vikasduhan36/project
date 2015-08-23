@@ -143,7 +143,7 @@ require_once 'phpInclude/header.php';
 										<?php
 										if($fetch['exp_applied_id'] == 0)
 				{
-					$sql1 = " SELECT id FROM session_time where session_id='".$fetch['s_id']."' GROUP BY user_id ";
+					$sql1 = " SELECT id FROM session_time where session_id='".$fetch['s_id']."' and user_id != '".$_SESSION['LoginUserId']."' GROUP BY user_id ";
 					$query1 = mysql_query($sql1);
 					$exp_applied = 0;
 					if($query1)
