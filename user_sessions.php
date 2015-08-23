@@ -61,7 +61,7 @@ require_once 'phpInclude/header.php';
 						<?php 
 						if(empty($_GET['tab']) || (isset($_GET['tab']) && $_GET['tab'] == 'schedule'))
 						{
-							$sql = " SELECT s.session_datetime,u.fname,u.lname,s.exp_applied_id FROM sessions as s LEFT JOIN users as u ";
+							$sql = " SELECT s.title,s.session_datetime,u.fname,u.lname,s.exp_applied_id FROM sessions as s LEFT JOIN users as u ";
 	$sql .= " ON(s.exp_applied_id = u.id) WHERE user_id='".$_SESSION['LoginUserId']."' and s.status='2' ";
 
 							$query = mysql_query($sql) or die(mysql_error());
@@ -152,11 +152,11 @@ require_once 'phpInclude/header.php';
 						}
 						else if($fetch['user_reschedule'] == 1)
 						{
-							echo "<a href='javascript:void(0);' class='sess_btn'>Waiting for reply</a>";
+							echo "<a href='javascript:void(0);' class='sess_btn waitbtn'>Waiting for reply</a>";
 						}
 						else if($fetch['exp_reschedule'] == 0 && $fetch['user_reschedule'] == 0)
 						{
-							echo "<a href='javascript:void(0);' class='sess_btn'>Waiting for reply</a>";
+							echo "<a href='javascript:void(0);' class='sess_btn waitbtn'>Waiting for reply</a>";
 						}
 					}
 										?>

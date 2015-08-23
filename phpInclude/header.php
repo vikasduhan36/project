@@ -44,7 +44,7 @@ var root = "<?php echo $root;?>";
 	background-color:#E6F5E6;
 	color:#009900
 }
-label.error
+.error
 {
 	padding: 8px 15px;
     margin-bottom: 10px;

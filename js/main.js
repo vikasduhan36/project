@@ -222,25 +222,53 @@ $(document).ready(function(){
 	
 	$(".request_slot").click(function(){
 		
-		if($("[name='slot']:checked").length == 0)
+		var error = 0;
+		var message = "";
+		$("#notification").hide();
+		if($(this).attr("id") == "request_schedule")
 		{
-		$('html, body').animate({
-				scrollTop: $("#notification").offset().top
-			}, 800);
+			if($("#hidden_date_schedule").val() == '')
+			{
+				message = "Please select the session date.";
+				error = 1;
+			}
+			else if($("[name='slot_selected[]']:checked").length == 0)
+			{
+				message = "Please select the session time.";
+				error = 1;
+			}
+		}
+		else
+		{
+			if($("[name='slot']:checked").length == 0)
+			{
+				message = "Please select the session time.";
+				error = 1;
+			}
+		}
+		
+		if(error == 1)
+		{
+			$("#notification").addClass("error").removeClass("success").text(message).show();
+				$('html, body').animate({
+					scrollTop: $("#notification").offset().top
+				}, 800);
+				return false;
 		}
 		var datastring = $('#form_accept_session').serialize();
 		$.ajax({
 			url:root+'handler.php',
 			type:'post',
 			data:datastring,
-			dataType:'json',
+			//dataType:'json',
 			beforeSend:function(){
 				
 			},
 			success:function(response){
-				if(response.status == 'success')
+				if(response == 'success')
 				{
 					alert('success');
+					//window.location.href = root+'exp_sessions.php';
 				}
 				else
 				{

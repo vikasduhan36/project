@@ -63,11 +63,18 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 										<a href="javascript:void(0);" class="sess_btn waitbtn">Waiting for reply</a>
 										<?php
 									}
-									else if($session_detail[0]['exp_reschedule'] == '0' )
+									else if($session_detail[0]['exp_reschedule'] == '0' && $session_detail[0]['user_reschedule'] == '1' )
 									{
 										?>
 										
-										<a href="<?php echo $root.'session_accept.php?id='.$session_id;?>" class="btn1 proceedbtn">Accept <i class="fa fa-angle-double-right"></i></a>
+										<a href="<?php echo $root.'session_accept.php?id='.$session_id;?>" class="btn1 proceedbtn">Accept Reschedule<i class="fa fa-angle-double-right"></i></a>
+										<?php
+									}
+									else 
+									{
+										?>
+										
+										<a href="<?php echo $root.'session_accept.php?id='.$session_id;?>" class="btn1 proceedbtn">Accept<i class="fa fa-angle-double-right"></i></a>
 										<?php
 									}
 								}

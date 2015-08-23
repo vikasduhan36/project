@@ -23,7 +23,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
             
             <div class="col-xs-12 col-sm-8 col-md-9">
             	<section class="right_main"><!-- // RIGHT MAIN // -->
-                
+                <div id="notification" style="display:none;"></div>
                 	<div class="browsemain" ><!-- // BROWSER EXPERTS MAIN // -->
                     
                     <section id="step1" class="Req_sections req_step1" style="display:block;"><!-- // STEP 1 // -->
@@ -55,7 +55,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 								<a href="javascript:void(0);" class="sess_btn canceled_btn" >Cancel</a>
 								<br>
 								
-								<a class="bookme_btn apply_btn request_slot" id="alternative_dates" href="javascript:void(0);">Request Alternative time</a>
+								<a class="bookme_btn apply_btn" id="alternative_dates" href="javascript:void(0);">Request Alternative time</a>
 								
  <section class="ChooseDatesCont" id="public_select_date" style="display:none;"><!-- CHOOSE DATE CONTAINER -->
                                 <p><strong class="txt_lt_it">Select at least 1 (preferably 3) time slots that suit you.</strong><br/><small>(All times are in your local timezone AsialKolkata)</small></p>
@@ -68,7 +68,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 										-->
 										<input type="hidden" name="date_schedule" id="hidden_date_schedule" value=""/>
 										<div id="date_schedule"  class="date_schedule"></div>
-										<a href="javascript:void(0);" class="sess_btn canceled_btn date_schedule" id="request_schedule" />Request Reschedule</a>
+										<a href="javascript:void(0);" class="sess_btn canceled_btn date_schedule request_slot" id="request_schedule" />Request Reschedule</a>
 								<a href="javascript:void(0);" class="sess_btn canceled_btn" id="alternative_dates_cancel" >Cancel</a>
 								<input type="hidden" name="type" value="accept">
 								<input type="hidden" name="action" value="submit_accept_session">
