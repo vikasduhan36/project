@@ -110,7 +110,8 @@ $(document).ready(function(){
 		else
 		{
 			$("#notification").removeClass("error success").text('').hide();
-			$(".progresslist li:eq(0)").addClass("stepcomp");
+			$(".progresslist li:eq(0)").addClass("stepcomp").find(".count").html('<i class="fa fa-check"></i>');
+		
 			$("#step1").fadeOut(function(){$("#step2").fadeIn()});
 		}
 	});
@@ -156,13 +157,16 @@ $(document).ready(function(){
 		else
 		{
 			$("#notification").removeClass("error success").text('').hide();
-			$(".progresslist li:eq(1)").addClass("stepcomp");
+			$(".progresslist li:eq(1)").addClass("stepcomp").find(".count").html('<i class="fa fa-check"></i>');
 			var datetime_html = '';
 			$.each($(".slot_selected:checked"),function(){
-				
-				datetime_html += '<li>'+$(this).val()+'<li>';
+				if($.trim($(this).val()) != '')
+				{
+					datetime_html += '<li>'+$(this).val()+'</li>';
+				}
 				
 			});
+			console.log(datetime_html);
 			if(datetime_html == '')
 			{
 				datetime_html = '<li>Experts will propose possible dates for this session.</li>';
@@ -240,11 +244,23 @@ $(document).ready(function(){
 		}
 		else
 		{
-			if($("[name='slot']:checked").length == 0)
+			if($(this).hasClass('public') && !$(this).hasClass('exp_hired'))
 			{
-				message = "Please select the session time.";
-				error = 1;
+				if($("[name='slot[]']:checked").length == 0)
+				{
+					message = "Please select the session time.";
+					error = 1;
+				}
 			}
+			else
+			{
+				if($("[name='slot']:checked").length == 0)
+				{
+					message = "Please select the session time.";
+					error = 1;
+				}
+			}
+			
 		}
 		
 		if(error == 1)
@@ -255,12 +271,20 @@ $(document).ready(function(){
 				}, 800);
 				return false;
 		}
-		var datastring = $('#form_accept_session').serialize();
+		if($(this).hasClass('public'))
+		{
+			var datastring = $('#form_accept_public').serialize();
+		}
+		else
+		{
+			var datastring = $('#form_accept_session').serialize();
+		}
+		
 		$.ajax({
 			url:root+'handler.php',
 			type:'post',
 			data:datastring,
-			//dataType:'json',
+			dataType:'json',
 			beforeSend:function(){
 				
 			},
@@ -391,7 +415,7 @@ $(document).ready(function(){
 		else
 		{
 			$("#notification").removeClass("error success").text('').hide();
-			$(".progresslist li:eq(0)").addClass("stepcomp");
+			$(".progresslist li:eq(0)").addClass("stepcomp").find(".count").html('<i class="fa fa-check"></i>');
 			$("#step1").fadeOut(function(){$("#step2").fadeIn()});
 		}
 	});
@@ -908,7 +932,7 @@ function search_public_request(datastring)
 				$.each(response.result,function(key,value){
 					
                         html += '<div class="listcont browserreqlist"><div class="row">';
-                        html += '<div class="col-xs-12"><h2>'+value.title+'</h2>';
+                        html += '<div class="col-xs-12"><h2><a href="'+root+'session_request.php?id='+value.id+'">'+value.title+'</a></h2>';
 						html += '<p>'+value.description+'</p>';
 												
 						if(value.tag != '')

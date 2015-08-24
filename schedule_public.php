@@ -15,8 +15,8 @@ $categories = getDetail($field,$table,$condition);
         	<div class="col-xs-12 col-sm-10 col-sm-offset-1">
             	<ul class="progresslist">
 				<!-- stepcomp -->
-                    <li class=""><span class="stepblk"><span class="count"><i class="fa fa-check"></i></span></span><h6>Schedule session</h6></li>
-                    <li class=""><span class="stepblk"><span class="count"><i class="fa fa-check"></i></span></span><h6>Add details</h6></li>
+                    <li class=""><span class="stepblk"><span class="count">1</span></span><h6>Schedule session</h6></li>
+                    <li class=""><span class="stepblk"><span class="count">2</span></span><h6>Add details</h6></li>
                     <li class=""><span class="stepblk"><span class="count">3</span></span><h6>Confirm</h6></li>
                 </ul>
             </div>

@@ -32,8 +32,8 @@ require_once 'phpInclude/header.php';
                             </div>
                         </div>
                         <ul class="navlist">
-                            <li><a href="javascript:void(0);" class="active"><i class="fa fa-caret-right"></i> My Account</a></li>
-                            <li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> My Sessions</a></li>
+                            <li><a href="javascript:void(0);" ><i class="fa fa-caret-right"></i> My Account</a></li>
+                            <li><a href="javascript:void(0);" class="active"><i class="fa fa-caret-right"></i> My Sessions</a></li>
                             <li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> Expert Wishlist</a></li>
                             <li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> Finance</a></li>
                             <li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> Help</a></li>
@@ -127,6 +127,14 @@ require_once 'phpInclude/header.php';
 									
 									while($fetch = mysql_fetch_assoc($query))
 									{
+										if($fetch['type'] == 'request')
+										{
+											$url = "public_request.php";
+										}
+										else
+										{
+											$url = "session_request.php";
+										}
 									?>
 									<li>
 									<div class="row">
@@ -152,7 +160,7 @@ require_once 'phpInclude/header.php';
 										}
 										else if($fetch['user_reschedule'] == 1)
 										{
-											echo "<a href='".$root."session_request.php?id=".$fetch['s_id']."' class='sess_btn'>Reshcedule Request</a>";
+											echo "<a href='".$root.$url."?id=".$fetch['s_id']."' class='sess_btn'>Reshcedule Request</a>";
 											
 										}
 										else if($fetch['exp_reschedule'] == 0 && $fetch['user_reschedule'] == 0)

@@ -163,6 +163,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_book_schedule')
 }
 else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_session')
 {
+	
 	$error = array();
 	foreach($_POST as $key => $value)
 	{
@@ -222,6 +223,233 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_session')
 		$status = "error";
 	}
 	echo json_encode(array('status'=>$status,'is_expert'=>$is_expert,'tab'=>$tab));
+	/*
+	$error = array();
+	foreach($_POST as $key => $value)
+	{
+		$$key = $value;
+	}
+	//$slot
+	
+	$field = "user_reschedule, exp_reschedule";
+	$table = "sessions";
+	$condition = "and id = '".$session_id."' ";
+	$s_detail = getDetail($field,$table,$condition);
+		
+	$tab = "schedule";
+	if($type == 'accept' && $session_type == 'schedule')
+	{
+		$sql= " UPDATE sessions SET session_datetime='".$slot."',exp_reschedule='0',user_reschedule='0', status='2' WHERE id='".$session_id."' ";
+		$query = mysql_query($sql);
+	}
+	else if($session_type == 'request')
+	{
+		if($type == 'accept')
+		{
+			if($is_expert == "1")
+			{//***
+				if($s_detail[0]['user_reschedule'] == 0 && $s_detail[0]['exp_reschedule'] == 0)
+				{
+					foreach($slot as $key => $value)
+					{
+						$datetime = convertTimezone($value,$userTimezone['timezone'],$default_tz);
+						$sql = " INSERT INTO session_time SET user_id='".$user_id."', session_id='".$session_id."', datetime='".$datetime."' ";
+						$query = mysql_query($sql);
+					}
+				}
+				$query = mysql_query($sql);
+				if($query)
+				{
+					foreach($slot_selected as $key => $value)
+					{
+						$datetime = convertTimezone($value,$userTimezone['timezone'],$default_tz);
+						$sql = " INSERT INTO session_time SET user_id='".$user_id."', session_id='".$session_id."', datetime='".$datetime."' ";
+						$query = mysql_query($sql);
+					}
+				}
+			}
+			else
+			{
+				$sql = " DELETE FROM session_time WHERE session_id='".$session_id."' and user_id='".$user_id."' ";
+			}	
+				
+			
+		}
+	}
+	else if($type == 'request')
+	{
+	$tab = "open";
+		
+		
+		$userTimezone = getUserTimezone($user_id);
+		
+		if($is_expert == '1')
+		{
+			$reschedule_field = 'exp_reschedule';
+			$reset_field = 'user_reschedule';
+		}
+		else 
+		{
+			$reschedule_field = 'user_reschedule';
+			$reset_field = 'exp_reschedule';
+		}
+		$sql= " UPDATE sessions SET ".$reschedule_field."='1', ".$reset_field."='0' WHERE id='".$session_id."' ";
+		$query = mysql_query($sql);
+		if($query)
+		{
+			if($session_type == 'schedule')
+			{
+				$sql = " DELETE FROM session_time WHERE session_id='".$session_id."' ";
+			}
+			else
+			{
+				$sql = " DELETE FROM session_time WHERE session_id='".$session_id."' and user_id='".$user_id."' ";
+			}	
+				$query = mysql_query($sql);
+				if($query)
+				{
+					foreach($slot_selected as $key => $value)
+					{
+						$datetime = convertTimezone($value,$userTimezone['timezone'],$default_tz);
+						$sql = " INSERT INTO session_time SET user_id='".$user_id."', session_id='".$session_id."', datetime='".$datetime."' ";
+						$query = mysql_query($sql);
+					}
+				}
+			
+			
+		}
+	}
+	
+	if($query)
+	{
+		$status = "success";
+	}
+	else
+	{
+		$status = "error";
+	}
+	echo json_encode(array('status'=>$status,'is_expert'=>$is_expert,'tab'=>$tab));
+	*/
+}
+else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_public')
+{
+	
+	$error = array();
+	foreach($_POST as $key => $value)
+	{
+		$$key = $value;
+	}
+	//$slot
+	$tab = "schedule";
+	$userTimezone = getUserTimezone($user_id);
+	
+	if($is_expert == "1")
+	{
+		$sql 	= " DELETE FROM session_time WHERE session_id='".$session_id."' and user_id='".$user_id."' ";
+		$query 	= mysql_query($sql);
+		if($query)
+		{
+			if($type == 'accept')
+			{
+				$slot_val = $slot;
+			}
+			else
+			{
+				$slot_val = $slot_selected;
+			}
+			foreach($slot_val as $key => $value)
+			{
+				$datetime = convertTimezone($value,$userTimezone['timezone'],$default_tz);
+				$sql = " INSERT INTO session_time SET user_id='".$user_id."', session_id='".$session_id."', datetime='".$datetime."' ";
+				$query = mysql_query($sql);
+			}
+		}
+	}
+	else
+	{
+		$sql = " UPDATE sessions SET exp_hired='".$exp_hired."' WHERE id='".$session_id."' ";
+		$query = mysql_query($sql);
+		if($query)
+		{
+			if($type == 'accept')
+			{
+				
+				$sql = " UPDATE sessions SET session_datetime='".$slot."', exp_applied_id='".$exp_hired."',status='2' WHERE id='".$session_id."' ";
+				$query = mysql_query($sql);
+			}
+			else
+			{
+			
+				$sql 	= " DELETE FROM session_time WHERE session_id='".$session_id."' ";
+				$query 	= mysql_query($sql);
+				if($query)
+				{
+					$slot_val = $slot_selected;
+					foreach($slot_val as $key => $value)
+					{
+						$datetime = convertTimezone($value,$userTimezone['timezone'],$default_tz);
+						$sql = " INSERT INTO session_time SET user_id='".$user_id."', session_id='".$session_id."', datetime='".$datetime."' ";
+						$query = mysql_query($sql);
+					}
+				}
+			}
+		}
+	}
+	if($query)
+	{
+		$status = "success";
+	}
+	else
+	{
+		$status = "error";
+	}
+	echo json_encode(array('status'=>$status,'is_expert'=>$is_expert,'tab'=>$tab));
+	
+	/*
+	if($type == 'accept')
+	{
+		$sql= " UPDATE sessions SET session_datetime='".$slot."',exp_reschedule='0',user_reschedule='0', status='2' WHERE id='".$session_id."' ";
+		$query = mysql_query($sql);
+	}
+	else if($type == 'request')
+	{
+	$tab = "open";
+		$field = "is_expert";
+		$table = "users";
+		$condition = "and id = '".$user_id."' ";
+		$get_avail = getDetail($field,$table,$condition);
+		
+		$userTimezone = getUserTimezone($user_id);
+		
+		if($get_avail[0]['is_expert'] == '1')
+		{
+			$reschedule_field = 'exp_reschedule';
+			$reset_field = 'user_reschedule';
+		}
+		else 
+		{
+			$reschedule_field = 'user_reschedule';
+			$reset_field = 'exp_reschedule';
+		}
+		$sql= " UPDATE sessions SET ".$reschedule_field."='1', ".$reset_field."='0' WHERE id='".$session_id."' ";
+		$query = mysql_query($sql);
+		if($query)
+		{
+			$sql = " DELETE FROM session_time WHERE session_id='".$session_id."' ";
+			$query = mysql_query($sql);
+			if($query)
+			{
+				foreach($slot_selected as $key => $value)
+				{
+					$datetime = convertTimezone($value,$userTimezone['timezone'],$default_tz);
+					$sql = " INSERT INTO session_time SET user_id='".$user_id."', session_id='".$session_id."', datetime='".$datetime."' ";
+					$query = mysql_query($sql);
+				}
+			}
+		}
+	}
+	*/
+	
 }
 else if(isset($_POST['action']) && $_POST['action'] == 'submit_cancel_session')
 {
@@ -457,7 +685,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_public_request')
 	$sql  .= " s.tag_id,u.fname,u.lname,u.profile_image ";
 	$sql  .= ", ( SELECT name FROM categories WHERE id = s.category_id) as category "; 
 	$sql  .= " FROM sessions as s LEFT JOIN users as u ON(s.user_id = u.id)";
-	$sql  .= " WHERE s.status = '1' and s.type='request' ".$condition." ";
+	$sql  .= " WHERE s.status = '1' and s.exp_hired='0' and s.type='request' ".$condition." ";
 
 	$query = mysql_query($sql) or die(mysql_error());
 	if($query)

@@ -32,8 +32,8 @@ require_once 'phpInclude/header.php';
                             </div>
                         </div>
                         <ul class="navlist">
-                            <li><a href="javascript:void(0);" class="active"><i class="fa fa-caret-right"></i> My Account</a></li>
-                            <li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> My Sessions</a></li>
+                            <li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> My Account</a></li>
+                            <li><a href="javascript:void(0);" class="active"><i class="fa fa-caret-right"></i> My Sessions</a></li>
                             <li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> Expert Wishlist</a></li>
                             <li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> Finance</a></li>
                             <li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> Help</a></li>
@@ -114,7 +114,7 @@ require_once 'phpInclude/header.php';
 						else if(isset($_GET['tab']) && $_GET['tab'] == 'open')
 						{
 							
-							$sql = " SELECT s.exp_applied_id,s.id as s_id,s.user_reschedule,s.exp_reschedule,s.title,s.session_datetime,u.fname,u.lname,s.exp_applied_id FROM sessions as s LEFT JOIN users as u ";
+							$sql = " SELECT s.type,s.exp_applied_id,s.id as s_id,s.user_reschedule,s.exp_reschedule,s.title,s.session_datetime,u.fname,u.lname,s.exp_applied_id FROM sessions as s LEFT JOIN users as u ";
 							$sql .= " ON(s.exp_applied_id = u.id) WHERE user_id='".$_SESSION['LoginUserId']."' and s.status='1' ";
 
 							$query = mysql_query($sql) or die(mysql_error());
@@ -127,6 +127,14 @@ require_once 'phpInclude/header.php';
 									
 									while($fetch = mysql_fetch_assoc($query))
 									{
+										if($fetch['type'] == 'request')
+										{
+											$url = "public_request.php";
+										}
+										else
+										{
+											$url = "session_request.php";
+										}
 									?>
 									<li>
 									<div class="row">
@@ -134,7 +142,7 @@ require_once 'phpInclude/header.php';
 									<div class="col-xs-12 col-sm-2 col-xss-2"><h5>--</h5></div>
 								
 										<div class="col-xs-12 col-sm-7 col-xss-10"><h3>
-										<a href="<?php echo $root.'session_request.php?id='.$fetch['s_id'];?>">
+										<a href="<?php echo $root.$url.'?id='.$fetch['s_id'];?>">
 										<?php echo $fetch['title'];?>
 										</a>
 										<span>Expert: <?php $fetch['fname']." ".$fetch['lname'];?></span></h3></div>
@@ -156,7 +164,7 @@ require_once 'phpInclude/header.php';
 					{
 						if($fetch['exp_reschedule'] == 1)
 						{
-							echo "<a href='".$root."session_request.php?id=".$fetch['s_id']."' class='sess_btn'>Please Reschedule</a>";
+							echo "<a href='".$root.$url."?id=".$fetch['s_id']."' class='sess_btn'>Please Reschedule</a>";
 						}
 						else if($fetch['user_reschedule'] == 1)
 						{

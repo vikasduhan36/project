@@ -23,23 +23,27 @@
                                 </li>
                                 <li>
                                     <h5>Tags <i class="fa fa-angle-down"></i></h5>
-                                    
+                                    <ul class="taglist" id="tag_search_ui">
+									</ul>
+									<div class="autocomp_blk">
 									<input type="text" name="tag_search" id="tag_search" placeholder="Add Tags" class="form-control">
-									<ul id="tag_result">
+									<ul id="tag_result" class="autocomp_list">
 									</ul>
 									<div id="tag_selected">
 									</div>
-
+									</div>
                                 </li>
                                 <li>
                                     <h5>Languages <i class="fa fa-angle-down"></i></h5>
-                                    
-									<input type="text" name="language_search" id="language_search" placeholder="Add Languages" class="form-control" >
-<ul id="language_result">
-</ul>
-
-<div id="language_selected">
-</div>
+                                    <ul class="taglist" id="language_search_ui">
+									</ul>
+									<div class="autocomp_blk">
+										<input type="text" name="language_search" id="language_search" placeholder="Add Languages" class="form-control" >
+										<ul id="language_result" class="autocomp_list">
+										</ul>
+										<div id="language_selected">
+										</div>
+									</div>	
                                 </li>
                             </ul>
                         </div>

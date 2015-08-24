@@ -102,9 +102,9 @@ if ($user_detail[0]['facebook_url']!=""){	$facebook_url = $user_detail[0]['faceb
     	<div class="row">
             <div class="col-xs-12">
             	<a href="javascript:void(0);" class="logo">
-				
+				<!--
                		<img src="images/eyeask2.png" alt="eyeask" class="img-responsive logoimg2" />
-				
+				-->
                 </a>
                 <nav class="nav1">
                 	<a href="javascript:void(0);" class="navtogglebtn visible-xs">
@@ -119,7 +119,8 @@ if ($user_detail[0]['facebook_url']!=""){	$facebook_url = $user_detail[0]['faceb
                     	<a href="javascript:void(0);">
                         	<h6><small>Welcome</small> <?php echo $username;?></h6>
                             <i class="fa fa-sort"></i>
-                            <span class="userimg"><img src="<?php echo $prof_pic;?>" alt="img" class="img-responsive" /></span>
+                            <span class="userimg">
+							<img src="<?php echo $prof_pic;?>" alt="img" class="img-responsive" /></span>
                         </a>
                         <div class="dropmenu">
                         	<ul>

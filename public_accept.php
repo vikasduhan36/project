@@ -1,15 +1,26 @@
 <?php 
-require_once('phpInclude/header.php');
+	require_once('phpInclude/header.php');
 	
-$session_id = $_GET['id'];
-$field = " sessions.*,u.fname,u.lname,u.profile_image, (select GROUP_CONCAT(datetime) FROM session_time WHERE session_time.session_id=sessions.id) as time_request ";
+	$session_id = $_GET['id'];
+	$exp = '';
+	if(!empty($_GET['exp']))
+	{
+		$exp = $_GET['exp'];
+	}
+$field = " sessions.*,u.fname,u.lname,u.profile_image, (select GROUP_CONCAT(datetime) FROM session_time WHERE session_time.session_id=sessions.id ";
+if(!empty($exp))
+{
+	$field .= " and session_time.user_id='".$exp."' ";
+}
+$field .= " ) as time_request ";
 $table = "sessions LEFT JOIN users as u ON(sessions.user_id=u.id) ";
 $condition 	= "and sessions.id='".$session_id."' ";
 $session_detail = getDetail($field,$table,$condition);
 $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 
 ?>
-<form id="form_accept_session">
+<form id="form_accept_public">
+<input type="hidden" name="exp_hired" value="<?php echo $exp;?>">
 <input type="hidden" id="exp_id" name="exp_id" value="<?php echo $_SESSION['LoginUserId'];?>">
 
 <section class="midsection accountsection"><!-- // MID MAIN SECTION // -->
@@ -39,10 +50,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
                             	<h4>Other</h4>
                                 <p><?php echo (!empty($session_detail[0]['other']))?$session_detail[0]['other']:"--";?></p>
                             </div>
-					<?php
-				 if($session_detail[0]['status'] == '1' && $session_detail[0]['user_id'] != $_SESSION['LoginUserId'])
-				 {
-					?>
+
                             <div class="row">
                                 <div class="col-xs-12">
 								
@@ -50,17 +58,24 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 								$time_request = explode(",",$session_detail[0]['time_request']);
 								foreach($time_request as $request)
 								{
-									echo "<div><input type='checkbox' name='slot' value='".$request."'>".$request."</div>";
+									if(!empty($exp))
+									{
+										echo "<div><input type='checkbox' name='slot' value='".$request."'>".$request."</div>";
+									}
+									else if($session_detail[0]['user_id'] != $_SESSION['LoginUserId'])
+									{
+										echo "<div><input type='checkbox' name='slot[]' value='".$request."'>".$request."</div>";
+									}
 								}
 								?>
 								
-								<a class="bookme_btn apply_btn request_slot" href="javascript:void(0);">Accept </a>
+								<a class="bookme_btn apply_btn request_slot public <?php if(!empty($exp)){echo 'exp_hired';}?>" href="javascript:void(0);">Accept </a>
 								
 								<br>
 								
 								<a class="bookme_btn apply_btn" id="alternative_dates" href="javascript:void(0);">Request Alternative time</a>
 								
-								<section class="ChooseDatesCont" id="public_select_date" style="display:none;"><!-- CHOOSE DATE CONTAINER -->
+ <section class="ChooseDatesCont" id="public_select_date" style="display:none;"><!-- CHOOSE DATE CONTAINER -->
                                 <p><strong class="txt_lt_it">Select at least 1 (preferably 3) time slots that suit you.</strong><br/><small>(All times are in your local timezone AsialKolkata)</small></p>
                                 
                                 <div class="row">
@@ -71,10 +86,10 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 										-->
 										<input type="hidden" name="date_schedule" id="hidden_date_schedule" value=""/>
 										<div id="date_schedule"  class="date_schedule"></div>
-										<a href="javascript:void(0);" class="sess_btn canceled_btn date_schedule request_slot" id="request_schedule" />Request Reschedule</a>
+										<a href="javascript:void(0);" class="sess_btn canceled_btn date_schedule request_slot public" id="request_schedule" />Request Reschedule</a>
 								<a href="javascript:void(0);" class="sess_btn canceled_btn" id="alternative_dates_cancel" >Cancel</a>
 								<input type="hidden" name="type" value="accept">
-								<input type="hidden" name="action" value="submit_accept_session">
+								<input type="hidden" name="action" value="submit_accept_public">
 								<input type="hidden" name="session_id" value="<?php echo $session_id;?>">
 								
 								<input type="hidden" name="session_type" value="<?php echo $session_detail[0]['type'];?>">
@@ -100,10 +115,6 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 								
 								</div>
                             </div>
-					<?php
-					}
-					?>
-							
                         </div>
                     </section><!-- // STEP 1 // -->
 

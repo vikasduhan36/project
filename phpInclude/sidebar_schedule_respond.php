@@ -18,6 +18,8 @@
                                     	<span class="imgblk"><img src="images/users/default.jpg" alt="user" /></span>
                                         <h6><?php echo $session_detail[0]['fname']." ".$session_detail[0]['lname'];?>
 										<small>On: <?php 
+										echo $session_detail[0]['created'];
+										/*
 										if(!empty(strtotime($session_detail[0]['session_datetime'])))
 										{
 										echo $session_detail[0]['session_datetime'];
@@ -29,16 +31,10 @@
 											echo "<br>".$time;
 										}
 										}
+										*/
 										?></small></h6>
                                     </span>
-                                   <?php
-								   if($session_detail[0]['status'] == '1')
-									{
-										?>
-											<a href="javascript:void(0);" class="apply_btn cancel_req_btn" id="cancel_session" alt="<?php echo $session_id;?>">Cancel</a>
-										<?php
-									}
-								   ?>
+                                   
 									
 									
                                 </li>
@@ -80,7 +76,7 @@
                                     <span class="req_in">
 										<?php
 										
-											echo "<span>".$category_detail['name']."</span>";
+											echo "<span>".$category_detail[0]['name']."</span>";
 										
 										?>
 										</span>
@@ -92,7 +88,7 @@
 										  	<?php
 										$field = " name ";
 										$table = "tags";
-										$condition 	= "and tag_id IN(".$session_detail[0]['language_id'].") ";
+										$condition 	= "and id IN(".$session_detail[0]['language_id'].") ";
 										$tag_detail = getDetail($field,$table,$condition);
 										if(!empty($tag_detail))
 										{
@@ -111,6 +107,16 @@
 										<?php
 										}
 										?>
+										
+								<?php
+								   if($session_detail[0]['status'] == '1' && $session_detail[0]['user_id'] == $_SESSION['LoginUserId'])
+									{
+										?><li>
+											<a href="javascript:void(0);" class="apply_btn cancel_req_btn" id="cancel_session" alt="<?php echo $session_id;?>">Cancel</a>
+										</li>
+										<?php
+									}
+								   ?>
 								
                             </ul>
                         </div>
