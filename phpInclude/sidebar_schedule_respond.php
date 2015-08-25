@@ -1,7 +1,4 @@
- 	<?php
-	
-	?>
-	
+
 	<div class="sidebarnav sidebar2 requestsidebar"><!-- // SIDE BAR NAV // -->
                 	<span class="dashbar clearfix">
                     	<i class="fa fa-info-circle"></i> Information
@@ -15,10 +12,13 @@
                                 <li>
                                     <h5>Requested by </h5>
                                     <span class="req_by">
-                                    	<span class="imgblk"><img src="images/users/default.jpg" alt="user" /></span>
+                                    	<span class="imgblk">
+										<img src="<?php echo (!empty($session_detail[0]['profile_image']))?$session_detail[0]['profile_image']:'images/users/default.jpg';?>" alt="user" />
+										</span>
                                         <h6><?php echo $session_detail[0]['fname']." ".$session_detail[0]['lname'];?>
 										<small>On: <?php 
-										echo $session_detail[0]['created'];
+										$datetime = convertTimezone($session_detail[0]['created'],$default_tz,$userTimezone['timezone']);
+										echo $datetime;
 										/*
 										if(!empty(strtotime($session_detail[0]['session_datetime'])))
 										{

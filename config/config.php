@@ -3,7 +3,7 @@ if(!isset($_SESSION))
 {
  session_start();		
 }
-global $root, $con,$adminRoot, $defaultProfileImage, $date, $pagename, $default_tz ,$fromMail;
+global $root, $con,$adminRoot, $defaultProfileImage, $date, $pagename, $default_tz ,$fromMail, $default_tz_name,$is_expert;
 
 $con = '';
 //local database configuration ////////////
@@ -18,5 +18,6 @@ $pagename 		= basename($_SERVER['SCRIPT_NAME']);
 date_default_timezone_set('UTC');
 $date = date('Y-m-d H:i:s');
 $default_tz = '+00:00:00';
+$default_tz_name = 'GMT';
 $fromMail = "sricky555@gmail.com";
 ?>

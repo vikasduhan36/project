@@ -52,7 +52,16 @@ function getUserTimezone($user_id)
 	$result = array();
 	if($query)
 	{
-		$result = mysql_fetch_assoc($query);
+		if(mysql_num_rows($query) > 0)
+		{
+			$result = mysql_fetch_assoc($query);
+		}
+		else
+		{
+			$result['name'] = $GLOBALS['default_tz_name'];
+			$result['abbrevation'] = $GLOBALS['default_tz_name'];
+			$result['timezone'] = $GLOBALS['default_tz'];
+		}
 	}
 	return $result;
 }
@@ -216,6 +225,31 @@ function forgotPasswordMail($fromMail,$email,$password,$root)
 	else
 	{
 		return false;
+	}
+}
+
+function schedulingMail($fromMail,$emailTo,$subject,$body,$root)
+{
+	
+	//$subject = "Welcome to eyeask.com";
+
+	$body ="<html>
+	<div style='width:560px; height:auto; margin:0 auto;'>
+	<div style='text-align:center; padding-bottom:10px;'><img src='".$root."'images/eyeask1.png' alt='logo'/></div>
+	<div style='float:left; background:#F0FAFF; border: 1px solid #006F9D; margin:0; padding:20px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; font-size:13px; color:#221E1F; font-family:Arial, Helvetica, sans-serif; width:560px;'>
+	<p style='font-size:12px; margin:0; margin-bottom:10px; line-height:normal;'>".$subject.",</p>
+	 ".$body."
+	
+	<p style='font-size:12px; padding-top:10px; margin:0; line-height:18px;'>Greetings,<br/>
+	<strong style='font-style:italic; color:#221E1F;'>Eyeask.com Team</strong></p>
+	</html>";
+	if(sendMail($emailTo,$subject,$body,$fromMail))
+	{
+		return 'success';
+	}
+	else
+	{
+		return 'fail';
 	}
 }
 ?>

@@ -6,50 +6,9 @@ require_once 'phpInclude/header.php';
 	<div class="container">
     	<div class="row">
         	<div class="col-xs-12 col-sm-4 col-md-3">
-            	<div class="sidebarnav"><!-- // SIDE BAR NAV // -->
-                	<span class="dashbar clearfix">
-                    	<i class="fa fa-dashboard"></i> Dashboard
-                        <a href="javascript:void(0);" class="togglebtn2 visible-xs" data-toggle="tooltip" title="Click me">
-                        	<i class="fa fa-circle"></i><i class="fa fa-circle"></i><i class="fa fa-circle"></i>
-                        </a>
-                    </span>
-                    <div class="toggle_db"><!-- FOR TOGGLED DASHBOARD -->
-                    <form id="imageform" method="post" enctype="multipart/form-data" action='handler.php'>
-                        <div class="accountimgblk">
-                            <span class="imgcont" id='preview'><img src="<?php echo $prof_pic;?>" alt="user" class="responsiveimg" id="output"/></span>
-                            <span class="uploadimgotr">
-                                <input type="file"  name="photoimg" id="photoimg" />
-                                <span><i class="fa fa-camera"></i> Upload Image</span>
-                            </span>
-                        </div>
-                        </form>
-                         <?php 
-                            $count=0;
-                            //print_r($user_detail[0]);
-                            foreach($user_detail[0] as $key => $value){//echo $key;
-                           	if($value!=""){
-                            	 $count+=5;
-                            	}
-                            } $count=$count-30;
-                             ?>
-                        <div class="accountprogress">
-                            <h6 class="progresstxt">Profile completeness: <span><?php echo trim($count);?>%</span></h6>
-                            <div class="progress">
-                           
-                            	<div class="progress-bar progress-bar-striped active progress-bar-info" role="progressbar" aria-valuenow="<?php echo trim($count);?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo trim($count);?>%">
-                                <span class="sr-only"></span>
-                              </div>
-                            </div>
-                        </div>
-                        <ul class="navlist">
-                            <li><a href="javascript:void(0);" class="active"><i class="fa fa-caret-right"></i> My Account</a></li>
-                            <li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> My Sessions</a></li>
-                            <li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> Expert Wishlist</a></li>
-                            <li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> Finance</a></li>
-                            <li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> Help</a></li>
-                        </ul>					
-                    </div><!-- FOR TOGGLED DASHBOARD -->
-                </div><!-- // SIDE BAR NAV // -->
+            <?php
+			require_once('phpInclude/sidebar_expert_profile.php');
+			?>
             </div>
             
             <div class="col-xs-12 col-sm-8 col-md-9">

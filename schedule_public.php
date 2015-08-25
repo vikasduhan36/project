@@ -6,7 +6,15 @@ $condition 	= "and status='1' ";
 $categories = getDetail($field,$table,$condition);
 	
 ?>
-
+<style>
+.available
+{
+    background-color: #d7eac0 !important;
+    border-color: #afd581 !important;
+    border-style: solid !important;
+    border-width: 1px !important;
+}
+</style>
 <form id="form_book_schedule_public">
 
 <section class="midsection accountsection"><!-- // MID MAIN SECTION // -->

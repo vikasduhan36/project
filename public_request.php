@@ -68,7 +68,10 @@ $applied_detail = getDetail($field,$table,$condition);
 									   <div class="row">
                                             <div class="col-xs-12 col-sm-9"> 
                                                 <div class="expertinforow">
-                                                    <span class="expertimg"><img class="img-responsive" alt="expert1" src="<?php echo $applied['profile_image'];?>"></span>
+                                                    <span class="expertimg"><img class="img-responsive" alt="expert1" src="
+													
+													<?php echo (!empty($applied['profile_image']))?$applied['profile_image']:'images/users/default.jpg';?>
+													"></span>
                                                     <h4><a href="javascript:void(0);"><?php echo $applied['fname']." ".$applied['lname'];?></a></h4>
                                                     <ul class="MrgT0">
                                                         <li><i class="fa fa-euro"></i> <span><?php echo (!empty($applied['exp_rate']))?$applied['exp_rate']:'Free';?></span></li>
@@ -87,8 +90,21 @@ $applied_detail = getDetail($field,$table,$condition);
                                                     <li><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris condimentum consequat feugiat.<span>Aug 16, 15:10</span></p></li>
                                                 </ul>
 											-->	
-                                            	<a class="bookme_btn apply_btn" href="<?php echo $root.'public_accept.php?id='.$session_id.'&exp='.$applied['id'];?>">Accept </a>
-                                               	<!--
+											<?php
+											if($session_detail[0]['status'] == '2' && $session_detail[0]['exp_applied_id'] == $applied['id'])
+											{
+											?>
+                                            	<a class="bookme_btn apply_btn" href="javascript:void(0);">Booked </a>
+											<?php
+											}
+											else if($session_detail[0]['status'] == '1')
+											{
+												?>
+												<a class="bookme_btn apply_btn" href="<?php echo $root.'public_accept.php?id='.$session_id.'&exp='.$applied['id'];?>">Accept </a>
+												<?php
+											}
+											?>
+											 <!--
 												<a class="wishlistbtn details_btn" href="javascript:void(0);">Send Message</a>
 												-->
                                             </div>

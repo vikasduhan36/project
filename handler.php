@@ -52,7 +52,8 @@ if(isset($_POST['action']) && $_POST['action'] == 'submit_add_avail')
 	}
 	$userTimezone = getUserTimezone($user_id);
 	
-	
+	$sql = " DELETE FROM user_availability WHERE user_id='".$user_id."' "; 
+	$query = mysql_query($sql);
 	foreach($date_avail as $key_val => $date_val)
 	{
 
@@ -82,17 +83,18 @@ if(isset($_POST['action']) && $_POST['action'] == 'submit_add_avail')
 }
 else if(isset($_POST['action']) && $_POST['action'] == 'get_user_avail')
 {
-	$user_id = $_POST['user_id'];
+	//$user_id = $_POST['user_id'];
 	$date_selected = $_POST['date'];
 	$field = "`from`,`to`";
 	$table = "user_availability";
-	$condition = "and user_id = '".$user_id."' ";
+	$condition = "and user_id = '".$_POST['user_id']."' ";
 	$get_avail = getDetail($field,$table,$condition);
 	
 	$default_availability = default_availability();
 	$available = array();
 
 	$userTimezone = getUserTimezone($user_id);
+	$current_time = convertTimezone($date,$default_tz,$userTimezone['timezone']);
 	$all = array();
 	foreach($get_avail as  $datetime)
 	{
@@ -102,6 +104,8 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_user_avail')
 		$from = convertTimezone($from_dtime,$default_tz,$userTimezone['timezone']);
 		$to = convertTimezone($to_dtime,$default_tz,$userTimezone['timezone']);
 
+		
+		
 		foreach($default_availability as $time_val)
 		{
 			$time = $date_selected." ".$time_val;
@@ -115,7 +119,10 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_user_avail')
 	foreach($default_availability as $time_val)
 	{
 		$time = $date_selected." ".$time_val;
-		$all[] = date("Y-m-d H:i:s",strtotime($time));
+		if(strtotime($time) > strtotime($current_time))
+		{
+			$all[] = date("Y-m-d H:i:s",strtotime($time));
+		}
 	}
 		
 	echo json_encode(array('all'=>array_unique($all),'available'=>array_unique($available)));
@@ -125,7 +132,14 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_book_schedule')
 	$error = array();
 	foreach($_POST as $key => $value)
 	{
-		$$key = $value;
+		if(!is_array($value))
+		{
+			$$key = mysql_real_escape_string(trim($value));
+		}
+		else
+		{
+			$$key = $value;
+		}
 	}
 	$userTimezone = getUserTimezone($user_id);
 	//exp_id
@@ -158,6 +172,39 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_book_schedule')
 	}
 	else
 	{
+		
+		$field = "fname,lname,email";
+		$table = "users";
+		$condition = "and id = '".$exp_id."' ";
+		$get_exp = getDetail($field,$table,$condition);
+	
+		$field = "title";
+		$table = "sessions";
+		$condition = "and id = '".$session_id."' ";
+		$get_session = getDetail($field,$table,$condition);
+		
+		$field = "fname,lname,email";
+		$table = "users";
+		$condition = "and id = '".$user_id."' ";
+		$get_user = getDetail($field,$table,$condition);
+		
+		//to user
+		$subject = "Booking request sent";
+		$body = "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>Your booking request to book ".$get_exp[0]['fname']." ".$get_exp[0]['lname']." for a session about <b>".$get_session[0]['title']."</b> has now been sent to the expert.</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>We'll keep you posted when the expert accepts or rejects your booking request.</p>";
+		$emailTo = $get_user[0]['email'];
+		schedulingMail($fromMail,$emailTo,$subject,$body,$root);
+
+
+		//to expert
+		$subject = "New booking request";
+		$body = "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>".$get_user[0]['fname']." ".$get_user[0]['lname']." has sent you a booking request for session <b>".$get_session[0]['title']."</b>.</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>TO respond to the request, Click on the link below:</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><a href='".$root."session_request.php?id=".$session_id."'>".$root."session_request.php?id=".$session_id."</a></p>";
+		$emailTo = $get_exp[0]['email'];
+		schedulingMail($fromMail,$emailTo,$subject,$body,$root);
+		
+		
 		echo json_encode(array("status"=>"success","id"=>$session_id));exit();
 	}
 }
@@ -170,21 +217,58 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_session')
 		$$key = $value;
 	}
 	//$slot
+	$userTimezone = getUserTimezone($user_id);
 	$tab = "schedule";
+
+		$field = "title,exp_applied_id,user_id";
+		$table = "sessions";
+		$condition = "and id = '".$session_id."' ";
+		$get_session = getDetail($field,$table,$condition);
+		
+		$field = "fname,lname,email";
+		$table = "users";
+		$condition = "and id = '".$get_session[0]['exp_applied_id']."' ";
+		$get_exp = getDetail($field,$table,$condition);
+	
+		$field = "fname,lname,email";
+		$table = "users";
+		$condition = "and id = '".$get_session[0]['user_id']."' ";
+		$get_user = getDetail($field,$table,$condition);
+		
 	if($type == 'accept')
 	{
-		$sql= " UPDATE sessions SET session_datetime='".$slot."',exp_reschedule='0',user_reschedule='0', status='2' WHERE id='".$session_id."' ";
+		$slot_tz = convertTimezone($slot,$userTimezone['timezone'],$default_tz);
+		$sql= " UPDATE sessions SET session_datetime='".$slot_tz."',exp_reschedule='0',user_reschedule='0', status='2' WHERE id='".$session_id."' ";
 		$query = mysql_query($sql);
+	
+		
+		
+		//to user
+		$subject = "Session scheduled";
+		$body = "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>Your session <b>".$get_session[0]['title']."</b> with expert <b>".$get_exp[0]['fname']." ".$get_exp[0]['lname']."</b> has been scheduled.</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>TO participate in the session, Click on the link below:</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><a href='".$root."user_sessions.php?tab=schedule'>".$root.".user_sessions.php?tab=schedule</a></p>";
+		$emailTo = $get_user[0]['email'];
+		schedulingMail($fromMail,$emailTo,$subject,$body,$root);
+
+		//to expert
+		$subject = "Session scheduled";
+		$body = "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>Your have been booked for session <b>".$get_session[0]['title']."</b> with user <b>".$get_user[0]['fname']." ".$get_user[0]['lname']."</b> has been scheduled.</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>TO participate in the session, Click on the link below:</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><a href='".$root."exp_sessions.php?tab=schedule'>".$root.".exp_sessions.php?tab=schedule</a></p>";
+		$emailTo = $get_exp[0]['email'];
+		schedulingMail($fromMail,$emailTo,$subject,$body,$root);
+		
 	}
 	else if($type == 'request')
 	{
-	$tab = "open";
+		$tab = "open";
 		$field = "is_expert";
 		$table = "users";
 		$condition = "and id = '".$user_id."' ";
 		$get_avail = getDetail($field,$table,$condition);
 		
-		$userTimezone = getUserTimezone($user_id);
+		
 		
 		if($get_avail[0]['is_expert'] == '1')
 		{
@@ -210,12 +294,50 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_session')
 					$sql = " INSERT INTO session_time SET user_id='".$user_id."', session_id='".$session_id."', datetime='".$datetime."' ";
 					$query = mysql_query($sql);
 				}
+	if($get_avail[0]['is_expert'] == '1')
+	{			
+		//to user
+		$subject = "Session Re-scheduled";
+		$body = "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>Expert <b>".$get_exp[0]['fname']." ".$get_exp[0]['lname']."</b> has requested to reschedule the session <b>".$get_session[0]['title']."</b>.</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>TO respond to the session, Click on the link below:</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><a href='".$root."session_request.php?id=".$session_id."'>".$root."session_request.php?id=".$session_id."</a></p>";
+		$emailTo = $get_user[0]['email'];
+		schedulingMail($fromMail,$emailTo,$subject,$body,$root);
+
+		//to expert
+		$subject = "Session Re-scheduled";
+		$body = "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>Your reschedule request for session <b>".$get_session[0]['title']."</b> has been sent to the user <b>".$get_user[0]['fname']." ".$get_user[0]['lname']."</b>.</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>TO respond to the session, Click on the link below:</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><a href='".$root."exp_sessions.php?tab=open'>".$root.".exp_sessions.php?tab=open</a></p>";
+		$emailTo = $get_exp[0]['email'];
+		schedulingMail($fromMail,$emailTo,$subject,$body,$root);
+	}	
+	else
+	{
+		//to user
+		$subject = "Session Re-scheduled";
+		$body = "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>Your reschedule request for session <b>".$get_session[0]['title']."</b> has been sent to the Expert <b>".$get_exp[0]['fname']." ".$get_exp[0]['lname']."</b>.</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>TO respond to the session, Click on the link below:</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><a href='".$root."exp_sessions.php?tab=open'>".$root.".exp_sessions.php?tab=open</a></p>";
+		$emailTo = $get_user[0]['email'];
+		schedulingMail($fromMail,$emailTo,$subject,$body,$root);
+
+		//to expert
+		$subject = "Session Re-scheduled";
+		$body = "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>User <b>".$get_user[0]['fname']." ".$get_user[0]['lname']."</b> has requested to reschedule the session <b>".$get_session[0]['title']."</b>.</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>TO respond to the session, Click on the link below:</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><a href='".$root."session_request.php?id=".$session_id."'>".$root."session_request.php?id=".$session_id."</a></p>";
+		$emailTo = $get_exp[0]['email'];
+		schedulingMail($fromMail,$emailTo,$subject,$body,$root);
+	}
+		
 			}
 		}
 	}
 	
 	if($query)
 	{
+		
 		$status = "success";
 	}
 	else
@@ -223,113 +345,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_session')
 		$status = "error";
 	}
 	echo json_encode(array('status'=>$status,'is_expert'=>$is_expert,'tab'=>$tab));
-	/*
-	$error = array();
-	foreach($_POST as $key => $value)
-	{
-		$$key = $value;
-	}
-	//$slot
 	
-	$field = "user_reschedule, exp_reschedule";
-	$table = "sessions";
-	$condition = "and id = '".$session_id."' ";
-	$s_detail = getDetail($field,$table,$condition);
-		
-	$tab = "schedule";
-	if($type == 'accept' && $session_type == 'schedule')
-	{
-		$sql= " UPDATE sessions SET session_datetime='".$slot."',exp_reschedule='0',user_reschedule='0', status='2' WHERE id='".$session_id."' ";
-		$query = mysql_query($sql);
-	}
-	else if($session_type == 'request')
-	{
-		if($type == 'accept')
-		{
-			if($is_expert == "1")
-			{//***
-				if($s_detail[0]['user_reschedule'] == 0 && $s_detail[0]['exp_reschedule'] == 0)
-				{
-					foreach($slot as $key => $value)
-					{
-						$datetime = convertTimezone($value,$userTimezone['timezone'],$default_tz);
-						$sql = " INSERT INTO session_time SET user_id='".$user_id."', session_id='".$session_id."', datetime='".$datetime."' ";
-						$query = mysql_query($sql);
-					}
-				}
-				$query = mysql_query($sql);
-				if($query)
-				{
-					foreach($slot_selected as $key => $value)
-					{
-						$datetime = convertTimezone($value,$userTimezone['timezone'],$default_tz);
-						$sql = " INSERT INTO session_time SET user_id='".$user_id."', session_id='".$session_id."', datetime='".$datetime."' ";
-						$query = mysql_query($sql);
-					}
-				}
-			}
-			else
-			{
-				$sql = " DELETE FROM session_time WHERE session_id='".$session_id."' and user_id='".$user_id."' ";
-			}	
-				
-			
-		}
-	}
-	else if($type == 'request')
-	{
-	$tab = "open";
-		
-		
-		$userTimezone = getUserTimezone($user_id);
-		
-		if($is_expert == '1')
-		{
-			$reschedule_field = 'exp_reschedule';
-			$reset_field = 'user_reschedule';
-		}
-		else 
-		{
-			$reschedule_field = 'user_reschedule';
-			$reset_field = 'exp_reschedule';
-		}
-		$sql= " UPDATE sessions SET ".$reschedule_field."='1', ".$reset_field."='0' WHERE id='".$session_id."' ";
-		$query = mysql_query($sql);
-		if($query)
-		{
-			if($session_type == 'schedule')
-			{
-				$sql = " DELETE FROM session_time WHERE session_id='".$session_id."' ";
-			}
-			else
-			{
-				$sql = " DELETE FROM session_time WHERE session_id='".$session_id."' and user_id='".$user_id."' ";
-			}	
-				$query = mysql_query($sql);
-				if($query)
-				{
-					foreach($slot_selected as $key => $value)
-					{
-						$datetime = convertTimezone($value,$userTimezone['timezone'],$default_tz);
-						$sql = " INSERT INTO session_time SET user_id='".$user_id."', session_id='".$session_id."', datetime='".$datetime."' ";
-						$query = mysql_query($sql);
-					}
-				}
-			
-			
-		}
-	}
-	
-	if($query)
-	{
-		$status = "success";
-	}
-	else
-	{
-		$status = "error";
-	}
-	echo json_encode(array('status'=>$status,'is_expert'=>$is_expert,'tab'=>$tab));
-	*/
 }
 else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_public')
 {
@@ -343,8 +359,11 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_public')
 	$tab = "schedule";
 	$userTimezone = getUserTimezone($user_id);
 	
+		
+		
 	if($is_expert == "1")
 	{
+		$tab = "open";
 		$sql 	= " DELETE FROM session_time WHERE session_id='".$session_id."' and user_id='".$user_id."' ";
 		$query 	= mysql_query($sql);
 		if($query)
@@ -363,23 +382,98 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_public')
 				$sql = " INSERT INTO session_time SET user_id='".$user_id."', session_id='".$session_id."', datetime='".$datetime."' ";
 				$query = mysql_query($sql);
 			}
+		
+		$field = "title,user_id,exp_applied_id";
+		$table = "sessions";
+		$condition = "and id = '".$session_id."' ";
+		$get_session = getDetail($field,$table,$condition);
+		
+		$field = "fname,lname,email";
+		$table = "users";
+		$condition = "and id = '".$_SESSION['LoginUserId']."' ";
+		$get_exp = getDetail($field,$table,$condition);
+	
+		$field = "fname,lname,email";
+		$table = "users";
+		$condition = "and id = '".$get_session[0]['user_id']."' ";
+		$get_user = getDetail($field,$table,$condition);
+				
+	
+		//to user
+		$subject = "Apply to public request";
+		$body = "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>Expert <b>".$get_exp[0]['fname']." ".$get_exp[0]['lname']."</b> has replied to public session <b>".$get_session[0]['title']."</b>.</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>TO view session detail, Click on the link below:</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><a href='".$root."public_request.php?id=".$session_id."'>".$root."public_request.php?id=".$session_id."</a></p>";
+		
+		$emailTo = $get_user[0]['email'];
+		schedulingMail($fromMail,$emailTo,$subject,$body,$root);
+
+
+		//to expert
+		$subject = "Apply to public request";
+		$body = "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>You had replied to user <b>".$get_exp[0]['fname']." ".$get_exp[0]['lname']."</b> for public session <b>".$get_session[0]['title']."</b>.</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>TO view session detail, Click on the link below:</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><a href='".$root."public_request.php?id=".$session_id."'>".$root."public_request.php?id=".$session_id."</a></p>";
+		$emailTo = $get_exp[0]['email'];
+		schedulingMail($fromMail,$emailTo,$subject,$body,$root);
+		
+		
 		}
 	}
 	else
 	{
+	
+	$field = "title,user_id,exp_applied_id";
+		$table = "sessions";
+		$condition = "and id = '".$session_id."' ";
+		$get_session = getDetail($field,$table,$condition);
+		
+		$field = "fname,lname,email";
+		$table = "users";
+		$condition = "and id = '".$exp_hired."' ";
+		$get_exp = getDetail($field,$table,$condition);
+	
+		$field = "fname,lname,email";
+		$table = "users";
+		$condition = "and id = '".$get_session[0]['user_id']."' ";
+		$get_user = getDetail($field,$table,$condition);
+		
 		$sql = " UPDATE sessions SET exp_hired='".$exp_hired."' WHERE id='".$session_id."' ";
 		$query = mysql_query($sql);
 		if($query)
 		{
 			if($type == 'accept')
 			{
-				
-				$sql = " UPDATE sessions SET session_datetime='".$slot."', exp_applied_id='".$exp_hired."',status='2' WHERE id='".$session_id."' ";
+				$tab = "schedule";
+				$slot_tz = convertTimezone($slot,$userTimezone['timezone'],$default_tz);
+				$sql = " UPDATE sessions SET session_datetime='".$slot_tz."', exp_applied_id='".$exp_hired."',status='2' WHERE id='".$session_id."' ";
 				$query = mysql_query($sql);
+				
+		
+		//to user
+		$subject = "Booking confirmation";
+		$body = "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>You had booked Expert <b>".$get_exp[0]['fname']." ".$get_exp[0]['lname']."</b> for public session <b>".$get_session[0]['title']."</b>.</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>TO participate in the session, Click on the link below:</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><a href='".$root."user_sessions.php.php?tab=schedule'>".$root."user_sessions.php.php?tab=schedule</a></p>";
+		
+		$emailTo = $get_user[0]['email'];
+		schedulingMail($fromMail,$emailTo,$subject,$body,$root);
+
+
+		//to expert
+		$subject = "Booking confirmation";
+		$body = "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>You have booked by user <b>".$get_user[0]['fname']." ".$get_user[0]['lname']."</b> for public session <b>".$get_session[0]['title']."</b>.</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>TO participate in the session, Click on the link below:</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><a href='".$root."exp_sessions.php.php?tab=schedule'>".$root."exp_sessions.php.php?tab=schedule</a></p>";
+		
+		$emailTo = $get_exp[0]['email'];
+		schedulingMail($fromMail,$emailTo,$subject,$body,$root);
+		
+		
 			}
 			else
 			{
-			
+				$tab = "open";
 				$sql 	= " DELETE FROM session_time WHERE session_id='".$session_id."' ";
 				$query 	= mysql_query($sql);
 				if($query)
@@ -392,6 +486,26 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_public')
 						$query = mysql_query($sql);
 					}
 				}
+				
+	
+		//to user
+		$subject = "Reschedule Request";
+		$body = "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>You had sent a reschedule request to Expert <b>".$get_exp[0]['fname']." ".$get_exp[0]['lname']."</b> for public session <b>".$get_session[0]['title']."</b>.</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>TO view the session detail, Click on the link below:</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><a href='".$root."public_request.php?id=".$session_id."'>".$root."public_request.php?id=".$session_id."</a></p>";
+		$emailTo = $get_user[0]['email'];
+		schedulingMail($fromMail,$emailTo,$subject,$body,$root);
+
+
+		//to expert
+		$subject = "Reschedule Request";
+		$body = "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>You have been requested for resvhedule by user <b>".$get_user[0]['fname']." ".$get_user[0]['lname']."</b> for public session <b>".$get_session[0]['title']."</b>.</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>TO view the session detail, Click on the link below:</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><a href='".$root."public_request.php?id=".$session_id."'>".$root."public_request.php?id=".$session_id."</a></p>";
+		$emailTo = $get_exp[0]['email'];
+		schedulingMail($fromMail,$emailTo,$subject,$body,$root);
+		
+		
 			}
 		}
 	}
@@ -405,50 +519,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_public')
 	}
 	echo json_encode(array('status'=>$status,'is_expert'=>$is_expert,'tab'=>$tab));
 	
-	/*
-	if($type == 'accept')
-	{
-		$sql= " UPDATE sessions SET session_datetime='".$slot."',exp_reschedule='0',user_reschedule='0', status='2' WHERE id='".$session_id."' ";
-		$query = mysql_query($sql);
-	}
-	else if($type == 'request')
-	{
-	$tab = "open";
-		$field = "is_expert";
-		$table = "users";
-		$condition = "and id = '".$user_id."' ";
-		$get_avail = getDetail($field,$table,$condition);
-		
-		$userTimezone = getUserTimezone($user_id);
-		
-		if($get_avail[0]['is_expert'] == '1')
-		{
-			$reschedule_field = 'exp_reschedule';
-			$reset_field = 'user_reschedule';
-		}
-		else 
-		{
-			$reschedule_field = 'user_reschedule';
-			$reset_field = 'exp_reschedule';
-		}
-		$sql= " UPDATE sessions SET ".$reschedule_field."='1', ".$reset_field."='0' WHERE id='".$session_id."' ";
-		$query = mysql_query($sql);
-		if($query)
-		{
-			$sql = " DELETE FROM session_time WHERE session_id='".$session_id."' ";
-			$query = mysql_query($sql);
-			if($query)
-			{
-				foreach($slot_selected as $key => $value)
-				{
-					$datetime = convertTimezone($value,$userTimezone['timezone'],$default_tz);
-					$sql = " INSERT INTO session_time SET user_id='".$user_id."', session_id='".$session_id."', datetime='".$datetime."' ";
-					$query = mysql_query($sql);
-				}
-			}
-		}
-	}
-	*/
+	
 	
 }
 else if(isset($_POST['action']) && $_POST['action'] == 'submit_cancel_session')
@@ -459,6 +530,41 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_cancel_session')
 	if($query)
 	{
 		$status = 'success';
+		
+		$field = "title,user_id,exp_applied_id";
+		$table = "sessions";
+		$condition = "and id = '".$session_id."' ";
+		$get_session = getDetail($field,$table,$condition);
+		
+		$field = "fname,lname,email";
+		$table = "users";
+		$condition = "and id = '".$get_session[0]['exp_applied_id']."' ";
+		$get_exp = getDetail($field,$table,$condition);
+	
+		$field = "fname,lname,email";
+		$table = "users";
+		$condition = "and id = '".$get_session[0]['user_id']."' ";
+		$get_user = getDetail($field,$table,$condition);
+		
+		//to user
+		$subject = "Schedule cancelled";
+		$body = "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>Your session <b>".$get_session[0]['title']."</b> with expert <b>".$get_exp[0]['fname']." ".$get_exp[0]['lname']."</b> has cancelled.</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>TO view session detail, Click on the link below:</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><a href='".$root."session_request.php?id=".$session_id."'>".$root."session_request.php?id=".$session_id."</a></p>";
+		
+		$emailTo = $get_user[0]['email'];
+		schedulingMail($fromMail,$emailTo,$subject,$body,$root);
+
+
+		//to expert
+		$subject = "Schedule cancelled";
+		$body = "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>Your session <b>".$get_session[0]['title']."</b> with user <b>".$get_user[0]['fname']." ".$get_user[0]['lname']."</b> has cancelled.</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>TO view session detail, Click on the link below:</p>";
+		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><a href='".$root."session_request.php?id=".$session_id."'>".$root."session_request.php?id=".$session_id."</a></p>";
+		$emailTo = $get_exp[0]['email'];
+		schedulingMail($fromMail,$emailTo,$subject,$body,$root);
+		
+		
 	}
 	else
 	{
@@ -508,7 +614,14 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_book_schedule_pub
 	$error = array();
 	foreach($_POST as $key => $value)
 	{
-		$$key = $value;
+		if(!is_array($value))
+		{
+			$$key = mysql_real_escape_string(trim($value));
+		}
+		else
+		{
+			$$key = $value;
+		}
 	}
 	$userTimezone = getUserTimezone($user_id);
 	//exp_id
@@ -603,7 +716,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')
 	{
 		$sql .= " LEFT JOIN wishlist as w ON(w.wished_id = u.id)";
 	}
-	$sql .= " WHERE 1=1 and is_expert='1' ".$condition." ";
+	$sql .= " WHERE 1=1 and is_expert='1' and u.id != '".$user_id."' ".$condition." ";
 	
 	$query = mysql_query($sql) or die(mysql_error());
 	if($query)

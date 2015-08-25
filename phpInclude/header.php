@@ -54,6 +54,10 @@ var root = "<?php echo $root;?>";
 	background-color:#FFE6E6;
 	color:#ff0000
 }
+
+header.innerhead nav.nav1 ul.navlist li a.active{
+    color: #58bde7 !important;
+}
 </style>
 </head>
 <body>
@@ -64,6 +68,7 @@ $field = " * ";
 $table = " users ";
 $condition = " AND id='".trim($_SESSION['LoginUserId'])."' ";
 $user_detail = getDetail($field,$table,$condition);
+$GLOBALS['is_expert'] = $user_detail[0]['is_expert'];
 //print_r($user_detail);
 if($user_detail[0]['profile_image']!=""){ 
 	$prof_pic=$user_detail[0]['profile_image']; 
@@ -91,6 +96,7 @@ if ($user_detail[0]['linkedin_url']!=""){	$linkedin_url = $user_detail[0]['linke
 if ($user_detail[0]['twitter_url']!=""){	$twitter_url = $user_detail[0]['twitter_url'];}else {$twitter_url="";} /* user twitter url */
 if ($user_detail[0]['google_url']!=""){	$google_url = $user_detail[0]['google_url'];}else {$google_url="";} /* user google url */
 if ($user_detail[0]['facebook_url']!=""){	$facebook_url = $user_detail[0]['facebook_url'];}else {$facebook_url="";} /* user facebook url */
+
 }
 ?>
 <section id="main"><!-- // MAIN ID SECTION // -->
@@ -111,9 +117,24 @@ if ($user_detail[0]['facebook_url']!=""){	$facebook_url = $user_detail[0]['faceb
                     	<span></span><span></span><span></span>
                     </a>
                     <ul class="navlist">
-                    	<li><a href="javascript:void(0);">Browse Experts</a></li>
-                        <li><a href="javascript:void(0);">Place Request</a></li>
-                        <li><a href="javascript:void(0);">About</a></li>
+                    	<li><a href="<?php echo $root;?>experts.php" class="<?php if($pagename=='experts.php'){echo 'active';}?>">Browse Experts</a></li>
+                        <?php
+						if($GLOBALS['is_expert'] == 1)
+						{
+							?>
+							<li><a href="<?php echo $root;?>public_sessions.php" class="<?php if($pagename=='public_sessions.php'){echo 'active';}?>">Browse Requests</a></li>
+							<?php
+						}
+						else
+						{
+							?>
+							<li><a href="<?php echo $root;?>schedule_public.php" class="<?php if($pagename=='schedule_public.php'){echo 'active';}?>">Place Request</a></li>
+							<?php
+						}
+						?>
+						
+                       
+					   <li><a href="javascript:void(0);">About</a></li>
                     </ul>
                    	<div class="userdropdown">
                     	<a href="javascript:void(0);">
@@ -124,9 +145,16 @@ if ($user_detail[0]['facebook_url']!=""){	$facebook_url = $user_detail[0]['faceb
                         </a>
                         <div class="dropmenu">
                         	<ul>
-                            	<li><a href="javascript:void(0);">My Account</a></li>
-                                <li><a href="javascript:void(0);">My Session</a></li>
-                                <li><a href="javascript:void(0);">Expert Wishlist</a></li>
+                            	<li><a href="<?php echo $root;?>account.php">My Account</a></li>
+                                <li><a href="<?php if($GLOBALS['is_expert'] == '1')
+								{
+									echo $root.'exp_sessions.php';	
+								}
+								else
+								{
+									echo $root.'user_sessions.php';	
+								}?>">My Session</a></li>
+                                <li><a href="<?php echo $root;?>wishlist.php">Expert Wishlist</a></li>
                                 <li><a href="javascript:void(0);">Finance</a></li>
                                 <li><a href="javascript:void(0);">Help</a></li>
                                 <li><a href="handler.php?method=<?php echo base64_encode("logout");?>">Logout <i class="fa fa-sign-out pull-right"></i></a></li>

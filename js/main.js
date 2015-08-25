@@ -6,11 +6,19 @@ var year = current.getFullYear();
 $(document).ready(function(){
 
 	$('.date_pick').datepicker({
-		dateFormat: 'dd-mm-yy',
-		minDate: new Date()
+		
 		});
-		console.log(date+"-"+month+"-"+year);
-	$(".date_pick").val(date+"-"+month+"-"+year);
+		
+	$( ".date_pick_icon" ).datepicker({
+		  showOn: "button",
+		  buttonImage: "images/calendar.gif",
+		  buttonImageOnly: true,
+		  buttonText: "Select date",
+		  dateFormat: 'dd-mm-yy',
+		minDate: new Date()
+	});
+		
+	$(".date_pick,.date_pick_icon").not('.pre_select').val(date+"-"+month+"-"+year);
 	$('.date_schedule').datepicker({
 		dateFormat: 'dd-mm-yy',
 		minDate: new Date(),
@@ -24,11 +32,12 @@ $(document).ready(function(){
 	
 	$("#submit_add_avail").click(function(){
 		var error = 0;
+		var message = '';
 		$.each($(".time_from"),function(key,value){
 			
 			if($(this).val() >= $(".time_to").eq(key).val())
 			{
-				alert('To time must be greater then from time');
+				message = 'Time to must be greater then time from';
 				error = 1;
 			}
 			
@@ -36,6 +45,12 @@ $(document).ready(function(){
 		
 		if(error == 1)
 		{
+			$("#notification").addClass("error").removeClass("success").text(message).show();
+			
+			$('html, body').animate({
+					scrollTop: $("#notification").offset().top
+			}, 800);
+				
 			return false;
 		}
 		
@@ -44,34 +59,79 @@ $(document).ready(function(){
 			url:root+'handler.php',
 			type:'post',
 			data:datastring,
-			dataType:'json',
+			//dataType:'json',
 			beforeSend:function(){
 				
 			},
 			success:function(response){
-				if(response.status == 'success')
+				if(response == 'success')
 				{
-					alert('success');
+					$("#notification").addClass("success").removeClass("error").text('You availability has been updated successfully.').show();
 				}
 				else
 				{
-					alert('error');
+					$("#notification").addClass("error").removeClass("success").text('Something went wrong. Please try again later.').show();
 				}
+				$('html, body').animate({
+					scrollTop: $("#notification").offset().top
+				}, 800);
 			}
 		})
 	});
 	
 	
 	$('#add_more_avail').click(function(){
+
+		var html = '<div class="row availability_inner">';
+			html += '<div class="col-xs-12 col-md-4">'
+			html += '<label class="lbl">Choose Date</label>';
+			html += '<input type="text" name="date_avail[]" class="date_pick_icon form-control" readonly="readonly"/>';
+			html += '<div id="date_schedule"  class="date_schedule"></div>';
+			html += '</div>';
+			html += '<div class="col-xs-12 col-md-3">';
+			html += '<label class="lbl">Time from</label>';
+
+			html += '<select name="timefrom[]" class="time_from form-control">';
+			html += $('.time_from:first').html();
+			html += '</select>';
+			
+			html += '</div><div class="col-xs-12 col-md-3"><label class="lbl">Time to</label>';
+			html += '<select name="timeto[]" class="time_to form-control">';
+			html += $('.time_to:first').html();
+			html += '</select></div>';
+			
+			html += '<div class="col-xs-12 col-md-2"><label class="lbl">';
+			html += '<a href="javascript:void(0);" class="remove_availability" title="Remove availability">';
+			html += 'X</a></label></div>';
+			
+			html += '</div>';
+
+		$(".availability_outer").append(html);
 		
-		$(".availability_outer").append($(".availability").html());
 		
-		//$('.date_pick:last').removeClass('hasDatepicker date_pick').addClass('dynamic_datepicker');
-		//$('.dynamic_datepicker').datepicker({dateFormat: 'dd-mm-yy', minDate: new Date()});
-		
-		
+		//$('.date_pick:last').datepicker();
+		$( ".date_pick_icon:last" ).datepicker({
+			  showOn: "button",
+			  buttonImage: "images/calendar.gif",
+			  buttonImageOnly: true,
+			  buttonText: "Select date",
+			  dateFormat: 'dd-mm-yy',
+				minDate: new Date()
+		});
+		$(".date_pick_icon:last").val(date+"-"+month+"-"+year);
+		$(".time_from:last").val('09:00:00');
+		$(".time_to:last").val('17:00:00');
 	});
 
+	$('body').on('click','.remove_availability',function(){
+		var r = confirm('Are you sure you want to remove this availability?');
+		if(!r)
+		{
+			return false;
+		}
+		$(this).parents().eq(2).slideUp(function(){$(this).remove();});
+	});
+	
 	$("#validate_step1").click(function(){
 	
 		var message = '';
@@ -289,6 +349,7 @@ $(document).ready(function(){
 				
 			},
 			success:function(response){
+				
 				if(response.status == 'success')
 				{
 					if(response.is_expert == '1')
@@ -297,7 +358,7 @@ $(document).ready(function(){
 					}
 					else
 					{
-						var url = 'exp_sessions.php';
+						var url = 'user_sessions.php';
 					}
 					
 					window.location.href = root+url+"?tab="+response.tab;
@@ -824,9 +885,13 @@ html += '<li><a href="javascript:void(0);" data-toggle="tooltip" title="Website"
 html += '</ul>';
 html += '</div>';
 html += '</div>';
-
+var profile_image = 'images/users/default.jpg';
+if(value.profile_image != '')
+{
+	profile_image = value.profile_image;
+}
 html += '<span class="expertimg">';
-html += '<img src="images/users/default.jpg" alt="expert1" class="img-responsive"/>';
+html += '<img src="'+profile_image+'" alt="expert1" class="img-responsive"/>';
 html += '</span><h4><a href="javascript:void(0);">'+value.fname+' '+value.lname+'</a></h4>';
 html += '<ul>';
 html += '<li><i class="fa fa-map-marker"></i> '+value.city+' '+value.country_id+'</li>';
@@ -944,15 +1009,19 @@ function search_public_request(datastring)
 						});
 						html += '</ul>';
 						}
-
+						var profile_image = 'images/users/default.jpg';
+						if(value.profile_image != '')
+						{
+							profile_image = value.profile_image;
+						}
 						html += '<div class="expertinforow"><span class="expertimg">';
-						html += '<img src="'+value.profile_image+'" alt="expert1" class="img-responsive"/></span>';
+						html += '<img src="'+profile_image+'" alt="expert1" class="img-responsive"/></span>';
 						html += '<ul>';
 						html += '<li><i class="fa fa-user"></i> Requested by : <span>'+value.fname+' '+value.lname+'</span> '+value.created+'</li>';
 						html += '<li><i class="fa fa-globe"></i>'+value.language+'</li>';
 						html += '</ul>';
-						html += '<a href="'+root+'session_accept.php?id='+value.id+'" class="bookme_btn apply_btn">Apply </a>';
-						html += '<a href="'+root+'session_request.php?id='+value.id+'" class="wishlistbtn details_btn">See Details</a>';
+						html += '<a href="'+root+'public_accept.php?id='+value.id+'" class="bookme_btn apply_btn">Apply </a>';
+						html += '<a href="'+root+'public_request.php?id='+value.id+'" class="wishlistbtn details_btn">See Details</a>';
 						html += '</div>';
 						html += '</div>';
 						html += '<div class="col-xs-12 col-md-4 col-lg-3">';

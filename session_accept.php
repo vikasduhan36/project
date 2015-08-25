@@ -40,16 +40,18 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
                                 <p><?php echo (!empty($session_detail[0]['other']))?$session_detail[0]['other']:"--";?></p>
                             </div>
 					<?php
-				 if($session_detail[0]['status'] == '1' && $session_detail[0]['user_id'] != $_SESSION['LoginUserId'])
+				 if($session_detail[0]['status'] == '1' /*&& $session_detail[0]['user_id'] != $_SESSION['LoginUserId']*/)
 				 {
 					?>
                             <div class="row">
                                 <div class="col-xs-12">
 								
 								<?php
+								$userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 								$time_request = explode(",",$session_detail[0]['time_request']);
-								foreach($time_request as $request)
+								foreach($time_request as $req)
 								{
+									$request = convertTimezone($req,$default_tz,$userTimezone['timezone']);
 									echo "<div><input type='checkbox' name='slot' value='".$request."'>".$request."</div>";
 								}
 								?>

@@ -9,7 +9,8 @@
                     </span>
                     <div class="toggle_db"><!-- FOR TOGGLED DASHBOARD -->
                         <div class="accountimgblk">
-                            <span class="imgcont"><img src="images/users/default.jpg" alt="user" class="responsiveimg" /></span>
+                            <span class="imgcont">
+							<img src="images/users/default.jpg" alt="user" class="responsiveimg" /></span>
                             <span class="uploadimgotr">
                                 <input type="file" />
                                 <span>

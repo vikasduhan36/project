@@ -56,8 +56,9 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 								
 								<?php
 								$time_request = explode(",",$session_detail[0]['time_request']);
-								foreach($time_request as $request)
+								foreach($time_request as $req)
 								{
+									$request = convertTimezone($req,$default_tz,$userTimezone['timezone']);
 									if(!empty($exp))
 									{
 										echo "<div><input type='checkbox' name='slot' value='".$request."'>".$request."</div>";

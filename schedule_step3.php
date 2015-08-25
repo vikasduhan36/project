@@ -5,7 +5,7 @@
                         <div class="schedulemain">
                             
                             <div class="confirmdetail">
-                            	<a href="javascript:void(0);" id="edit_step1" class="editlink pull-right"><i class="fa fa-edit"></i> &nbsp;Edit</a>
+                            	<a href="javascript:void(0);" id="edit_step2" class="editlink pull-right"><i class="fa fa-edit"></i> &nbsp;Edit</a>
                             	<h4>Details</h4>
                                 <ul>
                                 	<li>
@@ -24,7 +24,7 @@
                             </div>
                             
                             <div class="confirmdetail">
-                            	<a href="javascript:void(0);" id="edit_step2" class="editlink pull-right"><i class="fa fa-edit"></i> &nbsp;Edit</a>
+                            	<a href="javascript:void(0);" id="edit_step1" class="editlink pull-right"><i class="fa fa-edit"></i> &nbsp;Edit</a>
                             	<h4>Suggested Time</h4>
                                 <ul class="timelist" id="display_datetime">
 								

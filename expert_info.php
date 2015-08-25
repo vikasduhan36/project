@@ -25,26 +25,9 @@ if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){
 	<div class="container">
     	<div class="row">
         	<div class="col-xs-12 col-sm-4 col-md-3">
-            	<div class="sidebarnav"><!-- // SIDE BAR NAV // -->
-                	<span class="dashbar clearfix">
-                    	<i class="fa fa-dashboard"></i> Dashboard
-                        <a href="javascript:void(0);" class="togglebtn2 visible-xs" data-toggle="tooltip" title="Click me">
-                        	<i class="fa fa-circle"></i><i class="fa fa-circle"></i><i class="fa fa-circle"></i>
-                        </a>
-                    </span>
-                    <div class="toggle_db"><!-- FOR TOGGLED DASHBOARD -->
-                        <div class="accountimgblk">
-                            <span class="imgcont"><img src="<?php echo $prof_pic;?>" alt="user" class="responsiveimg" /></span>
-                        </div>
-                        <ul class="navlist">
-                            <li><a href="javascript:void(0);" class="active"><i class="fa fa-caret-right"></i> My Account</a></li>
-                            <li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> My Sessions</a></li>
-                            <li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> Expert Wishlist</a></li>
-                            <li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> Finance</a></li>
-                            <li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> Help</a></li>
-                        </ul>					
-                    </div><!-- FOR TOGGLED DASHBOARD -->
-                </div><!-- // SIDE BAR NAV // -->
+         <?php
+				require_once('phpInclude/sidebar_expert_profile.php');
+				?>
             </div>
             
             <div class="col-xs-12 col-sm-8 col-md-9">

@@ -2,7 +2,15 @@
 	require_once('phpInclude/header.php');
 		$exp_id = $_GET['id'];
 ?>
-
+<style>
+.available
+{
+    background-color: #d7eac0 !important;
+    border-color: #afd581 !important;
+    border-style: solid !important;
+    border-width: 1px !important;
+}
+</style>
 <section class="midsection accountsection"><!-- // MID MAIN SECTION // -->
 	<div class="container">
     	<div class="row">
