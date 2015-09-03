@@ -3,7 +3,7 @@ if(!isset($_SESSION))
 {
  session_start();		
 }
-global $root, $con,$adminRoot, $defaultProfileImage, $date, $pagename, $default_tz ,$fromMail, $default_tz_name,$is_expert;
+global $root, $con,$adminRoot, $defaultProfileImage, $date, $pagename, $default_tz ,$fromMail, $default_tz_name,$is_expert, $tokboxApi, $tokboxApiSecret;
 
 $con = '';
 //local database configuration ////////////
@@ -20,4 +20,10 @@ $date = date('Y-m-d H:i:s');
 $default_tz = '+00:00:00';
 $default_tz_name = 'GMT';
 $fromMail = "sricky555@gmail.com";
+$tokboxApi = 45331532;
+$tokboxApiSecret = '1216ee36e813250d5d3ad1a94c81fdb14946bbb6';
+
+
+
+
 ?>

@@ -1139,7 +1139,17 @@ if(isset($_POST['action']) && $_POST['action']=="update_email")
 /* apply as expert */
 if (isset($_GET['set']) && $_GET['set']==base64_encode("apply_expert"))
 {
-	$update_user = "UPDATE users set is_expert='1' WHERE id='".trim(base64_decode($_GET['sid']))."' ";
+
+	require_once 'SDK/OpenTokSDK.php';
+    require_once 'SDK/OpenTokArchive.php';
+    require_once 'SDK/OpenTokSession.php';
+    
+    $apiObj = new OpenTokSDK($tokboxApi, $tokboxApiSecret);
+    
+	$session = $apiObj->createSession();
+    $sessionId=$session->getSessionId();
+	
+	$update_user = "UPDATE users set is_expert='1',tokbox_id='".$sessionId."' WHERE id='".trim(base64_decode($_GET['sid']))."' ";
 	$update_query = mysql_query($update_user);
 	if($update_query)
 	{

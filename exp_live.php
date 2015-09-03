@@ -1,6 +1,46 @@
 <?php 
 	require_once('phpInclude/header.php');
+	require_once 'SDK/OpenTokSDK.php';
+    require_once 'SDK/OpenTokArchive.php';
+    require_once 'SDK/OpenTokSession.php';
+	?>
+		 <script type="text/javascript" src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js" ></script> 	<!-- FOR OPENTOK WEBRTC --> 
+	<?php
+	$field = " tokbox_id ";
+	$table = " users ";
+	$condition = " AND id = '".$_SESSION['LoginUserId']."' ";
+	$user_dt = getDetail($field,$table,$condition);
 	
+	$sessionId = $user_dt[0]['tokbox_id'];
+    
+    $apiObj = new OpenTokSDK($tokboxApi, $tokboxApiSecret);
+    
+	$tokenId=$apiObj->generate_token($sessionId, RoleConstants::PUBLISHER, null, 'expert'); 
+	?>
+	<script type="text/javascript">
+	
+var type="exp";
+
+var apiKey			 = "<?php echo $tokboxApi;?>";
+var apiSecret		 = "<?php echo $tokboxApiSecret;?>";
+var sessionId		 = "<?php echo $sessionId;?>";  												//tokbox id to start live session
+var token			 = "<?php echo $tokenId;?>";						
+var session			 = "";
+var publisher		 = "";
+var subscribers 	 = {};
+var cameras			 = "";
+var myCameraWidth 	 = 536;																				//Inset stram width
+var myCameraHeight 	 = 400;	
+var connections 	 = {};
+var connection_id;
+var streamcount 	 = null;
+var connectionCount  = 0;
+var VIDEO_HEIGHT	 = 154;
+var VIDEO_WIDTH 	 = 270;
+	
+    </script>
+	<script src="<?php echo $root;?>js/exp_video.js"></script>
+	<?php
 	$sql  = " SELECT s.session_datetime,s.duration,s.title,s.description,s.question, ";
 	$sql .= " u.id,u.fname,u.lname ";
 	$sql .= " FROM sessions as s LEFT JOIN users as u ON(s.user_id = u.id) ";
@@ -52,8 +92,13 @@
 	
 	
 ?>	
-	
+<h3>Expert</h3>
+	<div id="myCamera"></div>
 
+	<h3>User</h3>
+	<div id="subVideo"></div>
+	
+	<div id="user"></div>
 
 <?php 
 	require_once('phpInclude/footer.php');
