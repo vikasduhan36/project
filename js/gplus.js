@@ -49,7 +49,11 @@ function loginCallback(result)
 					cache: false,
 					//contentType: false,
 					//processData: false,
+					beforeSend:function(){
+						$('#loader').show();
+					},
 					success:  function(data){
+						$('#loader').hide();
 					if($.trim(data=="success"))
 					{
 						window.location.href = 'account.php'; 

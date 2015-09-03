@@ -1,9 +1,9 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 4.1.14
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 20, 2015 at 07:21 PM
+-- Generation Time: Aug 26, 2015 at 07:00 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `eyeask`
+-- Database: `tutmeatv_eyeask`
 --
 
 -- --------------------------------------------------------
@@ -63,6 +63,278 @@ INSERT INTO `categories` (`id`, `name`, `status`, `created`, `modified`) VALUES
 (7, 'Coaching and training', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (8, 'Tech', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (9, 'Other', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `country`
+--
+
+CREATE TABLE IF NOT EXISTS `country` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `country_code` varchar(255) DEFAULT NULL,
+  `country_name` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=256 ;
+
+--
+-- Dumping data for table `country`
+--
+
+INSERT INTO `country` (`id`, `country_code`, `country_name`) VALUES
+(1, 'FR ', 'France'),
+(4, 'DE ', 'Germany'),
+(5, 'IE ', 'Ireland'),
+(6, 'ES ', 'Spain'),
+(7, 'GB ', 'United Kingdom'),
+(8, 'US ', 'United States'),
+(9, 'AF ', 'Afghanistan'),
+(10, 'AL ', 'Albania'),
+(11, 'DZ ', 'Algeria'),
+(12, 'AS ', 'American samoa'),
+(13, 'AD ', 'Andorra'),
+(14, 'AO ', 'Angola'),
+(15, 'AI ', 'Anguilla'),
+(16, 'AQ ', 'Antarctica'),
+(17, 'AG ', 'Antigua and Barbuda'),
+(18, 'AR ', 'Argentina'),
+(19, 'AM ', 'Armenia'),
+(20, 'AW ', 'Aruba'),
+(21, 'AU ', 'Australia'),
+(22, 'AT ', 'Austria'),
+(23, 'AZ ', 'Azerbaijan'),
+(24, 'BS ', 'Bahamas'),
+(25, 'BH ', 'Bahrain'),
+(26, 'BD ', 'Bangladesh'),
+(27, 'BB ', 'Barbados'),
+(28, 'BY ', 'Belarus'),
+(29, 'BE ', 'Belgium'),
+(30, 'BZ ', 'Belize'),
+(31, 'BJ ', 'Benin'),
+(32, 'BM ', 'Bermuda'),
+(33, 'BT ', 'Bhutan'),
+(34, 'BO ', 'Bolivia'),
+(35, 'BA ', 'Bosnia and Herzegovina'),
+(36, 'BW ', 'Botswana'),
+(37, 'BV ', 'Bouvet Island'),
+(38, 'BR ', 'Brazil'),
+(39, 'IO ', 'British Indian Ocean Territory'),
+(40, 'BN ', 'Brunei Darussalam'),
+(41, 'BG ', 'Bulgaria'),
+(42, 'BF ', 'Burkina Faso'),
+(43, 'BI ', 'Burundi'),
+(44, 'KH ', 'Cambodia'),
+(45, 'CM ', 'Cameroon'),
+(46, 'CA ', 'Canada'),
+(47, 'CV ', 'Cape Verde'),
+(48, 'KY ', 'Cayman Islands'),
+(49, 'CF ', 'Central African Republic'),
+(50, 'TD ', 'Chad'),
+(51, 'CL ', 'Chile'),
+(52, 'CN ', 'China'),
+(53, 'CX ', 'Christmas Island'),
+(54, 'CC ', 'Cocos (Keeling) Islands'),
+(55, 'CO ', 'Colombia'),
+(56, 'KM ', 'Comoros'),
+(57, 'CG ', 'Congo'),
+(58, 'CK ', 'Cook Islands'),
+(59, 'CR ', 'Costa Rica'),
+(60, 'HR ', 'Croatia'),
+(61, 'CU ', 'Cuba'),
+(62, 'CY ', 'Cyprus'),
+(63, 'CS ', 'Czech Republic'),
+(64, 'DK ', 'Denmark'),
+(65, 'DJ ', 'Djibouti'),
+(66, 'DM ', 'Dominica'),
+(67, 'DO ', 'Dominican Republic'),
+(68, 'TP ', 'East Timor'),
+(69, 'EC ', 'Ecuador'),
+(70, 'EG ', 'Egypt'),
+(71, 'SV ', 'El Salvador'),
+(72, 'GQ ', 'Equatorial guinea'),
+(73, 'ER ', 'Eritrea'),
+(74, 'EE ', 'Estonia'),
+(75, 'ET ', 'Ethiopia'),
+(76, 'FK ', 'Falkland Islands (Malvinas)'),
+(77, 'FO ', 'Faroe Islands'),
+(78, 'FJ ', 'Fiji'),
+(79, 'FI ', 'Finland'),
+(80, 'GF ', 'French Guiana'),
+(81, 'PF ', 'French Polynesia'),
+(82, 'TF ', 'French Southern Territories'),
+(83, 'GA ', 'Gabon'),
+(84, 'GM ', 'Gambia'),
+(85, 'GE ', 'Georgia'),
+(86, 'GH ', 'Ghana'),
+(87, 'GI ', 'Gibraltar'),
+(88, 'GR ', 'Greece'),
+(89, 'GL ', 'Greenland'),
+(90, 'GD ', 'Grenada'),
+(91, 'GP ', 'Guadeloupe'),
+(92, 'GU ', 'Guam'),
+(93, 'GT ', 'Guatemala'),
+(94, 'GN ', 'Guinea'),
+(95, 'GW ', 'Guinea-Bissau'),
+(96, 'GY ', 'Guyana'),
+(97, 'HT ', 'Haiti'),
+(98, 'HM ', 'Heard Island and Mcdonald Islands'),
+(99, 'VA ', 'Holy See (Vatican City State)'),
+(100, 'HN ', 'Honduras'),
+(101, 'HK ', 'Hong Kong'),
+(102, 'HU ', 'Hungary'),
+(103, 'IS ', 'Iceland'),
+(104, 'IN ', 'India'),
+(105, 'ID ', 'Indonesia'),
+(106, 'IR ', 'Iran, Islamic Republic of'),
+(107, 'IQ ', 'Iraq'),
+(108, 'IL ', 'Israel'),
+(109, 'IT ', 'Italy'),
+(110, 'JM ', 'Jamaica'),
+(111, 'JP ', 'Japan'),
+(112, 'JO ', 'Jordan'),
+(113, 'KZ ', 'Kazakstan'),
+(114, 'KE ', 'Kenya'),
+(115, 'KI ', 'Kiribati'),
+(116, 'KP ', 'Korea, Democratic People''s Republic of'),
+(117, 'KR ', 'Korea, Republic of'),
+(118, 'KW ', 'Kuwait'),
+(119, 'KG ', 'Kyrgyzstan'),
+(120, 'LA ', 'Lao People''s Democratic Republic'),
+(121, 'LV ', 'Latvia'),
+(122, 'LB ', 'Lebanon'),
+(123, 'LS ', 'Lesotho'),
+(124, 'LR ', 'Liberia'),
+(125, 'LY ', 'Libyan Arab Jamahiriya'),
+(126, 'LI ', 'Liechtenstein'),
+(127, 'LT ', 'Lithuania'),
+(128, 'LU ', 'Luxembourg'),
+(129, 'MO ', 'Macau'),
+(130, 'MK ', 'Macedonia'),
+(131, 'MG ', 'Madagascar'),
+(132, 'MW ', 'Malawi'),
+(133, 'MY ', 'Malaysia'),
+(134, 'MV ', 'Maldives'),
+(135, 'ML ', 'Mali'),
+(136, 'MT ', 'Malta'),
+(137, 'MH ', 'Marshall Islands'),
+(138, 'MQ ', 'Martinique'),
+(139, 'MR ', 'Mauritania'),
+(140, 'MU ', 'Mauritius'),
+(141, 'YT ', 'Mayotte'),
+(142, 'MX ', 'Mexico'),
+(143, 'FM ', 'Micronesia, Federated States of'),
+(144, 'MD ', 'Moldova, Republic of'),
+(145, 'MC ', 'Monaco'),
+(146, 'MN ', 'Mongolia'),
+(147, 'MS ', 'Montserrat'),
+(148, 'MA ', 'Morocco'),
+(149, 'MZ ', 'Mozambique'),
+(150, 'MM ', 'Myanmar'),
+(151, 'NA ', 'Namibia'),
+(152, 'NR ', 'Nauru'),
+(153, 'NP ', 'Nepal'),
+(154, 'NL ', 'Netherlands'),
+(155, 'AN ', 'Netherlands Antilles'),
+(156, 'NC ', 'New Caledonia'),
+(157, 'NZ ', 'New Zealand'),
+(158, 'NI ', 'Nicaragua'),
+(159, 'NE ', 'Niger'),
+(160, 'NG ', 'Nigeria'),
+(161, 'NU ', 'Niue'),
+(162, 'NF ', 'Norfolk Island'),
+(163, 'MP ', 'Northern Mariana Islands'),
+(164, 'NO ', 'Norway'),
+(165, 'OM ', 'Oman'),
+(166, 'PK ', 'Pakistan'),
+(167, 'PW ', 'Palau'),
+(168, 'PA ', 'Panama'),
+(169, 'PG ', 'Papua New Guinea'),
+(170, 'PY ', 'Paraguay'),
+(171, 'PE ', 'Peru'),
+(172, 'PH ', 'Philippines'),
+(173, 'PN ', 'Pitcairn'),
+(174, 'PL ', 'Poland'),
+(175, 'PT ', 'Portugal'),
+(176, 'PR ', 'Puerto Rico'),
+(177, 'QA ', 'Qatar'),
+(178, 'RE ', 'Reunion'),
+(179, 'RO ', 'Romania'),
+(180, 'RU ', 'Russian Federation'),
+(181, 'RW ', 'Rwanda'),
+(182, 'SH ', 'Saint Helena'),
+(183, 'KN ', 'Saint Kitts and Nevis'),
+(184, 'LC ', 'Saint Lucia'),
+(185, 'PM ', 'Saint Pierre and Miquelon'),
+(186, 'VC ', 'Saint Vincent and the Grenadines'),
+(187, 'WS ', 'Samoa (US)'),
+(188, 'SM ', 'San Marino'),
+(189, 'ST ', 'Sao Tome and Principe'),
+(190, 'SA ', 'Saudi Arabia'),
+(191, 'SN ', 'Senegal'),
+(192, 'SC ', 'Seychelles'),
+(193, 'SL ', 'Sierra Leone'),
+(194, 'SG ', 'Singapore'),
+(195, 'SK ', 'Slovakia'),
+(196, 'SI ', 'Slovenia'),
+(197, 'SB ', 'Solomon Islands'),
+(198, 'SO ', 'Somalia'),
+(199, 'GS ', 'South Georgia'),
+(200, 'ZA ', 'South Africa'),
+(201, 'LK ', 'Sri Lanka'),
+(202, 'SD ', 'Sudan'),
+(203, 'SR ', 'Suriname'),
+(204, 'SJ ', 'Svalbard and Jan Mayen'),
+(205, 'SZ ', 'Swaziland'),
+(206, 'SE ', 'Sweden'),
+(207, 'CH ', 'Switzerland'),
+(208, 'SY ', 'Syrian Arab Republic'),
+(209, 'TW ', 'Taiwan, Province of China'),
+(210, 'TJ ', 'Tajikistan'),
+(211, 'TZ ', 'Tanzania, United Republic of'),
+(212, 'TH ', 'Thailand'),
+(213, 'TG ', 'Togo'),
+(214, 'TK ', 'Tokelau'),
+(215, 'TO ', 'Tonga'),
+(216, 'TT ', 'Trinidad and Tobago'),
+(217, 'TN ', 'Tunisia'),
+(218, 'TR ', 'Turkey'),
+(219, 'TM ', 'Turkmenistan'),
+(220, 'TC ', 'Turks and Caicos Islands'),
+(221, 'TV ', 'Tuvalu'),
+(222, 'UG ', 'Uganda'),
+(223, 'UA ', 'Ukraine'),
+(224, 'AE ', 'United Arab Emirates'),
+(225, 'UM ', 'United States Minor Outlying Islands'),
+(226, 'UY ', 'Uruguay'),
+(227, 'UZ ', 'Uzbekistan'),
+(228, 'VU ', 'Vanuatu'),
+(229, 'VE ', 'Venezuela'),
+(230, 'VN ', 'Vietnam'),
+(231, 'VG ', 'Virgin Islands, British'),
+(232, 'VI ', 'Virgin Islands, U.S.'),
+(233, 'WF ', 'Wallis and Futuna'),
+(234, 'EH ', 'Western Sahara'),
+(235, 'YE ', 'Yemen'),
+(236, 'YU ', 'Yugoslavia'),
+(237, 'ZM ', 'Zambia'),
+(238, 'ZW ', 'Zimbabwe'),
+(239, 'AX', 'Aland Islands'),
+(240, 'FR', 'Corsica, France'),
+(241, 'IT', 'Sardinia, Italy'),
+(242, 'IT', 'Vatican City, Italy'),
+(243, 'NO', 'Spitzbergen, Norway'),
+(244, 'ES', 'Azores, Spain'),
+(245, 'ES', 'Madeira, Spain'),
+(246, 'ES', 'Majorca, Spain'),
+(247, 'ES', 'Menorca, Spain'),
+(248, 'ES', 'Ibiza, Spain'),
+(249, 'ES', 'Formentera, Spain'),
+(250, 'ES', 'Canary Islands, Spain'),
+(251, 'NO', 'Spitsbergen, Norway'),
+(252, 'HLD', 'UK(Scottish Highlands)'),
+(253, 'NIUK', 'UK(Northern Ireland)'),
+(254, 'CI', 'UK(Channel Islands)'),
+(255, 'IMUK', 'UK(Isle Of Man)');
 
 -- --------------------------------------------------------
 
@@ -215,18 +487,36 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   `exp_reschedule` enum('0','1') NOT NULL DEFAULT '0' COMMENT '''0''=>NO,''1''=>YES',
   `user_reschedule` enum('0','1') NOT NULL DEFAULT '0' COMMENT '''0''=>NO,''1''=>YES',
   `status` enum('0','1','2','3') NOT NULL COMMENT '''0''=>inactive,''1''=>active,''2''=>applied,''3''=>completed',
+  `exp_hired` int(11) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `sessions`
 --
 
-INSERT INTO `sessions` (`id`, `user_id`, `exp_applied_id`, `type`, `duration`, `session_datetime`, `category_id`, `tag_id`, `language_id`, `title`, `description`, `question`, `other`, `attachment_id`, `exp_reschedule`, `user_reschedule`, `status`, `created`, `modified`) VALUES
-(5, 1, 2, 'schedule', 20, '2015-08-18 22:30:00', 0, '', '', 'user1', 'user1user1user1', 'user1user1user1', 'user1user1user1', '', '0', '0', '2', '2015-08-19 05:00:55', '0000-00-00 00:00:00'),
-(6, 3, 3, 'schedule', 50, '2015-08-25 01:30:00', 0, '', '', 'user2', 'user2user2', 'user2user2', 'user2user2', '', '0', '0', '2', '2015-08-19 05:03:49', '0000-00-00 00:00:00');
+INSERT INTO `sessions` (`id`, `user_id`, `exp_applied_id`, `type`, `duration`, `session_datetime`, `category_id`, `tag_id`, `language_id`, `title`, `description`, `question`, `other`, `attachment_id`, `exp_reschedule`, `user_reschedule`, `status`, `exp_hired`, `created`, `modified`) VALUES
+(1, 11, 12, 'schedule', 20, '2015-08-25 22:30:00', 0, '', '', 'html', 'html', 'html', 'html', '', '0', '0', '2', 0, '2015-08-23 04:51:25', '0000-00-00 00:00:00'),
+(2, 11, 12, 'schedule', 40, '2015-08-23 22:30:00', 0, '', '', 'reschedule', 'reschedule', 'reschedule', 'reschedule', '', '0', '0', '2', 0, '2015-08-23 05:19:37', '0000-00-00 00:00:00'),
+(3, 11, 12, 'schedule', 110, '2015-08-26 18:30:00', 0, '', '', 'check', 'check', 'check', 'check', '', '0', '0', '2', 0, '2015-08-23 05:27:22', '0000-00-00 00:00:00'),
+(4, 11, 12, 'schedule', 100, '2015-08-27 22:30:00', 0, '', '', 'reschedule-reschedule', 'reschedule-reschedule', 'reschedule-reschedule', 'reschedule-reschedule', '', '0', '0', '2', 0, '2015-08-23 05:32:27', '0000-00-00 00:00:00'),
+(5, 11, 12, 'schedule', 30, '0000-00-00 00:00:00', 0, '', '', 'cancel', 'cancel', 'cancel', 'cancel', '', '0', '0', '0', 0, '2015-08-23 05:48:26', '0000-00-00 00:00:00'),
+(6, 11, 0, 'request', 20, '0000-00-00 00:00:00', 2, '45', '1', 'pulic', 'pulic', 'pulic', 'pulic', '', '0', '0', '1', 0, '2015-08-23 17:38:55', '0000-00-00 00:00:00'),
+(7, 11, 0, 'request', 30, '2015-08-25 22:30:00', 2, '45', '1', 'public xyz', 'public xyz', 'public xyz', 'public xyz', '', '0', '0', '2', 0, '2015-08-24 17:23:19', '0000-00-00 00:00:00'),
+(8, 11, 13, 'request', 70, '2015-08-26 13:00:00', 2, '45', '1', 'ADD ', 'ADD ADD ADD ADD ', 'ADD ADD ADD ADD ADD ADD ADD ', '', '', '0', '0', '2', 13, '2015-08-24 17:32:01', '0000-00-00 00:00:00'),
+(9, 11, 13, 'request', 30, '2015-08-30 19:00:00', 2, '45', '1', 'DETAILS', 'DETAILS', 'DETAILS', 'DETAILS', '', '0', '0', '2', 13, '2015-08-24 18:24:06', '0000-00-00 00:00:00'),
+(10, 13, 12, 'schedule', 20, '0000-00-00 00:00:00', 0, '', '', 'email', 'email', 'email', 'email', '', '0', '0', '1', 0, '2015-08-25 17:26:07', '0000-00-00 00:00:00'),
+(11, 13, 12, 'schedule', 20, '0000-00-00 00:00:00', 0, '', '', 'email', 'email', 'email', 'email', '', '0', '0', '1', 0, '2015-08-25 17:27:14', '0000-00-00 00:00:00'),
+(12, 13, 12, 'schedule', 20, '0000-00-00 00:00:00', 0, '', '', 'email', 'email', 'email', 'email', '', '0', '0', '1', 0, '2015-08-25 17:31:44', '0000-00-00 00:00:00'),
+(13, 13, 12, 'schedule', 20, '0000-00-00 00:00:00', 0, '', '', 'email', 'email', 'email', 'email', '', '0', '0', '1', 0, '2015-08-25 17:32:31', '0000-00-00 00:00:00'),
+(14, 13, 12, 'schedule', 20, '0000-00-00 00:00:00', 0, '', '', 'email', 'email', 'email', 'email', '', '0', '0', '1', 0, '2015-08-25 17:33:37', '0000-00-00 00:00:00'),
+(15, 13, 12, 'schedule', 20, '0000-00-00 00:00:00', 0, '', '', 'email', 'email', 'email', 'email', '', '0', '0', '1', 0, '2015-08-25 17:34:48', '0000-00-00 00:00:00'),
+(16, 13, 12, 'schedule', 20, '2015-08-25 17:30:00', 0, '', '', 'email', 'email', 'email', 'email', '', '0', '0', '2', 0, '2015-08-25 17:37:33', '0000-00-00 00:00:00'),
+(17, 13, 12, 'schedule', 30, '0000-00-00 00:00:00', 0, '', '', 'reschedule_email', 'reschedule_email', 'reschedule_email', 'reschedule_email', '', '1', '0', '1', 0, '2015-08-25 18:45:19', '0000-00-00 00:00:00'),
+(18, 13, 12, 'schedule', 50, '0000-00-00 00:00:00', 0, '', '', 'cencel', 'cencel', 'cencel', 'cencel', '', '0', '0', '0', 0, '2015-08-25 19:03:44', '0000-00-00 00:00:00'),
+(19, 13, 12, 'request', 30, '2015-08-26 02:30:00', 1, '45', '1', 'public-email', 'public-email', 'public-email', 'public-email', '', '0', '0', '2', 12, '2015-08-25 19:33:14', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -259,17 +549,44 @@ CREATE TABLE IF NOT EXISTS `session_time` (
   `session_id` int(11) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=57 ;
 
 --
 -- Dumping data for table `session_time`
 --
 
 INSERT INTO `session_time` (`id`, `user_id`, `session_id`, `datetime`) VALUES
-(3, 1, 5, '2015-08-18 22:30:00'),
-(4, 1, 5, '2015-08-18 23:30:00'),
-(7, 2, 6, '2015-08-25 00:30:00'),
-(8, 2, 6, '2015-08-25 01:30:00');
+(1, 11, 1, '2015-08-25 22:30:00'),
+(2, 11, 1, '2015-08-25 23:30:00'),
+(5, 12, 2, '2015-08-23 18:30:00'),
+(6, 12, 2, '2015-08-23 22:30:00'),
+(9, 12, 3, '2015-08-26 18:30:00'),
+(10, 12, 3, '2015-08-26 22:30:00'),
+(21, 11, 4, '2015-08-27 22:30:00'),
+(22, 11, 5, '2015-08-22 22:30:00'),
+(23, 11, 6, '2015-08-25 22:30:00'),
+(24, 11, 6, '2015-08-25 23:30:00'),
+(25, 11, 7, '2015-08-25 22:30:00'),
+(26, 11, 7, '2015-08-25 23:30:00'),
+(27, 13, 7, '2015-08-25 17:00:00'),
+(28, 11, 8, '2015-08-26 18:30:00'),
+(29, 11, 8, '2015-08-26 19:30:00'),
+(31, 13, 8, '2015-08-26 13:00:00'),
+(36, 11, 9, '2015-08-31 00:30:00'),
+(37, 11, 9, '2015-08-31 01:30:00'),
+(38, 13, 9, '2015-08-30 19:00:00'),
+(39, 13, 10, '2015-08-25 17:30:00'),
+(40, 13, 11, '2015-08-25 17:30:00'),
+(41, 13, 12, '2015-08-25 17:30:00'),
+(42, 13, 13, '2015-08-25 17:30:00'),
+(43, 13, 14, '2015-08-25 17:30:00'),
+(44, 13, 15, '2015-08-25 17:30:00'),
+(45, 13, 16, '2015-08-25 17:30:00'),
+(50, 12, 17, '2015-08-27 04:30:00'),
+(51, 13, 18, '2015-08-25 23:30:00'),
+(52, 13, 19, '2015-08-26 02:30:00'),
+(53, 13, 19, '2015-08-26 03:30:00'),
+(56, 12, 19, '2015-08-26 02:30:00');
 
 -- --------------------------------------------------------
 
@@ -481,14 +798,16 @@ INSERT INTO `timezone` (`id`, `country_id`, `name`, `timezone`, `timezone_dst`, 
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `linkedin_id` varchar(255) NOT NULL,
+  `login_type` varchar(255) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `fname` varchar(100) NOT NULL,
   `lname` varchar(100) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `gender` enum('male','female','other') NOT NULL,
   `profile_image` varchar(255) NOT NULL,
   `city` varchar(255) NOT NULL,
-  `country_id` int(11) NOT NULL,
+  `country_id` varchar(100) NOT NULL,
   `timezone_id` int(11) NOT NULL,
   `language_id` varchar(255) NOT NULL COMMENT 'comma separated language ids',
   `dob` date NOT NULL,
@@ -502,7 +821,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `exp_help` text NOT NULL,
   `exp_category_id` varchar(100) NOT NULL COMMENT 'comma separated category ids',
   `exp_tag_id` varchar(255) NOT NULL COMMENT 'comma separated tag ids',
-  `exp_rate` varchar(15) NOT NULL COMMENT '''free'',''int value''',
+  `exp_rate` int(11) NOT NULL COMMENT '''int value''',
   `exp_about` text NOT NULL,
   `exp_experience` text NOT NULL,
   `exp_education` text NOT NULL,
@@ -512,16 +831,21 @@ CREATE TABLE IF NOT EXISTS `users` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `linkedin_id`, `email`, `password`, `fname`, `lname`, `profile_image`, `city`, `country_id`, `timezone_id`, `language_id`, `dob`, `phone`, `linkedin_url`, `twitter_url`, `google_url`, `facebook_url`, `is_expert`, `exp_description`, `exp_help`, `exp_category_id`, `exp_tag_id`, `exp_rate`, `exp_about`, `exp_experience`, `exp_education`, `exp_interest`, `exp_award`, `status`, `created`, `modified`) VALUES
-(1, '', 'test@mail.com', '123456', 'test', 'test', 'test', 'test', 1, 103, '1', '2015-08-03', '123', '', '', '', '', '0', '', '', '', '', '', '', '', '', '', '', '0', '2015-08-04 00:00:00', '0000-00-00 00:00:00'),
-(2, '', 'exp@mail.com', '123456', 'exp', 'exp', 'exp', 'exp', 1, 103, '1', '2015-08-04', '123', '', '', '', '', '1', 'exp', 'exp', 'exp', '', '20', 'exp', 'exp', 'exp', 'exp', 'exp', '1', '2015-08-12 00:00:00', '0000-00-00 00:00:00'),
-(3, '', 'use2@mail.com', 'use2', 'use2', 'use2', '', '', 0, 0, '', '0000-00-00', '', '', '', '', '', '0', '', '', '', '', '', '', '', '', '', '', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `users` (`id`, `login_type`, `email`, `password`, `fname`, `lname`, `username`, `gender`, `profile_image`, `city`, `country_id`, `timezone_id`, `language_id`, `dob`, `phone`, `linkedin_url`, `twitter_url`, `google_url`, `facebook_url`, `is_expert`, `exp_description`, `exp_help`, `exp_category_id`, `exp_tag_id`, `exp_rate`, `exp_about`, `exp_experience`, `exp_education`, `exp_interest`, `exp_award`, `status`, `created`, `modified`) VALUES
+(1, '', 'test@mail.com', '123456', 'test', 'test', '', 'male', 'test', 'test', '1', 103, '1', '2015-08-03', '123', '', '', '', '', '0', '', '', '', '', 0, '', '', '', '', '', '0', '2015-08-04 00:00:00', '0000-00-00 00:00:00'),
+(2, '', 'exp@mail.com', '123456', 'exp', 'exp', '', 'male', 'exp', 'exp', '1', 103, '1', '2015-08-04', '123', '', '', '', '', '1', 'exp', 'exp', 'exp', '', 0, 'exp', 'exp', 'exp', 'exp', 'exp', '1', '2015-08-12 00:00:00', '0000-00-00 00:00:00'),
+(3, '', 'use2@mail.com', 'use2', 'use2', 'use2', '', 'male', '', '', '0', 0, '', '0000-00-00', '', '', '', '', '', '0', '', '', '', '', 0, '', '', '', '', '', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(6, 'google', 'sricky555@gmail.com', '', 'Ricky', 'Sharma', 'Ricky Sharma', 'male', 'http://localhost/project/profile_pic/1440158632.jpg', '', 'US', 103, '1', '0000-00-00', '', '', '', '', '', '0', '', '', '', '', 0, '', '', '', '', '', '0', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(10, 'static', 'vivek_choudhary@hotmail.com', 'ram', '', '', 'Vivek Kumar', 'male', 'http://localhost/project/profile_pic/1440179624ne.png', 'Chandigarh', 'GB', 27, '25,84', '1990-03-08', '9023805175', '', '', '', '', '0', '', '', '', '', 0, '', '', '', '', '', '0', '2015-08-21 12:20:30', '0000-00-00 00:00:00'),
+(11, 'static', 'vikasduhan@gmail.com', '123456', 'user', 'user', '', 'male', 'http://localhost/project/profile_pic/1440228387act-673a.jpg', '', '', 103, '1,40', '1970-01-01', '', '', '', '', '', '0', '', '', '', '', 0, '', '', '', '', '', '0', '2015-08-22 07:22:29', '0000-00-00 00:00:00'),
+(12, 'static', 'ch.vikasduhan@gmail.com', '123456', 'expert', 'vduhan', 'expert', 'male', 'http://localhost/project/profile_pic/1440228470r-lautner-6a.jpg', '', '', 103, '1,40', '0000-00-00', '', '', '', '', '', '1', 'expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert ', 'expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert expert ', '1', '1,2', 10, 'expert expert expert expert expert ', 'expert expert expert expert ', 'expert expert ', 'expert expert ', 'expert expert expert ', '0', '2015-08-22 07:27:16', '0000-00-00 00:00:00'),
+(13, 'static', 'vikasduhan36@gmail.com', '123456', '', '', 'v expert', 'male', '', 'chandigarh', 'IN', 103, '1,40,3', '1970-01-01', '', '', '', '', '', '0', 'php developer', 'no u can not', '8', '45,37,4', 20, '', '', '', '', '', '0', '2015-08-23 08:21:04', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -561,7 +885,7 @@ CREATE TABLE IF NOT EXISTS `wishlist` (
   `wished_id` int(11) NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

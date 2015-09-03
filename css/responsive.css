@@ -35,7 +35,8 @@ header nav.nav1 ul.navlist li a:hover, header nav.nav1 ul.navlist li a.active, h
 header nav.nav1 ul.navlist li a:after, header nav.nav1 ul.navlist li a:before{border:none;}
 header nav.nav1 ul.expendnav{right:0;}
 .bannercont{min-height:auto; padding-bottom:50px;}
-.bannercont .searchbox .form-control{width:100%; margin-bottom:10px;}
+.bannercont .searchbox input.form-control{width:70%; margin-bottom:10px;}
+.bannercont .searchbox .select-wrapper{width:30%;}
 .bannercont .searchbox .searchbtn{width:100%;}
 .bannercont .tagslist li{width:100%; text-align:left; margin:0 0 5px;}
 .bannercont .bannertxt{font-size:35px; line-height:normal; margin-top:25px;}
@@ -110,6 +111,8 @@ footer.footer .ft_blks .qlinkslist li{margin-bottom:15px;}
 /*-- HOME PAGE --*/
 header.header .logo{width:150px; margin-top:7px;}
 .bannercont .bannertxt{font-size:24px; margin-top:0;}
+.bannercont .searchbox input.form-control{width:100%; margin-bottom:10px; border-radius:3px; margin-bottom:10px;}
+.bannercont .searchbox .select-wrapper{width:100%; border-radius:3px; margin-bottom:10px;}
 .aboutvideo .mac_frame{max-width:290px; margin-bottom:-20px; margin-top:0;}
 .aboutvideo .mac_frame .lSSlideOuter{height:125px; top:11px; width:200px;}
 .aboutvideo .mac_frame .lSSlideOuter .lSSlideWrapper ul{height:100% !important;}
@@ -118,7 +121,7 @@ footer.footer .ft_blks .qlinkslist li{margin:0 0 15px; width:100%;}
 /*-- ACCOUNT PAGE --*/
 .userdropdown h6{display:none;}
 /*-- SCHEDULE PAGE --*/
-.schedulemain .ChooseDatesCont .timelist li{width:33.33%;}
+.schedulemain .ChooseDatesCont .timelist{width:50%;}
 .schedulemain .confirmedCont h2{font-size:30px;}
 .schedulemain .confirmedCont h2 i{font-size:40px;}
 /*-- BROWSE EXPERT PAGE --*/

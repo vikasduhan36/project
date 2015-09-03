@@ -17,8 +17,6 @@ require_once("config/config.php");
 <link href="fonts/fonts.css" rel="stylesheet" type="text/css" />
 <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <link href="css/responsive.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="css/jquery-ui.css" />
-
 
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery-ui.min.js"></script>
@@ -54,7 +52,7 @@ label.error{
                     	<span></span><span></span><span></span>
                     </a>
                 	<ul class="navlist">
-                    	<?php if (isset($_SESSION['LoginUserId']) && $_SESSION['LoginUserId']!=""){?>
+                	<?php if (isset($_SESSION['LoginUserId']) && $_SESSION['LoginUserId']!=""){?>
                 	<li><a href="<?php echo $root;?>experts.php" class="<?php if($pagename=='experts.php'){echo 'active';}?>">Browse Experts</a></li>
                      <li><a href="<?php echo $root;?>account.php" class="<?php if($pagename=='account.php'){echo 'active';}?>">My Account</a></li>   
                         <?php
@@ -98,16 +96,10 @@ label.error{
     	<div class="row">
         	<div class="col-md-10 col-md-offset-1 col-xs-12 text-center">
             	<p class="bannertxt">Expertise over live video!</p>
-            	<form action="experts.php" id="index_search">
+            	<form>
                 <div class="searchbox">
-                	<input type="text" class="form-control" placeholder="e.g. yoga classes, legal help, interior decorator" id="tags" name="tags"/>
-                	<input type="hidden" name="tag_id" id="tag_id" />
-                    <select class="form-control custom-select" name="search_type" id="search_type">
-                    	<option value="tag">Tag</option>
-                        <option value="expert">Expert</option>
-                    </select>
-                	<!-- <a href="javascript:void(0);" class="btn1 searchbtn">Search <i class="fa fa-search"></i></a> -->
-                	<button type="submit" class="btn1 searchbtn">Search <i class="fa fa-search"></i></button>
+                	<input type="text" class="form-control" placeholder="e.g. yoga classes, legal help, interior decorator" />
+                	<a href="javascript:void(0);" class="btn1 searchbtn">Search <i class="fa fa-search"></i></a>
                     <img src="images/round_arrow.png" alt="arrow" class="img-responsive arrw hidden-xs hidden-sm" />
                 </div>
                 </form>
@@ -339,7 +331,7 @@ label.error{
                             <li><a href="javascript:void(0);"><i class="fa fa-linkedin"></i></a></li>
                         </ul>
                     </div>
-                    <p class="copyrighttxt">ï¿½2015 eyeask.com. All rights reserved.</p>
+                    <p class="copyrighttxt">©2015 eyeask.com. All rights reserved.</p>
                 </div>
             </div>
         </div>
@@ -543,47 +535,8 @@ $(document).ready(function() {
 		$("html, body").animate({ scrollTop: 0 }, 600);
 		return true;
 	});
-	// CUSTOME SELECT //
-	$(".custom-select").each(function(){
-		$(this).wrap("<span class='select-wrapper'></span>");
-		$(this).after("<span class='holder'></span>");
-	});
-	$(".custom-select").change(function(){
-		var selectedOption = $(this).find(":selected").text();
-		$(this).next(".holder").text(selectedOption);
-	}).trigger('change');
 	
 });
-$(function() {
-	$("#tags").autocomplete({
-		source: function(request, response) {
-			var search_type=$('#search_type').val();
-			//alert(search_type);
-	        $.ajax({
-	            url: "handler_next.php",
-	            dataType: "json",
-	            data: {
-	                tags_index : request.term,
-	                search_type :search_type
-	            },
-	            success: function(data) {
-	                response(data);
-	            }
-	        });
-	    },
-	    select: function(e, ui) {
-	        //e.preventDefault() // <--- Prevent the value from being inserted.
-	        var myElement = document.getElementById('search_type'),
-    myElementValue = myElement.value;
-	        //alert(myElementValue);
-	        if(myElementValue=="tag"){
-	        	$("#tag_id").val(ui.item.id);
-	        }
-	        //$(this).val(ui.item.label);
-	    }
-	});
-});
-</script>
 </script>
 </body>
 </html>

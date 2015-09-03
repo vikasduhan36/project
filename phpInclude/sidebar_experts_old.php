@@ -15,12 +15,6 @@ $categories = getDetail($field,$table,$condition);
                  	<div class="toggle_db"><!-- FOR TOGGLED DASHBOARD -->
                         <div class="sidebarfilter">
                             <ul>
-                            <li>
-                                    <h5>Expert <i class="fa fa-angle-down"></i></h5>
-                                    <div class="autocomp_blk">
-									<input type="text" name="expert_search" id="expert_search" placeholder="search expert" class="form-control" value="<?php if (isset($_GET['tags']) && $_GET['search_type']=="expert"){echo trim($_GET['tags']);}?>">
-									</div>
-                                </li>
                                 <li>
                                     <h5>Category <i class="fa fa-angle-down"></i></h5>
 									<select name="category_id" id="category" class="form-control custom-select">
@@ -36,18 +30,11 @@ $categories = getDetail($field,$table,$condition);
                                 <li>
                                     <h5>Tags <i class="fa fa-angle-down"></i></h5>
 									<ul class="taglist" id="tag_search_ui">
-									<?php 
-									if (isset($_GET['tags']) && $_GET['search_type']=="tag")
-									{
-									?>
-									<li><?php echo trim($_GET['tags']);?><a href="javascript:void(0);" class="remove_tag" alt="<?php echo trim($_GET['tag_id']);?>"><i class="fa fa-times"></i></a></li>
-									<?php }?>
 									</ul>
 									<div class="autocomp_blk">
 									<input type="text" name="tag_search" id="tag_search" placeholder="Add Tags" class="form-control">
 									
 									<ul id="tag_result" class="autocomp_list">
-									
 									</ul>
 									</div>
                                 </li>
@@ -72,14 +59,7 @@ $categories = getDetail($field,$table,$condition);
                     </div><!-- FOR TOGGLED DASHBOARD -->
                 </div><!-- // SIDE BAR NAV // -->
 				
-				<div id="tag_selected">
-				<?php 
-				if (isset($_GET['tags']) && $_GET['search_type']=="tag")
-				{
-				?>
-				<input type="hidden" name="tag_selected[]" value="<?php echo trim($_GET['tag_id']);?>">
-				<?php }?>
-				</div>
+				<div id="tag_selected"></div>
 				<div id="language_selected"></div>
 				
 				<input type="hidden" name="action" value="get_search_exp">

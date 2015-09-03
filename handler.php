@@ -668,6 +668,12 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')
 	$status = "error";
 	$count = 0;
 	
+	/* add new field expert name */
+	if(!empty($expert_search))
+	{
+		$condition .= " and (u.lname = '".$expert_search."' OR u.fname = '".$expert_search."' OR u.username = '".$expert_search."') ";
+	}
+	
 	if(!empty($category_id))
 	{
 		$condition .= " and u.exp_category_id = '".$category_id."' ";
@@ -1223,3 +1229,25 @@ if(isset($_POST['action']) && $_POST['action']=="expert_info")
 		echo "error";
 	}
 }
+/* search experts by name */
+if (isset($_GET['expert_name']) && $_GET['expert_name']!="")
+{
+	$search_query = mysql_real_escape_string(trim($_GET['expert_name']));
+	$field = " * ";
+	$table = " users ";
+	$condition = " AND is_expert='1' AND (username LIKE '$search_query%' OR fname LIKE '$search_query%' OR lname LIKE '$search_query%')";
+	$languages = getDetail($field,$table,$condition);
+	$data = array();
+	if(count($languages) > 0)
+	{
+		foreach ($languages as $key=>$value)
+		{
+			$data[] = array("id"=>$value['id'],"label"=>$value['fname'],"value"=>$value['fname']);
+		}
+	} else
+	{
+		$data[] = array("id"=>"0","label"=>"No record","value"=>"No record");
+	}
+	echo json_encode($data);
+}
+ 

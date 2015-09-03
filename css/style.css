@@ -30,6 +30,7 @@ input, textarea, select{outline:none; border:none;}
 /*---------- GLOBAL CSS ----------*/
 .padL0{padding-left:0 !important;}
 .MrgT0{margin-top:0 !important;}
+.Mrg30{margin-top:30px !important;}
 .btn1{background: #00bffe;
 background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwYmZmZSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMjk3ZDkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
 background: -moz-linear-gradient(top, #00bffe 0%, #0297d9 100%);
@@ -99,7 +100,9 @@ header.innerhead{background-color:#ffffff; position:relative !important; min-hei
 header.innerhead nav.nav1{margin-top:8px;}
 header.innerhead nav.nav1 ul.navlist li a{color:#444444;}
 header.innerhead nav.nav1 ul.navlist li a:hover{color:#58bde7;}
-header.innerhead nav.nav1 ul.navlist li a:hover:after,header.innerhead nav.nav1 ul.navlist li a:hover:before{border-color:#58bde7;}
+header.innerhead nav.nav1 ul.navlist li a:hover:after,header.innerhead nav.nav1 ul.navlist li a:hover:before,
+header.innerhead nav.nav1 ul.navlist li a:focus:after,header.innerhead nav.nav1 ul.navlist li a:focus:before,
+header.innerhead nav.nav1 ul.navlist li a.active:after,header.innerhead nav.nav1 ul.navlist li a.active:before{border-color:#58bde7;}
 /*-- NAV TOGGLE --*/
 .navtogglebtn{padding:7px 8px; float:right; background-color:#fff; overflow:hidden; border-radius:2px; margin:0 0 0 15px;}
 .navtogglebtn span{background-color:#58bde7; height:3px; width:22px; display:block; margin-bottom:4px;}
@@ -123,7 +126,10 @@ header.innerhead nav.nav1 ul.navlist li a:hover:after,header.innerhead nav.nav1 
 .bannercont .h5{font-size:26px; line-height:29px; color:#ffffff; margin:15px 0 40px; font-family:'proxima_nova_ltlight';}
 .bannercont .h5 span{display:block;}
 .bannercont .searchbox{background-color:rgba(0,0,0,0.4); border-radius:5px; padding:10px; float:left; width:100%; margin:50px 0 20px; position:relative;}
-.bannercont .searchbox .form-control{float:left; width:77%; height:62px; font-size:20px;}
+.bannercont .searchbox input.form-control{float:left; width:57%; height:62px; font-size:20px; border-right:none; border-radius:3px 0 0 3px;}
+.bannercont .searchbox .select-wrapper{float:left; width:20%; height:62px; font-size:18px; border-radius:0 3px 3px 0; line-height:62px; text-align:left;}
+.bannercont .searchbox .select-wrapper:before{top:10px;}
+.bannercont .searchbox .select-wrapper select{top:0; bottom:0; height:auto;}
 .bannercont .searchbox .searchbtn{height:62px; line-height:62px; color:#ffffff; font-family:'roboto_condensedregular'; font-size:25px; text-align:center; text-transform:uppercase; border-radius:2px; position:relative; float:right; width:22%;}
 .bannercont .searchbox .searchbtn strong{color:#f7ff25; font-family:'roboto_condensedbold'; font-weight:normal;}
 .bannercont .searchbox .searchbtn i{width:45px; line-height:62px; float:right; text-align:center; border-left:1px solid #4ecaf4; box-shadow:-2px 0 4px rgba(0,0,0,0.1);  font-size:20px;}
@@ -133,6 +139,11 @@ header.innerhead nav.nav1 ul.navlist li a:hover:after,header.innerhead nav.nav1 
 .bannercont .tagslist li:last-child{float:right;}
 .bannercont .tagslist li a{float:left; color:#ffffff; margin:0 2px; position:relative;}
 .bannercont .tagslist li a:hover{text-decoration:underline;}
+
+.ui-autocomplete .ui-menu-item{padding:6px 10px;}
+.ui-autocomplete .ui-menu-item a{display:block; background:none; outline:none; border:none; padding:none; border-radius:none;}
+.ui-autocomplete .ui-menu-item:hover a{background:none; color:#fff; outline:none; border:none; padding:none; border-radius:none;}
+.ui-autocomplete .ui-menu-item:hover{background:#58bde7; padding:6px 10px;}
 /*-- STEPS CONTAINER --*/
 .stepscont{background-color:#ffffff; padding:30px 0; position:relative;}
 .stepscont h3{font-size:40px; text-align:center; color:#58bde7; margin:0 0 40px; font-family:'roboto_condensedlight';}
@@ -354,6 +365,8 @@ input.cmn-toggle-round:checked + label .fa-check{display:block;}
 .autocomp_blk ul.autocomp_list li{line-height:normal; padding:0; margin:0;}
 .autocomp_blk ul.autocomp_list li a{display:block; line-height:33px; padding:0 10px; font-size:14px; font-family:'roboto_condensedregular';}
 .autocomp_blk ul.autocomp_list li a:hover{background:#58bde7; color:#fff;}
+.back_exprt_pro_btn{display:block; padding:0 5px; border-radius:3px; color:#fff; font-size:15px; text-transform:uppercase; margin:10px 0; background-color:#58bde7; text-align:center; line-height:40px;}
+.back_exprt_pro_btn:hover{background-color:#3da2cc;}
 /*-- SCHEDULE MAIN --*/
 .schedulemain{}
 .schedulemain p{font-size:16px; line-height:25px; color:#666666; margin-bottom:10px; font-family:'proxima_nova_ltlight';}
@@ -366,9 +379,10 @@ input.cmn-toggle-round:checked + label .fa-check{display:block;}
 .schedulemain .ChooseDatesCont{margin:40px 0 20px;}
 .schedulemain .ChooseDatesCont p small{display:block; font-size:13px;}
 .schedulemain .ChooseDatesCont label.lbl{display:block; margin-bottom:10px; font-family:'roboto_condensedregular'; font-size:16px; color:#444444;}
-.schedulemain .ChooseDatesCont .timelist{display:table; width:100%; margin-top:0;}
+.schedulemain .ChooseDatesCont #display_slot{display:table; width:100%;}
+.schedulemain .ChooseDatesCont .timelist{float:left; width:25%; margin-top:0; padding-right:10px;}
 .ChooseDatesCont .xdsoft_datetimepicker{margin-bottom:15px;}
-.schedulemain .ChooseDatesCont .timelist li{float:left; width:25%; padding-right:10px; margin-bottom:10px;}
+.schedulemain .ChooseDatesCont .timelist li{float:left; width:100%; margin-bottom:10px;}
 .schedulemain .ChooseDatesCont .timelist li input{position:absolute; z-index:-9999; opacity:0; -moz-opacity:0; -webkit-opacity:0; -ms-opacity:0; filter:alpha(opacity=0); visibility:hidden; cursor:pointer;}
 .schedulemain .ChooseDatesCont .timelist li label.checkbox{position:relative; padding:10px 0 10px 42px; min-height:23px; display:block; cursor:pointer; transition:all 0.3s ease-in-out 0s; color:#777777; font-size:16px; font-family:'roboto_condensedregular'; background-color:#f6f6f6; border:1px solid #dddddd;}
 .schedulemain .ChooseDatesCont .timelist li label.checkbox:before{background-color:#ffffff; border-radius:3px; border:1px solid #aaaaaa; height:21px; width:21px; position:absolute; left:10px; top:10px; content:""; cursor:pointer; transition:all 0.3s ease-in-out 0s;}
@@ -398,6 +412,15 @@ input.cmn-toggle-round:checked + label .fa-check{display:block;}
 .schedulemain .confirmedCont ol{padding-left:16px;}
 .schedulemain .confirmedCont ol li{list-style:decimal; font-size:16px; color:#666666; font-family:'roboto_condensedlight'; margin:0 0 10px;}
 .schedulemain .confirmedCont .gohome_btn{width:280px; font-size:18px; margin-top:5px;}
+
+.schedulemain .Acceptbtn{font-size:16px; border-radius:2px; line-height:45px; color:#ffffff; font-family:'roboto_condensedregular'; float:left; margin:0 10px 10px 0; padding:0 15px; text-align:center; text-shadow:1px 1px 2px rgba(0,0,0,0.4); background-color:#58bde7; overflow:hidden; white-space:no-wrap; min-width:150px;}
+.schedulemain .Acceptbtn:hover{background-color:#25aac4;}
+.schedulemain .alternate_btn{background-color:#f8a921;}
+.schedulemain .alternate_btn:hover{background-color:#E6B11B;}
+.schedulemain .timeslot2 input[type="checkbox"]{margin:0 8px 0 0; position:relative; top:-3px;}
+.schedulemain .reschdl_grp{margin:30px 0 0; clear:both; display:table; width:100%;}
+.schedulemain .reschdl_grp a{padding: 0 20px; float:left; margin-top:0;}
+.schedulemain .reschdl_grp .canceled_btn:hover{background:#e18084;}
 /*====================== SCHEDULE PAGE ======================*/
 /*====================== BROWSE EXPERT PAGE ======================*/
 .browsemain{}
@@ -578,6 +601,9 @@ input.cmn-toggle-round:checked + label .fa-check{display:block;}
 .Req_sections .Proposal_list .messagelist{display:table; width:100%;}
 .Req_sections .Proposal_list .messagelist li{border-bottom:1px solid #eee; padding:0 5px; margin-bottom:10px;}
 .Req_sections .Proposal_list .messagelist li p span{color:#999; font-family:'roboto_condenseditalic'; display:block;}
+
+.Req_sections .waitbtn{background:#f8a921; font-size:15px; font-family:'roboto_condensedregular'; color:#fff; padding:7px 10px; float:left; margin-top:4px;}
+.Req_sections .canceled_btn{background:#f49397; font-size:15px; font-family:'roboto_condensedregular'; color:#fff; padding:7px 10px; float:left; margin-top:4px;}
 /*====================== BROWSE REQUEST PAGE ======================*/
 /*====================== PAYMENT DETAIL PAGE ======================*/
 .payment_cont{}
@@ -615,3 +641,8 @@ input.cmn-toggle-round:checked + label .fa-check{display:block;}
 .MysessionCont .session_list li .sess_btn.waitbtn{background:#f8a921;}
 .MysessionCont .session_list li .sess_btn.canceled_btn{background:#f49397;}
 /*====================== MY SESSION PAGE ======================*/
+/*-- LOADER --*/
+.loaderotr{position:fixed; top:0; right:0; bottom:0; left:0; z-index:2000;}
+.loaderotr .overlay{position:absolute; top:0; right:0; bottom:0; left:0; z-index:2000; background:rgba(255,255,255,0.95);}
+.loaderotr .loading{height:85px; width:85px; position:absolute; top:0; right:0; bottom:0; left:0; z-index:3000; margin:auto auto;}
+/*-- LOADER --*/

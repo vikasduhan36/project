@@ -98,14 +98,10 @@ label.error{
     	<div class="row">
         	<div class="col-md-10 col-md-offset-1 col-xs-12 text-center">
             	<p class="bannertxt">Expertise over live video!</p>
-            	<form action="experts.php" id="index_search">
+            	<form action="experts.php">
                 <div class="searchbox">
                 	<input type="text" class="form-control" placeholder="e.g. yoga classes, legal help, interior decorator" id="tags" name="tags"/>
                 	<input type="hidden" name="tag_id" id="tag_id" />
-                    <select class="form-control custom-select" name="search_type" id="search_type">
-                    	<option value="tag">Tag</option>
-                        <option value="expert">Expert</option>
-                    </select>
                 	<!-- <a href="javascript:void(0);" class="btn1 searchbtn">Search <i class="fa fa-search"></i></a> -->
                 	<button type="submit" class="btn1 searchbtn">Search <i class="fa fa-search"></i></button>
                     <img src="images/round_arrow.png" alt="arrow" class="img-responsive arrw hidden-xs hidden-sm" />
@@ -339,7 +335,7 @@ label.error{
                             <li><a href="javascript:void(0);"><i class="fa fa-linkedin"></i></a></li>
                         </ul>
                     </div>
-                    <p class="copyrighttxt">ï¿½2015 eyeask.com. All rights reserved.</p>
+                    <p class="copyrighttxt">©2015 eyeask.com. All rights reserved.</p>
                 </div>
             </div>
         </div>
@@ -543,28 +539,16 @@ $(document).ready(function() {
 		$("html, body").animate({ scrollTop: 0 }, 600);
 		return true;
 	});
-	// CUSTOME SELECT //
-	$(".custom-select").each(function(){
-		$(this).wrap("<span class='select-wrapper'></span>");
-		$(this).after("<span class='holder'></span>");
-	});
-	$(".custom-select").change(function(){
-		var selectedOption = $(this).find(":selected").text();
-		$(this).next(".holder").text(selectedOption);
-	}).trigger('change');
 	
 });
 $(function() {
 	$("#tags").autocomplete({
 		source: function(request, response) {
-			var search_type=$('#search_type').val();
-			//alert(search_type);
 	        $.ajax({
-	            url: "handler_next.php",
+	            url: "handler.php",
 	            dataType: "json",
 	            data: {
-	                tags_index : request.term,
-	                search_type :search_type
+	                tags : request.term
 	            },
 	            success: function(data) {
 	                response(data);
@@ -572,13 +556,8 @@ $(function() {
 	        });
 	    },
 	    select: function(e, ui) {
-	        //e.preventDefault() // <--- Prevent the value from being inserted.
-	        var myElement = document.getElementById('search_type'),
-    myElementValue = myElement.value;
-	        //alert(myElementValue);
-	        if(myElementValue=="tag"){
-	        	$("#tag_id").val(ui.item.id);
-	        }
+	        e.preventDefault() // <--- Prevent the value from being inserted.
+	        $("#tag_id").val(ui.item.id);
 	        //$(this).val(ui.item.label);
 	    }
 	});

@@ -64,6 +64,7 @@ $(document).ready(function(){
 				
 			},
 			success:function(response){
+				
 				if(response == 'success')
 				{
 					$("#notification").addClass("success").removeClass("error").text('You availability has been updated successfully.').show();
@@ -272,6 +273,7 @@ $(document).ready(function(){
 				
 			},
 			success:function(response){
+				
 				if(response.status == 'success')
 				{
 					window.location.href = root+'schedule_confirmed.php?id='+response.id;
@@ -388,6 +390,7 @@ $(document).ready(function(){
 				
 			},
 			success:function(response){
+				
 				if(response.status == 'success')
 				{
 					if(response.is_expert == '1')
@@ -506,6 +509,7 @@ $(document).ready(function(){
 				
 			},
 			success:function(response){
+				
 				if(response.status == 'success')
 				{
 					alert('success');
@@ -547,6 +551,7 @@ $(document).ready(function(){
 				
 			},
 			success:function(response){
+				
 				if(response.status == 'success')
 				{
 					var html = '';
@@ -594,6 +599,7 @@ $(document).ready(function(){
 				
 			},
 			success:function(response){
+				
 				if(response.status == 'success')
 				{
 					var html = '';
@@ -770,6 +776,7 @@ $(document).ready(function(){
 				
 			},
 			success:function(response){
+				
 				if(response == 'success')
 				{
 					if(type == 'add')
@@ -813,6 +820,7 @@ function getUserAvailability(user_id,date)
 				
 			},
 			success:function(response){
+				
 				var html = '<ul class="timelist" >';
 				var avail_class = '';
 				var i=0;
@@ -866,6 +874,7 @@ function search_expert(datastring)
 				
 			},
 			success:function(response){
+				
 			var html = '';
 				if(response.status == 'success')
 				{
@@ -990,6 +999,7 @@ function search_public_request(datastring)
 				
 			},
 			success:function(response){
+				
 			var html = '';
 				if(response.status == 'success')
 				{
@@ -1346,6 +1356,28 @@ $("#expert_info").validate({
 			}
 				
 			}); 
+    }
+});
+/*search experts by name */
+$("#expert_search").autocomplete({
+	source: function(request, response) {
+        $.ajax({
+            url: "handler.php",
+            dataType: "json",
+            data: {
+            	expert_name : request.term
+            },
+            success: function(data) {
+                response(data);
+            }
+        });
+    },
+    select: function(e, ui) {
+        e.preventDefault() // <--- Prevent the value from being inserted.
+        //$("#tag_id").val(ui.item.id);
+        $(this).val(ui.item.label);
+        var datastring = $("#form_search_expert").serialize();
+		search_expert(datastring);
     }
 });
 });

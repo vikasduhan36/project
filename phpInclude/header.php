@@ -72,7 +72,7 @@ $GLOBALS['is_expert'] = $user_detail[0]['is_expert'];
 //print_r($user_detail);
 if($user_detail[0]['profile_image']!=""){ 
 	$prof_pic=$user_detail[0]['profile_image']; 
-	if (parse_url($prof_pic, PHP_URL_QUERY)){ $rep_query=explode("?",$prof_pic);$prof_pic=$rep_query['0']."?sz=200";}else {echo "no";}
+	if (parse_url($prof_pic, PHP_URL_QUERY)){ $rep_query=explode("?",$prof_pic);$prof_pic=$rep_query['0']."?sz=200";}//else {echo "no";}
 } else { $prof_pic= "images/users/default.jpg"; }/* profile image */
 if($user_detail[0]['username']!=""){$username=$user_detail[0]['username'];} else { $username= "";}/*user name*/
 if ($user_detail[0]['email']!=""){ $email=$user_detail[0]['email']; } else { $email=""; } /* user email */
@@ -107,10 +107,10 @@ if ($user_detail[0]['facebook_url']!=""){	$facebook_url = $user_detail[0]['faceb
 	<div class="container">
     	<div class="row">
             <div class="col-xs-12">
-            	<a href="javascript:void(0);" class="logo">
-				<!--
+            	<a href="<?php echo $root;?>" class="logo">
+				
                		<img src="images/eyeask2.png" alt="eyeask" class="img-responsive logoimg2" />
-				-->
+				
                 </a>
                 <nav class="nav1">
                 	<a href="javascript:void(0);" class="navtogglebtn visible-xs">
@@ -166,3 +166,9 @@ if ($user_detail[0]['facebook_url']!=""){	$facebook_url = $user_detail[0]['faceb
         </div>
     </div>
 </header><!-- ////// HEADER ////// -->
+
+
+<div class="loaderotr" style="display:none;" id="loader">
+	<span class="overlay"></span>
+    <div class="loading"><img src="<?php echo $root;?>/images/loader1.gif" alt="loader" /></div>
+</div>

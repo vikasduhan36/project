@@ -52,15 +52,13 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 								foreach($time_request as $req)
 								{
 									$request = convertTimezone($req,$default_tz,$userTimezone['timezone']);
-									echo "<div><input type='checkbox' name='slot' value='".$request."'>".$request."</div>";
+									echo "<div class='timeslot2'><input type='checkbox' name='slot' value='".$request."'>".$request."</div>";
 								}
 								?>
-								
-								<a class="bookme_btn apply_btn request_slot" href="javascript:void(0);">Accept </a>
-								
-								<br>
-								
-								<a class="bookme_btn apply_btn" id="alternative_dates" href="javascript:void(0);">Request Alternative time</a>
+								<div class="Mrg30 clearfix">
+									<a class="Acceptbtn request_slot" href="javascript:void(0);">Accept </a>
+									<a class="Acceptbtn alternate_btn" id="alternative_dates" href="javascript:void(0);">Request Alternative time</a>
+                                </div>
 								
 								<section class="ChooseDatesCont" id="public_select_date" style="display:none;"><!-- CHOOSE DATE CONTAINER -->
                                 <p><strong class="txt_lt_it">Select at least 1 (preferably 3) time slots that suit you.</strong><br/><small>(All times are in your local timezone AsialKolkata)</small></p>
@@ -68,31 +66,24 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
                                 <div class="row">
                                     <div class="col-xs-12 col-md-5">
                                         <label class="lbl">Choose Date</label>
-										<!--
-										<input type="text" name="date_schedule" id="date_schedule" readonly="readonly"  class="date_schedule" value=""/>
-										-->
-										<input type="hidden" name="date_schedule" id="hidden_date_schedule" value=""/>
-										<div id="date_schedule"  class="date_schedule"></div>
-										<a href="javascript:void(0);" class="sess_btn canceled_btn date_schedule request_slot" id="request_schedule" />Request Reschedule</a>
-								<a href="javascript:void(0);" class="sess_btn canceled_btn" id="alternative_dates_cancel" >Cancel</a>
-								<input type="hidden" name="type" value="accept">
-								<input type="hidden" name="action" value="submit_accept_session">
-								<input type="hidden" name="session_id" value="<?php echo $session_id;?>">
-								
-								<input type="hidden" name="session_type" value="<?php echo $session_detail[0]['type'];?>">
-								
-								
-								
-									</div>
+                                        <input type="hidden" name="date_schedule" id="hidden_date_schedule" value=""/>
+                                            <div id="date_schedule" class="date_schedule"></div>
+                                        <input type="hidden" name="type" value="accept">
+                                        <input type="hidden" name="action" value="submit_accept_session">
+                                        <input type="hidden" name="session_id" value="<?php echo $session_id;?>">
+                                        <input type="hidden" name="session_type" value="<?php echo $session_detail[0]['type'];?>">
+                                  	</div>
                                     <div class="col-xs-12 col-md-7">
-                                        <label class="lbl">Choose Time</label>
-                                        <div id="display_slot">
-										
-										</div>
-										
-                                    </div>
-								
-                                </div>
+                                    	<label class="lbl">Choose Time</label>
+                                    	<div id="display_slot"> </div>
+                                 	 </div>
+                                    <div class="col-xs-12">
+                                    	<div class="reschdl_grp"> 
+                                        	<a href="javascript:void(0);" class="Acceptbtn sess_btn date_schedule request_slot" id="request_schedule" />Request Reschedule</a>
+                                             <a href="javascript:void(0);" class="Acceptbtn sess_btn canceled_btn" id="alternative_dates_cancel" >Cancel</a> 
+                                   		</div>
+                                  	</div>
+                                  </div>
                                 
                             </section><!-- CHOOSE DATE CONTAINER -->
                             

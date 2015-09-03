@@ -175,7 +175,7 @@ $(document).ready(function() {
 		max: 500,
 		from: 0,
 		to: 500,
-		prefix: "<i class='fa fa-euro'></i> ",
+		prefix: "<i class='fa fa-usd'></i> ",
 		onFinish: function (data) {
         console.log(data);
 		$("#price_from").val(data.from);

@@ -67,7 +67,7 @@ if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Area of expertise</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
                                     	<span class="value" id="categ_span">-</span>
-                                        <select class="form-control valuefield" style="display:none;" name="category" id="category">
+                                        <select class="form-control valuefield" style="display:none;" name="category" id="category1">
                                         	<option value="">Select Category</option>
                                         <?php 
                                         $cond = " ";
@@ -106,7 +106,7 @@ if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){
                                         <div style="display:none;">
                                             <div class="h_rate"><input type="radio" name="rate" value="free" <?php if($user_detail[0]['is_expert']=="1" && $hourly_rate =="0"){echo 'checked="checked"';}?> /> Free</div>
                                             <div class="h_rate"><input type="radio" name="rate" value="rate" <?php if($user_detail[0]['is_expert']=="1" && $hourly_rate !="0"){echo 'checked="checked"';}?>/> 
-                                            <input type="text" class="form-control valuefield" style="width:100px;" name="hourly_rate" value="<?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $hourly_rate;}else {echo "0";}?>"/> <i class="fa fa-eur"></i>/hour</div>
+                                            <input type="text" class="form-control valuefield" style="width:100px;" name="hourly_rate" value="<?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $hourly_rate;}else {echo "0";}?>"/> <i class="fa fa-usd"></i>/hour</div>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-xss-2 col-sm-2">
@@ -301,8 +301,8 @@ $(function() {
           return false;
         }
       });
-    var selected_categ = $('#category').val();
-    $('#categ_span').text($("#category option[value='"+selected_categ+"']").text());
+    var selected_categ = $('#category1').val();
+    $('#categ_span').text($("#category1 option[value='"+selected_categ+"']").text());
 });
 </script>
 </body>

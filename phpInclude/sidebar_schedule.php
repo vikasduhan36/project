@@ -11,14 +11,7 @@
                         <div class="accountimgblk">
                             <span class="imgcont">
 							<img src="images/users/default.jpg" alt="user" class="responsiveimg" /></span>
-                            <span class="uploadimgotr">
-                                <input type="file" />
-                                <span>
-								<a href="#">Back to expert profile</a>
-								</span>
-                            </span>
                         </div>
-                      
-                      					
+                        <a href="#" class="back_exprt_pro_btn">Back to expert profile</a>				
                     </div><!-- FOR TOGGLED DASHBOARD -->
                 </div><!-- // SIDE BAR NAV // -->
