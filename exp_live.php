@@ -69,10 +69,11 @@ var VIDEO_WIDTH 	 = 270;
 				</span>
 				<script type="text/javascript">
 					var user_id = "<?php echo $fetch['id'];?>";
+					
 					var sec = parseInt(document.getElementById('seconds_'+user_id).innerHTML);
 					var min = parseInt(document.getElementById('minutes_'+user_id).innerHTML);
 					var hrs = parseInt(document.getElementById('hours_'+user_id).innerHTML);
-					var myVar=setInterval(function(){userTimer()},1000);
+					var myVar=setInterval(function(){userTimer(user_id)},1000);
 				</script>
  <?php
 				

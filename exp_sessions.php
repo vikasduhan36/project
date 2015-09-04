@@ -31,7 +31,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 						<?php 
 						if(empty($_GET['tab']) || (isset($_GET['tab']) && $_GET['tab'] == 'schedule'))
 						{
-							$sql = " SELECT s.id as s_id,s.title,s.session_datetime,u.fname,u.lname FROM sessions as s LEFT JOIN users as u ";
+							$sql = " SELECT s.id as s_id,s.title,s.session_datetime, s.status,s.duration, u.fname,u.lname FROM sessions as s LEFT JOIN users as u ";
 							$sql .= " ON(s.user_id = u.id) WHERE exp_applied_id='".$_SESSION['LoginUserId']."' and s.status='2' ";
 
 							$query = mysql_query($sql) or die(mysql_error());
@@ -56,10 +56,25 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 										<a href="<?php echo $root.'session_request.php?id='.$fetch['s_id'];?>">
 										<?php echo $fetch['title'];?>
 										</a>
-										<span>Expert: <?php $fetch['fname']." ".$fetch['lname'];?></span></h3></div>
+										<span>User: <?php $fetch['fname']." ".$fetch['lname'];?></span></h3></div>
 										<div class="col-xs-12 col-sm-3 date">
 										
-										<a href="javascript:void(0);" class="sess_btn">Scheduled</a>
+										<?php
+										if($fetch['status'] == '3')
+										{
+											echo '<a href="javascript:void(0);" class="sess_btn">Completed</a>';
+										}
+										else if(strtotime($date) > strtotime($fetch['session_datetime']."+".$fetch['duration']." MINUTES "))
+										{
+											echo '<a href="javascript:void(0);" class="sess_btn">Missed</a>';
+										}
+										else
+										{
+											echo '<a href="javascript:void(0);" class="sess_btn">Scheduled</a>';
+										}
+										//echo date("Y-m-d H:i:s",strtotime($fetch['session_datetime']."+".$fetch['duration']." MINUTES "));
+										?>
+										
 										
 										</div>
 									</div>

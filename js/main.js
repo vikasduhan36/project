@@ -1382,28 +1382,29 @@ $("#expert_search").autocomplete({
 });
 });
 
-function userTimer()                                                     
+function userTimer(user_id)                                                     
 {
+console.log(user_id);
     if(sec > 0){
-        document.getElementById('seconds').innerHTML = sec-1;
+        document.getElementById('seconds_'+user_id).innerHTML = sec-1;
         sec--;
     }else{
         sec = 59;
-        document.getElementById('seconds').innerHTML = sec;
+        document.getElementById('seconds_'+user_id).innerHTML = sec;
         if(min > 0){
-            document.getElementById('minutes').innerHTML = min-1;
+            document.getElementById('minutes_'+user_id).innerHTML = min-1;
             min--;
         }else{
             min = 59;
-            document.getElementById('minutes').innerHTML = min;
+            document.getElementById('minutes_'+user_id).innerHTML = min;
             if(hrs > 0){
-                document.getElementById('hours').innerHTML = hrs-1;
+                document.getElementById('hours_'+user_id).innerHTML = hrs-1;
                 hrs--;
             }else{
                 hrs = 23;
-                document.getElementById('hours').innerHTML = hrs;
+                document.getElementById('hours_'+user_id).innerHTML = hrs;
                 if(days > 0){
-                    document.getElementById('days').innerHTML = days-1;
+                    document.getElementById('days_'+user_id).innerHTML = days-1;
                     days--;
                 }
             }
@@ -1412,15 +1413,7 @@ function userTimer()
  
         if((hrs==0)&&(min==0)&&(sec == 0))                                                                                                                   // session
         {
-            var r = confirm("Your scheduled duration for this session has been finished. \r\n Do you want to request more time to participate?");
-			if(r)
-			{
-				alert('request expert');
-			}
-			else
-			{
-				alert('session complete');
-			}
+            alert('User session finished.');
 		}	
 		
      

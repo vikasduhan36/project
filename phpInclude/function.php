@@ -99,11 +99,19 @@ function daysRemaining($currentDate,$end,$out_in_array=false){
     if(!$out_in_array)
         return $out;
     $a_out = array();
-    array_walk(explode(',',$out),
+	$ot = explode(',',$out);
+	foreach($ot as $key => $val)
+	{
+		$v=explode(':',$val);
+		 $a_out[$v[0]] = $v[1];
+	}
+    /*
+	array_walk(explode(',',$out),
             function($val,$key) use(&$a_out){
         $v=explode(':',$val);
         $a_out[$v[0]] = $v[1];
     });
+	*/
     return $a_out;
 }
 // Configuration for send mail via SMTP with attachment
