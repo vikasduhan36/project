@@ -27,13 +27,26 @@ if (system_requirement == 0) {} else {
             connectionCount++;
             if (event.connection.connectionId != event.target.connection.connectionId) {
             	myId = event.target.connection.connectionId;
+				
+				$('#user_'+event.connection.data).parent().fadeIn();
+				$("#no_user").fadeOut();
             }
             
             OT.log(connectionCount + " connections." + event.connection.connectionId)
         },
         connectionDestroyed: function(event) {
             connectionCount--;
-            OT.log(connectionCount + " connections.")
+            OT.log(OtConnectionCount + " connections.");
+			if (event.connection.connectionId != event.target.connection.connectionId) {
+            	
+				
+				$('#user_'+event.connection.data).parent().fadeOut();
+				
+            }
+			if(OtConnectionCount == 1)
+			{
+				$("#no_user").fadeIn();
+			}
         },
         sessionDisconnected: function sessionDisconnectHandler(event) {
             if (event.reason == "networkDisconnected") {
@@ -50,26 +63,20 @@ if (system_requirement == 0) {} else {
 
 function startPublishing() {
     if (!publisher) {
-    	if(type == "exp")
-		{
-    		  var publisherProps = {
+	 var publisherProps = {
     		            width: myCameraWidth,
     		            height: myCameraHeight,
     		            insertMode: "replace"
 	           };
-	        publisher = OT.initPublisher("myCamera", publisherProps);
+    	if(type == "exp")
+		{
+    		 
+	        publisher = OT.initPublisher("mainvideo", publisherProps);
 		}
     	else
 		{
     		
-    	    VIDEO_HEIGHT = 150;
-    	    VIDEO_WIDTH = 221;
-    	    var publisherProps = {
-    	        width: VIDEO_WIDTH,
-    	        height: VIDEO_HEIGHT,
-    	        insertMode: "replace"
-    	    };
-    	    publisher = OT.initPublisher("subVideo", publisherProps);
+	        publisher = OT.initPublisher("smallvideo", publisherProps);
 		}
         session.publish(publisher);
         publisher.on({
@@ -101,29 +108,16 @@ function addStream(stream) {
     if (stream.connection.connectionId == session.connection.connectionId) {
         return
     }
-	if(stream.connection.data == "exp")
-	{
-		$('#myCamera').prepend('<div id="' + stream.connection.connectionId + '"></div>');
+	
+		
         
         var subscriberProps = {
             width: VIDEO_WIDTH,
             height: VIDEO_HEIGHT,
             insertMode: "replace"
         };
-        subscribers[stream.streamId] = session.subscribe(stream, stream.connection.connectionId, subscriberProps);
-	}
-	else
-	{
-		$('#user').prepend('<div class="small_screen" id="' + stream.connection.connectionId + '">&nbsp;</div>');
-	    VIDEO_HEIGHT = 150;
-	    VIDEO_WIDTH = 221;
-	    var subscriberProps = {
-	        width: VIDEO_WIDTH,
-	        height: VIDEO_HEIGHT,
-	        insertMode: "replace"
-	    };
-	    subscribers[stream.streamId] = session.subscribe(stream, stream.connection.connectionId, subscriberProps);
-	}
+        subscribers[stream.streamId] = session.subscribe(stream, 'user_'+stream.connection.data, subscriberProps);
+	
 	
     
 }
@@ -232,7 +226,124 @@ function signalReceivedHandler(event) {
 		$('.user_chat').scrollTop($('.user_chat')[0].scrollHeight);
 	}
 	
+	if(signalType == 'signal:time_request')
+	{
+		//event.from.data
+		var r = confirm($("#user_"+event.from.data).next("h6").text()+" has requested for more session time.\r\nClick ok to allow.");
+		
+		if(r)
+		{
+			session.signal({
+				type: "time_allow",
+				data: event.from.data
+			});
+		}
+		else
+		{
+			session.signal({
+				type: "time_reject",
+				data: event.from.data
+			});
+		}
+		
+	}
+	
 }
 
+
+$(document).ready(function(){
+
+	$("#audio_control").click(function(){
+		var $this = $(this);
+		if($this.hasClass("active"))
+		{
+			turnOnMyAudio();
+		}
+		else
+		{
+			turnOffMyAudio();
+		}
+		$this.toggleClass("active");
+	});
+	
+	$("#video_control").click(function(){
+		var $this = $(this);
+		if($this.hasClass("active"))
+		{
+			turnOnMyVideo();
+		}
+		else
+		{
+			turnOffMyVideo();
+		}
+		$this.toggleClass("active");
+	});
+	
+	$("#end_session").click(function(){
+		var r = confirm("Are you sure you want to end this session.");
+		if(r)
+		{
+			window.location.href = root+'exp_sessions.php';
+		}
+		
+	});
+	
+});
+
+function userTimer(user_id)                                                     
+{
+var sec = parseInt(document.getElementById('seconds_'+user_id).innerHTML);
+					var min = parseInt(document.getElementById('minutes_'+user_id).innerHTML);
+					var hrs = parseInt(document.getElementById('hours_'+user_id).innerHTML);
+					
+	var myVar=setInterval(function(){
+    if(sec > 0){
+        //document.getElementById('seconds_'+user_id).innerHTML = sec-1;
+        sec--;
+    }else{
+        sec = 59;
+       // document.getElementById('seconds_'+user_id).innerHTML = sec;
+        if(min > 0){
+            //document.getElementById('minutes_'+user_id).innerHTML = min-1;
+            min--;
+        }else{
+            min = 59;
+           // document.getElementById('minutes_'+user_id).innerHTML = min;
+            if(hrs > 0){
+             //   document.getElementById('hours_'+user_id).innerHTML = hrs-1;
+                hrs--;
+            }else{
+                hrs = 23;
+              //  document.getElementById('hours_'+user_id).innerHTML = hrs;
+                if(days > 0){
+                 //   document.getElementById('days_'+user_id).innerHTML = days-1;
+                    days--;
+                }
+            }
+        }
+    }
+ 
+        if((hrs==0)&&(min==0)&&(sec == 0))                                                                                                                   // session
+        {
+           // alert('User session finished.');
+		   clearInterval(myVar);
+		}	
+	
+	document.getElementById('timer_'+user_id).innerHTML	= preced_zero(hrs)+':'+preced_zero(min)+':'+preced_zero(sec);
+     },1000);
+}
+
+
+function preced_zero(value)
+{
+	if(value < 10)
+	{
+		return "0"+value;
+	}
+	else
+	{
+		return value;
+	}
+}
 
 

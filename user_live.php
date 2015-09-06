@@ -1,84 +1,139 @@
 <?php 
-	require_once('phpInclude/header.php');
+	require_once('phpInclude/header_live.php');
+	require_once('phpInclude/function.php');
 	require_once 'SDK/OpenTokSDK.php';
     require_once 'SDK/OpenTokArchive.php';
     require_once 'SDK/OpenTokSession.php';
-	
+	?>
+
+	 <div class="screenotr"><!-- ALL SCREEN OUTER -->
+        <div class="MainVideoCont">
+                <div id="mainvideo"></div><!-- Main Video -->
+            </div>
+			
+	<?php
 	$userTimezone = getUserTimezone($_SESSION['LoginUserId']);
-	$exp_id = $_GET['id'];
-	$sql  = " SELECT s.session_datetime,s.duration,s.title,s.description,s.question,s.status, ";
+	$id = $_GET['id'];
+	$sql  = " SELECT s.session_datetime,s.duration,s.title,s.description,s.question,s.status,s.exp_applied_id, ";
 	$sql .= " u.fname,u.lname,u.id,u.tokbox_id ";
 	$sql .= " FROM sessions as s LEFT JOIN users as u ON(s.user_id = u.id) ";
-	$sql .= " WHERE s.exp_applied_id='".$exp_id."' and s.status='2' and s.user_id='".$_SESSION['LoginUserId']."' ";
+	$sql .= " WHERE s.id='".$id."' and s.user_id='".$_SESSION['LoginUserId']."' ";
 	//$sql .= " and '".$date."' >= s.session_datetime and '".$date."' <= DATE_ADD(s.session_datetime, INTERVAL s.duration MINUTE)";
+	
 	$query = mysql_query($sql) or die(mysql_error());
 	if($query)
 	{
 		if( mysql_num_rows($query) > 0 )
 		{
 			$fetch = mysql_fetch_assoc($query);
-			//{
-				$datetime = convertTimezone($fetch['session_datetime'],$default_tz,$userTimezone['timezone']);
-				if($fetch['status'] == '3')
-				{
-					echo '<a href="javascript:void(0);" class="sess_btn">Your session has been completed.</a>';
-				}
-				else if(strtotime($date) < strtotime($fetch['session_datetime']))
-				{
-					
-					
-					echo '<h3>Your session will start at: '.$datetime.'</h3>';
-				}
-				else if(strtotime($date) > strtotime($fetch['session_datetime']."+".$fetch['duration']." MINUTES "))
-				{
-					
-					
-					echo '<h3>Your session has been missed, session was scheduled at : '.$datetime.'</h3>';
-				}
-				else if((strtotime($date) >= strtotime($fetch['session_datetime']))&&(strtotime($date) <= strtotime($fetch['session_datetime']."+".$fetch['duration']." MINUTES ")))
-				{
+			$datetime = convertTimezone($fetch['session_datetime'],$default_tz,$userTimezone['timezone']);
+			if($fetch['status'] == '3')
+			{
 				
-					$field = " tokbox_id ";
+				?>
+			
+			<div class="SessionMsg" style="display:table;"><!-- Session Message -->
+            	<div class="sessiontext">
+                	
+                	<p>Your session has been completed.<a href="<?php echo $root?>user_sessions.php?tab=schedule">Return to dashboard</a></p>	
+                </div>
+            </div><!-- Session Message -->
+             </div><!-- ALL SCREEN OUTER -->
+        
+    </div>
+			<?php
+			}
+			else if(strtotime($date) < strtotime($fetch['session_datetime']))
+			{
+				
+				?>
+			
+			<div class="SessionMsg" style="display:table;"><!-- Session Message -->
+            	<div class="sessiontext">
+                	
+                	<p>Your session will start at: <?php echo $datetime;?><a href="<?php echo $root?>user_sessions.php?tab=schedule">Return to dashboard</a></p>	
+                </div>
+            </div><!-- Session Message -->
+             </div><!-- ALL SCREEN OUTER -->
+        
+    </div>
+			<?php
+				
+			}
+			else if(strtotime($date) > strtotime($fetch['session_datetime']."+".$fetch['duration']." MINUTES "))
+			{
+				
+				
+				?>
+			
+			<div class="SessionMsg" style="display:table;"><!-- Session Message -->
+            	<div class="sessiontext">
+                	
+                	<p>Your session time has been passed.<br><a href="<?php echo $root?>user_sessions.php?tab=schedule">Return to dashboard</a></p>	
+                </div>
+            </div><!-- Session Message -->
+             </div><!-- ALL SCREEN OUTER -->
+        
+    </div>
+			<?php
+			}
+			else if((strtotime($date) >= strtotime($fetch['session_datetime']))&&(strtotime($date) <= strtotime($fetch['session_datetime']."+".$fetch['duration']." MINUTES ")))
+			{
+		$field = " tokbox_id ";
 					$table = " users ";
-					$condition = " AND id = '".$exp_id."' ";
+					$condition = " AND id = '".$fetch['exp_applied_id']."' ";
 					$user_dt = getDetail($field,$table,$condition);
 					
 					$sessionId = $user_dt[0]['tokbox_id'];
 					
-					
-					$apiObj = new OpenTokSDK($tokboxApi, $tokboxApiSecret);
-					
-					$tokenId=$apiObj->generate_token($sessionId, RoleConstants::PUBLISHER, null, 'expert'); 
-					?>
-					<script type="text/javascript" src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js" ></script> 	<!-- FOR OPENTOK WEBRTC --> 
-					<script type="text/javascript">
-						
-					var type="user";
-
-					var apiKey			 = "<?php echo $tokboxApi;?>";
-					var apiSecret		 = "<?php echo $tokboxApiSecret;?>";
-					var sessionId		 = "<?php echo $sessionId;?>";  												//tokbox id to start live session
-					var token			 = "<?php echo $tokenId;?>";						
-					var session			 = "";
-					var publisher		 = "";
-					var subscribers 	 = {};
-					var cameras			 = "";
-					var myCameraWidth 	 = 536;																				//Inset stram width
-					var myCameraHeight 	 = 400;	
-					var connections 	 = {};
-					var connection_id;
-					var streamcount 	 = null;
-					var connectionCount  = 0;
-					var VIDEO_HEIGHT	 = 154;
-					var VIDEO_WIDTH 	 = 270;
-						
-						</script>
-						<script src="<?php echo $root;?>js/exp_video.js"></script>
-						<?php
+    $apiObj = new OpenTokSDK($tokboxApi, $tokboxApiSecret);
+    
+	$tokenId=$apiObj->generate_token($sessionId, RoleConstants::PUBLISHER, null, $_SESSION['LoginUserId']); 
+	
+	
+			?>
+			<div class="SmallVideoCont">
+                <div id="smallvideo"></div><!-- Small Video -->
+            </div>
+				<script type="text/javascript">
+var root = "<?php echo $root;?>";	
+var type="user";
+var s_id = "<?php echo $id;?>";
+var apiKey			 = "<?php echo $tokboxApi;?>";
+var apiSecret		 = "<?php echo $tokboxApiSecret;?>";
+var sessionId		 = "<?php echo $sessionId;?>";  												//tokbox id to start live session
+var token			 = "<?php echo $tokenId;?>";	
+var my_id = "<?php echo $_SESSION['LoginUserId'];?>";					
+var session			 = "";
+var publisher		 = "";
+var subscribers 	 = {};
+var cameras			 = "";
+var myCameraWidth 	 = '100%';																				//Inset stram width
+var myCameraHeight 	 = '100%';	
+var connections 	 = {};
+var connection_id;
+var streamcount 	 = null;
+var connectionCount  = 0;
+var VIDEO_HEIGHT	 = '100%';
+var VIDEO_WIDTH 	 = '100%';
+var newTimer 		 = '';	
+    </script>
+	 <script type="text/javascript" src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js" ></script> 	<!-- FOR OPENTOK WEBRTC --> 
+	<script src="<?php echo $root;?>js/user_video.js"></script>
+	
+			<script>
+			$(document).ready(function(){
+				
+				$(".session_nav,.sess_timer").fadeIn();
+				
+			});
+			</script>
+			 </div><!-- ALL SCREEN OUTER -->
+        <?php
 					$endTime = date('Y-m-d H:i:s',strtotime($fetch['session_datetime'].' '.$fetch['duration'].' minutes'));
 					$diff = daysRemaining($date,$endTime,true);		
 		 ?>
-					<span class="gray" id="day_time_timer" style="display:<?php if(($diff['Days'] > 0) || ($diff['Hours'] > 0)){echo 'none';}else{echo 'block';}?>;">
+					<span class="gray" id="day_time_timer" style="display:none;">
 					<span id="days" class="tim" style='display:none;'><?php echo $diff['Days'];?></span>
 					<span id="hours" style='display:none;'><?php echo $diff['Hours'];?></span>
 					<span id="minutes"><?php echo $diff['Minutes'];?></span> min
@@ -88,32 +143,82 @@
 						var sec = parseInt(document.getElementById('seconds').innerHTML);
 						var min = parseInt(document.getElementById('minutes').innerHTML);
 						var hrs = parseInt(document.getElementById('hours').innerHTML);
-						var myVar=setInterval(function(){userTimer()},1000);
+						document.getElementById('seconds_hd').innerHTML = preced_zero(sec);
+						document.getElementById('minutes_hd').innerHTML = preced_zero(min);
+						document.getElementById('hours_hd').innerHTML = preced_zero(hrs);
+						var myVar=setInterval(function(){myTimer('hd')},1000);
 					</script>
-		 <?php
-						echo "<div>Scheduled at:".$fetch['session_datetime']."</div>";
-						echo "<div>DURATION:".$fetch['duration']." minutes</div>";
-						echo "<hr>";
+    </div>
+	
+			<?php
 			
-				}
+			$sql_user  = " SELECT ";
+			$sql_user .= " u.id,u.fname,u.lname ";
+			$sql_user .= " FROM session_time as s LEFT JOIN users as u ON(s.user_id = u.id) ";
+			$sql_user .= " WHERE s.session_id='".$fetch['s_id']."' and s.user_id != '".$_SESSION['LoginUserId']."'  ";
 			
+		$query_user = mysql_query($sql_user) or die(mysql_error());
+		if($query_user)
+		{
+			if( mysql_num_rows($query_user) > 0 )
+			{	
+			?>
+			<script>
+			$(document).ready(function(){
+				$(".SessionInner").addClass("opened_userlist");
+				
+			});
+			</script>
+			<div class="OtherUserList userlist_opened">
+    	<a href="javascript:void(0);" class="closebtn">X</a>
+        <div class="vlist_otr">
+        <div class="content blkheight " id="scrollbar">
+			<?php
+			while($fetch_user = mysql_fetch_assoc($query_user))
+			{
+				?>
+			
+        	<div class="v_blk_otr">
+            	<div class="v_blk_innr" id="user_<?php echo $fetch_user['id']?>"></div>
+                <h6><?php echo $fetch_user['fname']." ".$fetch_user['lname'];?></h6>
+                
+            </div>
+       	
+			<?php
+			
+			}
+			?>
+			</div>
+        </div>
+    </div>
+			<?php
+			}
+			}
+			}
 		}
 		else
 		{
 			?>
-			<h3>No scheduling.</h3>
+			
+			<div class="SessionMsg" style="display:table;"><!-- Session Message -->
+            	<div class="sessiontext">
+                	
+                	<p>No scheduled session found.<a href="<?php echo $root?>user_sessions.php?tab=schedule">Return to dashboard</a></p>	
+                </div>
+            </div><!-- Session Message -->
+             </div><!-- ALL SCREEN OUTER -->
+        
+    </div>
 			<?php
 		}
 	}
 	
 	
-	
-?>	
-	
+?>
 
-<h3>Expert</h3>
-	<div id="myCamera"></div>
+
+	
 <?php 
-	require_once('phpInclude/footer.php');
+	require_once('phpInclude/footer_live.php');
 ?>
 

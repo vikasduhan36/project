@@ -646,3 +646,43 @@ input.cmn-toggle-round:checked + label .fa-check{display:block;}
 .loaderotr .overlay{position:absolute; top:0; right:0; bottom:0; left:0; z-index:2000; background:rgba(255,255,255,0.95);}
 .loaderotr .loading{height:85px; width:85px; position:absolute; top:0; right:0; bottom:0; left:0; z-index:3000; margin:auto auto;}
 /*-- LOADER --*/
+
+/*====================== MY SESSION PAGE ======================*/
+header.sessionheader{background-color:#fff; position:relative;}
+.sessionheader .meeting_with{position:relative; float:left; padding-left:16px; border-left:1px solid #f5f5f5; line-height:38px; font-family:'roboto_condensedregular'; color:#b1b1b1; font-size:16px; margin:28px 0 0;}
+.sessionheader .session_nav{float:right; margin-top:5px;}
+.sessionheader .session_nav h5{float:left; font-size:18px; color:#444; line-height:40px; margin:0 10px; color:#58bde7;}
+.sessionheader .session_nav .sess_timer{float:left; border:2px solid #e02716; line-height:27px; border-radius:3px; min-width:68px; text-align:center; font-size:18px; font-family:'roboto_condensedregular'; color:#e02718; margin-top:4px;}
+.sessionheader .session_nav ul{float:left; transition:all 0.5s ease-in-out 0s;}
+.sessionheader .session_nav li{float:left; margin-left:10px; transition:all 0.5s ease-in-out 0s;}
+.sessionheader .session_nav li a{height:38px; width:38px; border-radius:3px; overflow:hidden; display:block;}
+.sessionheader .session_nav li a.micsbtn{background:url(../images/mics.jpg) no-repeat center center;}
+.sessionheader .session_nav li a.micsbtn:hover,.sessionheader .session_nav li a.micsbtn.active{background-image:url(../images/mics_hover.jpg);}
+.sessionheader .session_nav li a.videobtn{background:url(../images/video.jpg) no-repeat center center;}
+.sessionheader .session_nav li a.videobtn:hover,.sessionheader .session_nav li a.videobtn.active{background-image:url(../images/video_hover.jpg);}
+.sessionheader .session_nav li a.callbtn{background:url(../images/call.jpg) no-repeat center center; border:1px solid transparent;}
+.sessionheader .session_nav li a.callbtn:hover,.sessionheader .session_nav li a.callbtn.active{background-image:url(../images/call_hover.jpg);}
+.sessionheader .session_nav li a.viewusrbtn{background:url(../images/users.png) no-repeat center center; border:1px solid transparent;}
+.sessionheader .session_nav li a.viewusrbtn:hover,.sessionheader .session_nav li a.viewusrbtn.active{background:url(../images/users_hover.png) no-repeat center center; border-radius:3px; border:1px solid #58bde7;}
+
+.SessionContMain{position:absolute; left:0; right:0; bottom:0; top:0; width:100%; border-bottom:1px solid #e2e2e2; background-color:#ffffff; overflow:hidden; transition:all 0.5s ease-in-out 0s;}
+.SessionContMain .SessionInner{position:absolute; left:0; right:0; bottom:0; top:0; height:100%; transition:all 0.5s ease-in-out 0s;}
+.SessionContMain .SessionInner .screenotr{position:absolute; top:68px; left:0; right:0; bottom:0; width:100%; transition:all 0.5s ease-in-out 0s;}
+.SessionContMain .SessionInner .MainVideoCont{position:absolute; top:0; left:0; right:0; bottom:0; width:100%; height:100%; background-color:#666; z-index:88;}
+.SessionContMain .SessionInner .SmallVideoCont{width:185px; height:105px; border:2px solid #58bde7; border-radius:2px; position:absolute; bottom:20px; right:20px; background-color:rgba(0,0,0,0.3); z-index:100;}
+.SessionContMain .SessionMsg{position:absolute; top:0; left:0; right:0; bottom:0; margin:auto auto; text-align:center; display:table; width:100%; height:100%; z-index:99;}
+.SessionContMain .SessionMsg .sessiontext{display:table-cell; vertical-align:middle;}
+.SessionContMain .SessionMsg .sessiontext p{color:#fff; font-size:24px; line-height:48px;}
+.SessionContMain .SessionMsg .sessiontext p a{display:block; color:#58bde7;}
+.SessionContMain .opened_userlist{right:320px; width:auto;}
+
+.OtherUserList{width:320px; position:absolute; top:0; right:-320px; bottom:0; z-index:101; background-color:#2e2f2f; padding:40px 35px 20px; transition:all 0.5s ease-in-out 0s;}
+.OtherUserList a.closebtn{font-size:20px; color:#ffffff; position:absolute; z-index:100; right:0; top:0; line-height:45px; width:47px; text-align:center;}
+.OtherUserList .vlist_otr{overflow:hidden; overflow-x:hidden; color:#ffffff; height:100%;}
+.OtherUserList .vlist_otr .v_blk_otr{margin-bottom:10px; position:relative; height:130px; width:100%; border:2px solid #aaa; background:#000;}
+.OtherUserList .vlist_otr .v_blk_otr .v_blk_innr{}
+.OtherUserList .vlist_otr .v_blk_otr h6{float:left; position:absolute; top:0; z-index:5555; left:0; right:0; background:rgba(0,0,0,0.5); line-height:30px; font-size:15px; color:#fff; text-align:center;}
+.OtherUserList .vlist_otr .v_blk_otr .time_es{font-size:15px; color:#fff; background:#e02716; left:0; bottom:0; z-index:5555; line-height:30px; padding:0 10px; position:absolute;}
+.OtherUserList .vlist_otr .blkheight{max-height:600px; overflow: auto;	position: relative;}
+.OtherUserList.userlist_opened{right:0;}
+/*====================== MY SESSION PAGE ======================*/

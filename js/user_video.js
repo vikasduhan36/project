@@ -46,7 +46,8 @@ if (system_requirement == 0) {} else {
             	myId = event.target.connection.connectionId;
             }
             
-            OT.log(connectionCount + " connections." + event.connection.connectionId)
+            OT.log(connectionCount + " connections." + event.connection.connectionId);
+			
         },
         connectionDestroyed: function(event) {
             connectionCount--;
@@ -67,26 +68,20 @@ if (system_requirement == 0) {} else {
 
 function startPublishing() {
     if (!publisher) {
-    	if(type == "mod")
-		{
-    		  var publisherProps = {
-    		            width: $('.main_video').width(),
-    		            height: $('.main_video').height(),
+    	 var publisherProps = {
+    		            width: myCameraWidth,
+    		            height: myCameraHeight,
     		            insertMode: "replace"
 	           };
-	        publisher = OT.initPublisher("myCamera", publisherProps);
+    	if(type == "exp")
+		{
+    		 
+	        publisher = OT.initPublisher("mainvideo", publisherProps);
 		}
     	else
 		{
-    		$('#user').prepend('<div class="small_screen" id="subVideo">&nbsp;</div>');
-    	    VIDEO_HEIGHT = 150;
-    	    VIDEO_WIDTH = 221;
-    	    var publisherProps = {
-    	        width: VIDEO_WIDTH,
-    	        height: VIDEO_HEIGHT,
-    	        insertMode: "replace"
-    	    };
-    	    publisher = OT.initPublisher("subVideo", publisherProps);
+    		
+	        publisher = OT.initPublisher("smallvideo", publisherProps);
 		}
         session.publish(publisher);
         publisher.on({
@@ -118,38 +113,29 @@ function addStream(stream) {
     if (stream.connection.connectionId == session.connection.connectionId) {
         return
     }
-	if(stream.connection.data == "mod")
+
+	if(stream.connection.data == "exp")
 	{
-		$('#myCamera').prepend('<div id="' + stream.connection.connectionId + '"></div>');
-        VIDEO_HEIGHT = $('.main_video').height();
-        VIDEO_WIDTH = $('.main_video').width();
+		
+        
         var subscriberProps = {
             width: VIDEO_WIDTH,
             height: VIDEO_HEIGHT,
             insertMode: "replace"
         };
-        subscribers[stream.streamId] = session.subscribe(stream, stream.connection.connectionId, subscriberProps);
+        subscribers[stream.streamId] = session.subscribe(stream, 'mainvideo', subscriberProps);
 	}
 	else
 	{
-		$('#user').prepend('<div class="small_screen" id="' + stream.connection.connectionId + '">&nbsp;</div>');
-	    VIDEO_HEIGHT = 150;
-	    VIDEO_WIDTH = 221;
 	    var subscriberProps = {
 	        width: VIDEO_WIDTH,
 	        height: VIDEO_HEIGHT,
 	        insertMode: "replace"
 	    };
-	    subscribers[stream.streamId] = session.subscribe(stream, stream.connection.connectionId, subscriberProps);
+	    subscribers[stream.streamId] = session.subscribe(stream, 'user_'+stream.connection.data, subscriberProps);
 	}
 	
-    if(type=='mod' && is_archiving == 0)
-	{
-    	setTimeout(function(){
-        	//startArchive(); 
-    		$('#startArchive').removeAttr('disabled').css('background','#5CD65C');
-        },1000);
-	}
+   
 }
 
 function sessionConnectedHandler(event) {
@@ -256,68 +242,153 @@ function signalReceivedHandler(event) {
 		$('.user_chat').scrollTop($('.user_chat')[0].scrollHeight);
 	}
 	
-}
-
-
-function startArchive()
-{
-	$.ajax({
-		url:'handler.php',
-		type:'post',
-		data:'method=startArchive&session='+sessionId+'&apiKey='+apiKey+'&apiSecret='+apiSecret,
-		success:function(){
-			
-		},
-	});
-}
-
-function stopArchive()
-{
-	$.ajax({
-		url:'handler.php',
-		type:'post',
-		data:'archiveID='+archiveID+'&method=stopArchive',
-		success:function(result){
-			console.log('^^^***********');
-			console.log(result);
-			console.log('^^^***********');
-		},
-	});
+	if(signalType == 'signal:time_allow' && my_id == event.data)
+	{
+		alert('Expert has allowed you to participate more time in this session.');
+		clearInterval(myVar);
+		newTimer('sess_timer')
+	}
+	else if(signalType == 'signal:time_reject' && my_id == event.data)
+	{
+		alert('Expert has denied you to participate more time in this session.');
+		clearInterval(myVar);
+		window.location.href = root+'session_complete.php?id='+s_id;
+	}
 }
 
 $(document).ready(function(){
-$('body').on('keypress','#enterTextChat',function(event){
-	if(event.keyCode == 13 && $.trim($(this).val()) != "")
-	{
-		var selected = $(this);
-		var chat = selected.val();
-		selected.val('');
+
+	$("#audio_control").click(function(){
+		var $this = $(this);
+		if($this.hasClass("active"))
+		{
+			turnOnMyAudio();
+		}
+		else
+		{
+			turnOffMyAudio();
+		}
+		$this.toggleClass("active");
+	});
+	
+	$("#video_control").click(function(){
+		var $this = $(this);
+		if($this.hasClass("active"))
+		{
+			turnOnMyVideo();
+		}
+		else
+		{
+			turnOffMyVideo();
+		}
+		$this.toggleClass("active");
+	});
+	
+	$("#end_session").click(function(){
+		var r = confirm("Are you sure you want to end this session.");
+		if(r)
+		{
+			window.location.href = root+'session_complete.php?id='+s_id;
+		}
 		
-		session.signal({
-			type: "textChat",
-		   // to: [userId], // connection1 and 2 are Connection objects
-		    data: chat
-		});
-	}
-
-});
-$('body').on('click','#showTextChat',function(e){
-	//alert(e.which);
-	if($(e.target).hasClass('disableAnimate'))
-	{
-		return false;
-	}
-	if($(this).attr('alt') == 'open')
-	{
-		$(this).attr({'alt':'close'});
-		$(this).animate({'height':'300px'},1000);//,'width':'350px'
-	}
-	else if($(this).attr('alt') == 'close')
-	{
-		$(this).attr({'alt':'open'});
-		$(this).animate({'height':'40px'},1000);
-	}
+	});
+	
 });
 
+function myTimer(user_id)                                                     
+{
+    if(sec > 0){
+        document.getElementById('seconds_'+user_id).innerHTML = preced_zero(sec-1);
+        sec--;
+    }else{
+        sec = 59;
+        document.getElementById('seconds_'+user_id).innerHTML = preced_zero(sec);
+        if(min > 0){
+            document.getElementById('minutes_'+user_id).innerHTML = preced_zero(min-1);
+            min--;
+        }else{
+            min = 59;
+            document.getElementById('minutes_'+user_id).innerHTML = preced_zero(min);
+            if(hrs > 0){
+                document.getElementById('hours_'+user_id).innerHTML = preced_zero(hrs-1);
+                hrs--;
+            }else{
+                hrs = 23;
+                document.getElementById('hours_'+user_id).innerHTML = preced_zero(hrs);
+                if(days > 0){
+                    document.getElementById('days_'+user_id).innerHTML = preced_zero(days-1);
+                    days--;
+                }
+            }
+        }
+    }
+ 
+        if((hrs==0)&&(min==0)&&(sec == 0))                                                                                                                   // session
+        {
+			clearInterval(myVar);
+			var r = confirm("Your session time has been completed. \r Do you want to request Expert for more time?");
+			if(r)
+			{
+			session.signal({
+				type: "time_request",
+				data: my_id
+			});
+			}
+			else
+			{
+			window.location.href = root+'session_complete.php?id='+s_id;
+			}
+		}	
+     
+}
+function preced_zero(value)
+{
+	if(value < 10)
+	{
+		return "0"+value;
+	}
+	else
+	{
+		return value;
+	}
+}
 
-});
+function newTimer(element)
+{
+     var el = document.getElementById(element);
+    el.innerHTML = "<span>00</span>:<span>01</span>";
+	var seconds_timer = 0;
+	var minutes_timer = 0;
+	
+        newTimer = setInterval(function() {
+             
+            if(seconds_timer == 60)
+            {
+                minutes_timer++;
+                seconds_timer = 0;
+            }
+            if(minutes_timer > 0) 
+            {
+                var minute_text = "0"+minutes_timer;
+            } 
+            else
+            {
+                var minute_text = "00";
+            }
+            var second_text = seconds_timer;
+            if(seconds_timer<10)
+            {
+                seconds_timer="0"+seconds_timer;
+            }
+            if(minutes_timer<9)
+            {
+                el.innerHTML = "<span>0"+minutes_timer + '</span>:<span>' + seconds_timer+'</span>';
+            }
+            else
+            {
+                el.innerHTML = "<span>"+minutes_timer + '</span>:<span>' + seconds_timer+'</span>';
+            }
+            seconds_timer++;
+        }, 1000);
+     
+}

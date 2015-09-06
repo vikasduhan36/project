@@ -1382,40 +1382,4 @@ $("#expert_search").autocomplete({
 });
 });
 
-function userTimer(user_id)                                                     
-{
-console.log(user_id);
-    if(sec > 0){
-        document.getElementById('seconds_'+user_id).innerHTML = sec-1;
-        sec--;
-    }else{
-        sec = 59;
-        document.getElementById('seconds_'+user_id).innerHTML = sec;
-        if(min > 0){
-            document.getElementById('minutes_'+user_id).innerHTML = min-1;
-            min--;
-        }else{
-            min = 59;
-            document.getElementById('minutes_'+user_id).innerHTML = min;
-            if(hrs > 0){
-                document.getElementById('hours_'+user_id).innerHTML = hrs-1;
-                hrs--;
-            }else{
-                hrs = 23;
-                document.getElementById('hours_'+user_id).innerHTML = hrs;
-                if(days > 0){
-                    document.getElementById('days_'+user_id).innerHTML = days-1;
-                    days--;
-                }
-            }
-        }
-    }
- 
-        if((hrs==0)&&(min==0)&&(sec == 0))                                                                                                                   // session
-        {
-            alert('User session finished.');
-		}	
-		
-     
-}
 
