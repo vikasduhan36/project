@@ -28,8 +28,11 @@ if (system_requirement == 0) {} else {
             if (event.connection.connectionId != event.target.connection.connectionId) {
             	myId = event.target.connection.connectionId;
 				
-				$('#user_'+event.connection.data).parent().fadeIn();
-				$("#no_user").fadeOut();
+				//$('#user_'+event.connection.data).parent().fadeIn();
+				//$("#no_user").fadeOut();
+				
+				var exp_id = $("#exp_id").text();
+				onlineUserDetail(event.connection.data,exp_id);
             }
             
             OT.log(connectionCount + " connections." + event.connection.connectionId)
@@ -40,7 +43,11 @@ if (system_requirement == 0) {} else {
 			if (event.connection.connectionId != event.target.connection.connectionId) {
             	
 				
-				$('#user_'+event.connection.data).parent().fadeOut();
+				$('#user_'+event.connection.data).parent().hide();
+				if($('#user_'+event.connection.data).length == 0)
+				{
+					$('#timer_'+event.connection.data).parent().prepend('<div class="v_blk_innr" id="user_'+event.connection.data+'" ></div>')
+				}
 				
             }
 			if(OtConnectionCount == 1)
@@ -237,6 +244,16 @@ function signalReceivedHandler(event) {
 				type: "time_allow",
 				data: event.from.data
 			});
+			
+			$.ajax({
+				url:'handler.php',
+				type:'post',
+				data:{'action':'timeRequest','s_id':event.data},
+				dataType:'json',
+				success:function(result){
+				}
+			});
+		
 		}
 		else
 		{
@@ -346,4 +363,54 @@ function preced_zero(value)
 	}
 }
 
+function onlineUserDetail(user_id,exp_id)
+{
+	
+	if($('#user_'+user_id).length > 0)
+	{
+		$('#user_'+user_id).parent().fadeIn();
+		$("#no_user").hide();
+		return false;
+	}
+
+	$.ajax({
+		url:'handler.php',
+		type:'post',
+		data:{'action':'onlineUserDetail','user_id':user_id,'exp_id':exp_id,'for':'exp'},
+		dataType:'json',
+		success:function(result){
+			if(result.status == 'success')
+			{
+				var html = '';
+				
+				var response = result.data;
+				html += '<div class="v_blk_otr">';
+            	html += '<div class="v_blk_innr" id="user_'+user_id+'" ></div>';
+                html += '<h6>'+response.fname+' '+response.lname+'</h6>';
+                html += '<span class="time_es" id="timer_'+user_id+'"></span>';
+				html += '<span style="display:none;">';
+				html += '<span id="days_'+user_id+'" class="tim" style="display:none;">'+response.timer.Days+'</span>';
+				html += '<span id="hours_'+user_id+'" >'+response.timer.Hours+'</span>:';
+				html += '<span id="minutes_'+user_id+'">'+response.timer.Minutes+'</span>: ';
+				html += '<span id="seconds_'+user_id+'">'+response.timer.Seconds+'</span>';
+				html += '</span>';
+					
+				
+		
+				html += '</div>';
+			
+				$("#no_user").fadeOut();
+				$(".user_online_detail").append(html);
+				var days = 0;
+				var sec = parseInt(document.getElementById('seconds_'+user_id).innerHTML);
+				var min = parseInt(document.getElementById('minutes_'+user_id).innerHTML);
+				var hrs = parseInt(document.getElementById('hours_'+user_id).innerHTML);
+				
+				userTimer(user_id);
+				
+			}
+		}
+	
+	});
+}
 

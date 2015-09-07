@@ -11,11 +11,11 @@
                 <div id="mainvideo"></div><!-- Main Video -->
             </div>
 	<?php
-	$sql  = " SELECT s.session_datetime,s.duration,s.title,s.description,s.question, ";
+	$sql  = " SELECT s.time_requested,s.session_datetime,s.duration,s.title,s.description,s.question, ";
 	$sql .= " u.id,u.fname,u.lname ";
 	$sql .= " FROM sessions as s LEFT JOIN users as u ON(s.user_id = u.id) ";
 	$sql .= " WHERE s.exp_applied_id='".$_SESSION['LoginUserId']."' and s.status='2' ";
-	$sql .= " and '".$date."' >= s.session_datetime and '".$date."' <= DATE_ADD(s.session_datetime, INTERVAL s.duration MINUTE)";
+	$sql .= " and (('".$date."' >= s.session_datetime and '".$date."' <= DATE_ADD(s.session_datetime, INTERVAL s.duration MINUTE)) or (s.time_requested='1'))";
 	
 	$query = mysql_query($sql) or die(mysql_error());
 	if($query)
@@ -36,6 +36,7 @@
 	
 	
 			?>
+			<div id="exp_id" style="display:none;"><?php echo $_SESSION['LoginUserId'];?></div>
 				<script type="text/javascript">
 	
 var type="exp";
@@ -73,14 +74,14 @@ var VIDEO_WIDTH 	 = '100%';
 	<div class="OtherUserList userlist_opened">
     	<a href="javascript:void(0);" class="closebtn">X</a>
         <div class="vlist_otr">
-        <div class="content blkheight " id="scrollbar">
+        <div class="content blkheight user_online_detail" id="scrollbar">
 		
                 <h2 id="no_user">
 				No user is online.
 				</h3>
 			
 			<?php
-			
+			/*
 			while($fetch = mysql_fetch_assoc($query))
 			{
 			
@@ -121,6 +122,7 @@ var VIDEO_WIDTH 	 = '100%';
     
 				<?php
 			}
+			*/
 			?>
 			       	</div>
         </div>

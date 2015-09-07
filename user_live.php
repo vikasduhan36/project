@@ -14,7 +14,7 @@
 	<?php
 	$userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 	$id = $_GET['id'];
-	$sql  = " SELECT s.session_datetime,s.duration,s.title,s.description,s.question,s.status,s.exp_applied_id, ";
+	$sql  = " SELECT s.time_requested,s.session_datetime,s.duration,s.title,s.description,s.question,s.status,s.exp_applied_id, ";
 	$sql .= " u.fname,u.lname,u.id,u.tokbox_id ";
 	$sql .= " FROM sessions as s LEFT JOIN users as u ON(s.user_id = u.id) ";
 	$sql .= " WHERE s.id='".$id."' and s.user_id='".$_SESSION['LoginUserId']."' ";
@@ -77,7 +77,7 @@
     </div>
 			<?php
 			}
-			else if((strtotime($date) >= strtotime($fetch['session_datetime']))&&(strtotime($date) <= strtotime($fetch['session_datetime']."+".$fetch['duration']." MINUTES ")))
+			else if(($fetch['time_requested'] == '1') || ((strtotime($date) >= strtotime($fetch['session_datetime']))&&(strtotime($date) <= strtotime($fetch['session_datetime']."+".$fetch['duration']." MINUTES "))))
 			{
 		$field = " tokbox_id ";
 					$table = " users ";
@@ -95,6 +95,7 @@
 			<div class="SmallVideoCont">
                 <div id="smallvideo"></div><!-- Small Video -->
             </div>
+			<div id="exp_id"><?php echo $fetch['exp_applied_id'];?></div>
 				<script type="text/javascript">
 var root = "<?php echo $root;?>";	
 var type="user";
@@ -150,51 +151,21 @@ var newTimer 		 = '';
 					</script>
     </div>
 	
-			<?php
-			
-			$sql_user  = " SELECT ";
-			$sql_user .= " u.id,u.fname,u.lname ";
-			$sql_user .= " FROM session_time as s LEFT JOIN users as u ON(s.user_id = u.id) ";
-			$sql_user .= " WHERE s.session_id='".$fetch['s_id']."' and s.user_id != '".$_SESSION['LoginUserId']."'  ";
-			
-		$query_user = mysql_query($sql_user) or die(mysql_error());
-		if($query_user)
-		{
-			if( mysql_num_rows($query_user) > 0 )
-			{	
-			?>
-			<script>
-			$(document).ready(function(){
-				$(".SessionInner").addClass("opened_userlist");
-				
-			});
-			</script>
-			<div class="OtherUserList userlist_opened">
+		
+			<div class="OtherUserList ">
     	<a href="javascript:void(0);" class="closebtn">X</a>
         <div class="vlist_otr">
-        <div class="content blkheight " id="scrollbar">
-			<?php
-			while($fetch_user = mysql_fetch_assoc($query_user))
-			{
-				?>
-			
-        	<div class="v_blk_otr">
-            	<div class="v_blk_innr" id="user_<?php echo $fetch_user['id']?>"></div>
-                <h6><?php echo $fetch_user['fname']." ".$fetch_user['lname'];?></h6>
-                
-            </div>
-       	
-			<?php
-			
-			}
-			?>
+        <div class="content blkheight user_online_detail " id="scrollbar">
+		
+		 <h2 id="no_user">
+				No other user is online.
+				</h3>
 			</div>
         </div>
     </div>
 			<?php
-			}
-			}
-			}
+			
+			
 		}
 		else
 		{
@@ -211,6 +182,7 @@ var newTimer 		 = '';
     </div>
 			<?php
 		}
+	}
 	}
 	
 	

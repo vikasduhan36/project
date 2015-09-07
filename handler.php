@@ -868,7 +868,44 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_wishlist')
 	
 	
 }
-
+else if(isset($_POST['action']) && $_POST['action']=="onlineUserDetail")
+{
+	$user_id = $_POST['user_id'];
+	$exp_id = $_POST['exp_id'];
+	//$for = $_POST['for'];
+	$status = 'error';
+	$data = array();
+	
+	$sql  = " SELECT s.session_datetime,s.duration,s.title,s.description,s.question, ";
+	$sql .= " u.id,u.fname,u.lname ";
+	$sql .= " FROM sessions as s LEFT JOIN users as u ON(s.user_id = u.id) ";
+	$sql .= " WHERE s.exp_applied_id='".$exp_id."' and s.status='2' ";
+	$sql .= " and user_id='".$user_id."' ";
+	$sql .= " and ('".$date."' >= s.session_datetime and '".$date."' <= DATE_ADD(s.session_datetime, INTERVAL s.duration MINUTE)) or (s.time_requested = '1') ";
+			
+			
+	$query = mysql_query($sql) or die(mysql_error());
+	if($query)
+	{
+		if( mysql_num_rows($query) == 1 )
+		{
+			$status = 'success';
+			$fetch = mysql_fetch_assoc($query);
+			$data = $fetch;
+			$endTime = date('Y-m-d H:i:s',strtotime($fetch['session_datetime'].' '.$fetch['duration'].' minutes'));
+			$diff = daysRemaining($date,$endTime,true);
+			$data['timer'] = $diff;
+		
+		}
+		
+	}
+	echo json_encode(array('status'=>$status,'data'=>$data));
+}
+else if(isset($_POST['action']) && $_POST['action']=="timeRequest")
+{
+	$sql = "UPDATE sessions SET time_requested='1' WHERE id='".$_POST['s_id']."' ";
+	$query = mysql_query($sql);
+}
 
 if(isset($_POST['action']) && $_POST['action']=="googleLogin")
 {

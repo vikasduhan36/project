@@ -44,6 +44,10 @@ if (system_requirement == 0) {} else {
             connectionCount++;
             if (event.connection.connectionId != event.target.connection.connectionId) {
             	myId = event.target.connection.connectionId;
+				
+				var exp_id = $("#exp_id").text();
+				onlineUserDetail(event.connection.data,exp_id);
+				
             }
             
             OT.log(connectionCount + " connections." + event.connection.connectionId);
@@ -51,7 +55,13 @@ if (system_requirement == 0) {} else {
         },
         connectionDestroyed: function(event) {
             connectionCount--;
-            OT.log(connectionCount + " connections.")
+            OT.log(connectionCount + " connections.");
+			
+			$('#user_'+event.connection.data).parent().hide();
+			if($('#user_'+event.connection.data).length == 0)
+			{
+				$('#timer_'+event.connection.data).parent().prepend('<div class="v_blk_innr" id="user_'+event.connection.data+'" ></div>')
+			}
         },
         sessionDisconnected: function sessionDisconnectHandler(event) {
             if (event.reason == "networkDisconnected") {
@@ -331,7 +341,7 @@ function myTimer(user_id)
 			{
 			session.signal({
 				type: "time_request",
-				data: my_id
+				data: s_id
 			});
 			}
 			else
@@ -391,4 +401,45 @@ function newTimer(element)
             seconds_timer++;
         }, 1000);
      
+}
+
+function onlineUserDetail(user_id,exp_id)
+{
+	
+	if($('#user_'+user_id).length > 0)
+	{
+		$('#user_'+user_id).parent().fadeIn();
+		$("#no_user").hide();
+		return false;
+	}
+
+	$.ajax({
+		url:'handler.php',
+		type:'post',
+		data:{'action':'onlineUserDetail','user_id':user_id,'exp_id':exp_id,'for':'user'},
+		dataType:'json',
+		success:function(result){
+			if(result.status == 'success')
+			{
+				var html = '';
+				
+				var response = result.data;
+				html += '<div class="v_blk_otr">';
+            	html += '<div class="v_blk_innr" id="user_'+user_id+'" ></div>';
+                html += '<h6>'+response.fname+' '+response.lname+'</h6>';
+                html += '<span class="time_es" id="timer_'+user_id+'" style="display:none;"></span>';
+				
+					
+				
+		
+				html += '</div>';
+			
+				$("#no_user").fadeOut();
+				$(".user_online_detail").append(html);
+			
+				
+			}
+		}
+	
+	});
 }
