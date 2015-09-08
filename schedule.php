@@ -1,6 +1,10 @@
 <?php 
 	require_once('phpInclude/header.php');
 		$exp_id = $_GET['id'];
+		$field = " fname,lname,profile_image ";
+$table = "users ";
+$condition 	= "and id='".$exp_id."' ";
+$exp_detail = getDetail($field,$table,$condition);
 ?>
 <style>
 .available

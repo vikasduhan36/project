@@ -270,10 +270,10 @@ $(document).ready(function(){
 			data:datastring,
 			dataType:'json',
 			beforeSend:function(){
-				
+				$('#loader').show();
 			},
 			success:function(response){
-				
+				$('#loader').hide();
 				if(response.status == 'success')
 				{
 					window.location.href = root+'schedule_confirmed.php?id='+response.id;
@@ -348,10 +348,10 @@ $(document).ready(function(){
 			data:datastring,
 			dataType:'json',
 			beforeSend:function(){
-				
+				$('#loader').show();
 			},
 			success:function(response){
-				
+				$('#loader').hide();
 				if(response.status == 'success')
 				{
 					if(response.is_expert == '1')
@@ -387,10 +387,10 @@ $(document).ready(function(){
 			data:datastring,
 			dataType:'json',
 			beforeSend:function(){
-				
+				$('#loader').show();
 			},
 			success:function(response){
-				
+				$('#loader').hide();
 				if(response.status == 'success')
 				{
 					if(response.is_expert == '1')
@@ -506,10 +506,10 @@ $(document).ready(function(){
 			data:datastring,
 			dataType:'json',
 			beforeSend:function(){
-				
+				$('#loader').show();
 			},
 			success:function(response){
-				
+				$('#loader').hide();
 				if(response.status == 'success')
 				{
 					alert('success');
@@ -871,10 +871,10 @@ function search_expert(datastring)
 			data:datastring,
 			dataType:'json',
 			beforeSend:function(){
-				
+				$('#loader').show();
 			},
 			success:function(response){
-				
+				$('#loader').hide();
 			var html = '';
 				if(response.status == 'success')
 				{
@@ -996,10 +996,10 @@ function search_public_request(datastring)
 			data:datastring,
 			dataType:'json',
 			beforeSend:function(){
-				
+				$('#loader').show();
 			},
 			success:function(response){
-				
+				$('#loader').hide();
 			var html = '';
 				if(response.status == 'success')
 				{

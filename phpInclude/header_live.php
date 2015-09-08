@@ -44,7 +44,7 @@ var root = "<?php echo $root;?>";
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xs-12">
-                        <a href="javascript:void(0);" class="logo">
+                        <a href="<?php echo $root;?>" class="logo">
                             <img src="images/eyeask2.png" alt="eyeask" class="img-responsive logoimg1" />
                         </a>
                         <div class="session_nav" style="display:none;">

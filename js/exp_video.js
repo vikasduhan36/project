@@ -48,6 +48,8 @@ if (system_requirement == 0) {} else {
 				{
 					$('#timer_'+event.connection.data).parent().prepend('<div class="v_blk_innr" id="user_'+event.connection.data+'" ></div>')
 				}
+				var s_id = $('#timer_'+event.connection.data).attr('alt');
+				stopTimeTrack(s_id);
 				
             }
 			if(OtConnectionCount == 1)
@@ -387,7 +389,7 @@ function onlineUserDetail(user_id,exp_id)
 				html += '<div class="v_blk_otr">';
             	html += '<div class="v_blk_innr" id="user_'+user_id+'" ></div>';
                 html += '<h6>'+response.fname+' '+response.lname+'</h6>';
-                html += '<span class="time_es" id="timer_'+user_id+'"></span>';
+                html += '<span class="time_es" id="timer_'+user_id+'" alt="'+response.s_id+'" ></span>';
 				html += '<span style="display:none;">';
 				html += '<span id="days_'+user_id+'" class="tim" style="display:none;">'+response.timer.Days+'</span>';
 				html += '<span id="hours_'+user_id+'" >'+response.timer.Hours+'</span>:';
@@ -414,3 +416,16 @@ function onlineUserDetail(user_id,exp_id)
 	});
 }
 
+
+function stopTimeTrack(s_id)
+{
+	$.ajax({
+		url:'handler.php',
+		type:'post',
+		data:{'action':'stopTimeTrack','s_id':s_id},
+		dataType:'json',
+		success:function(result){
+			
+		}	
+	});
+}

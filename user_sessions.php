@@ -31,8 +31,8 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 						<?php 
 						if(empty($_GET['tab']) || (isset($_GET['tab']) && $_GET['tab'] == 'schedule'))
 						{
-							$sql = " SELECT s.id as s_id,s.title,s.status,s.session_datetime,s.duration,u.fname,u.lname,s.exp_applied_id FROM sessions as s LEFT JOIN users as u ";
-	 $sql .= " ON(s.user_id = u.id) WHERE s.user_id='".$_SESSION['LoginUserId']."'  ";//and s.status='2'
+							$sql = " SELECT s.id as s_id,s.title,s.status,s.session_datetime,s.duration,u.fname,u.lname,s.exp_applied_id,s.video_duration FROM sessions as s LEFT JOIN users as u ";
+							$sql .= " ON(s.user_id = u.id) WHERE s.user_id='".$_SESSION['LoginUserId']."'  ORDER BY s.id DESC";//and s.status='2'
 
 							$query = mysql_query($sql) or die(mysql_error());
 							
@@ -53,11 +53,34 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 										echo $datetime;
 										
 										?></h5></div>
-										<div class="col-xs-12 col-sm-7 col-xss-10"><h3>
+										<?php
+										if($fetch['status'] == '3')
+										{
+											?><div class="col-xs-12 col-sm-5 col-xss-10"><?php
+										}
+										else
+										{
+										?><div class="col-xs-12 col-sm-7 col-xss-10"><?php
+										}
+										?>
+										
+										<h3>
 										<a href="<?php echo $root.'session_request.php?id='.$fetch['s_id'];?>">
 										<?php echo $fetch['title'];?>
 										</a>
-										<span>Expert: <?php $fetch['fname']." ".$fetch['lname'];?></span></h3></div>
+										<span>Expert: <?php echo $fetch['fname']." ".$fetch['lname'];?></span></h3>
+										</div>
+										<?php
+										if($fetch['status'] == '3')
+										{
+											?><div class="col-xs-12 col-sm-2 col-xss-10">
+											<h3>
+											<span>Duration: <?php echo gmdate("H:i:s", $fetch['video_duration']);?></span></h3>
+											</div>
+											<?php
+										}
+										?>
+										
 										<div class="col-xs-12 col-sm-3 date">
 										
 										<?php
@@ -104,7 +127,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 						{
 							
 							$sql = " SELECT s.type,s.exp_applied_id,s.id as s_id,s.user_reschedule,s.exp_reschedule,s.title,s.session_datetime,u.fname,u.lname,s.exp_applied_id FROM sessions as s LEFT JOIN users as u ";
-							$sql .= " ON(s.exp_applied_id = u.id) WHERE user_id='".$_SESSION['LoginUserId']."' and s.status='1' ";
+							$sql .= " ON(s.exp_applied_id = u.id) WHERE user_id='".$_SESSION['LoginUserId']."' and s.status='1'   ORDER BY s.id DESC";
 
 							$query = mysql_query($sql) or die(mysql_error());
 							
@@ -134,7 +157,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 										<a href="<?php echo $root.$url.'?id='.$fetch['s_id'];?>">
 										<?php echo $fetch['title'];?>
 										</a>
-										<span>Expert: <?php $fetch['fname']." ".$fetch['lname'];?></span></h3></div>
+										<span>Expert: <?php echo $fetch['fname']." ".$fetch['lname'];?></span></h3></div>
 										<div class="col-xs-12 col-sm-3 date">
 										
 										<?php
@@ -192,7 +215,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 						else if(isset($_GET['tab']) && $_GET['tab'] == 'close')
 						{
 							$sql = " SELECT s.id as s_id,s.title,s.session_datetime,u.fname,u.lname FROM sessions as s LEFT JOIN users as u ";
-							$sql .= " ON(s.user_id = u.id) WHERE s.user_id='".$_SESSION['LoginUserId']."' and s.status='0' ";
+							$sql .= " ON(s.user_id = u.id) WHERE s.user_id='".$_SESSION['LoginUserId']."' and s.status='0'   ORDER BY s.id DESC ";
 
 							$query = mysql_query($sql) or die(mysql_error());
 							
@@ -214,7 +237,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 										<a href="<?php echo $root.'session_request.php?id='.$fetch['s_id'];?>">
 										<?php echo $fetch['title'];?>
 										</a>
-										<span>Expert: <?php $fetch['fname']." ".$fetch['lname'];?></span></h3></div>
+										<span>Expert: <?php echo $fetch['fname']." ".$fetch['lname'];?></span></h3></div>
 										<div class="col-xs-12 col-sm-3 date">
 										
 										<a href="javascript:void(0);" class="sess_btn canceled_btn">Cancelled</a>

@@ -876,7 +876,7 @@ else if(isset($_POST['action']) && $_POST['action']=="onlineUserDetail")
 	$status = 'error';
 	$data = array();
 	
-	$sql  = " SELECT s.session_datetime,s.duration,s.title,s.description,s.question, ";
+	$sql  = " SELECT s.id as s_id, s.session_datetime,s.duration,s.title,s.description,s.question, ";
 	$sql .= " u.id,u.fname,u.lname ";
 	$sql .= " FROM sessions as s LEFT JOIN users as u ON(s.user_id = u.id) ";
 	$sql .= " WHERE s.exp_applied_id='".$exp_id."' and s.status='2' ";
@@ -906,7 +906,18 @@ else if(isset($_POST['action']) && $_POST['action']=="timeRequest")
 	$sql = "UPDATE sessions SET time_requested='1' WHERE id='".$_POST['s_id']."' ";
 	$query = mysql_query($sql);
 }
-
+else if(isset($_POST['action']) && $_POST['action']=="startTimeTrack")
+{
+	$s_id = $_POST['s_id'];
+	$sql = "UPDATE sessions SET video_start_time='".$date."' WHERE user_id='".$_SESSION['LoginUserId']."' and id='".$s_id."' ";
+	$query = mysql_query($sql);
+}
+else if(isset($_POST['action']) && $_POST['action']=="stopTimeTrack")
+{
+	$s_id = $_POST['s_id'];
+	$sql = "UPDATE sessions SET video_duration = video_duration+TIME_TO_SEC(TIMEDIFF('".$date."',video_start_time)) WHERE id='".$s_id."' ";
+	$query = mysql_query($sql);
+}
 if(isset($_POST['action']) && $_POST['action']=="googleLogin")
 {
 	//print_r($_POST);die;

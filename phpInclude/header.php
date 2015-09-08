@@ -58,6 +58,16 @@ var root = "<?php echo $root;?>";
 header.innerhead nav.nav1 ul.navlist li a.active{
     color: #58bde7 !important;
 }
+.exp_session_button
+{
+    background: #90aa51;
+    font-size: 15px;
+    font-family: 'roboto_condensedregular';
+    color: #fff;
+    padding: 7px 10px;
+    float: right;
+    margin-top: 4px;
+}
 </style>
 </head>
 <body>

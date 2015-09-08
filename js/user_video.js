@@ -49,6 +49,11 @@ if (system_requirement == 0) {} else {
 				onlineUserDetail(event.connection.data,exp_id);
 				
             }
+			else
+			{
+				
+				startTimeTrack(s_id);
+			}
             
             OT.log(connectionCount + " connections." + event.connection.connectionId);
 			
@@ -441,5 +446,19 @@ function onlineUserDetail(user_id,exp_id)
 			}
 		}
 	
+	});
+}
+
+
+function startTimeTrack(s_id)
+{
+	$.ajax({
+		url:'handler.php',
+		type:'post',
+		data:{'action':'startTimeTrack','s_id':s_id},
+		dataType:'json',
+		success:function(result){
+			
+		}	
 	});
 }
