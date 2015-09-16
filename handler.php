@@ -15,6 +15,21 @@ if(!empty($_SESSION['LoginUserId']))
 	$is_expert = $user_detail['0']['is_expert'];
 }
 
+if(isset($_POST['action']) && $_POST['action'] == 'add_partner_website')
+{
+	foreach($_POST['partner_category'] as $key => $value)
+	{
+		$sql = " INSERT INTO user_website SET user_id='".$user_id."', link='".mysql_real_escape_string(trim($_POST['partner_link'][$key]))."', cat_id='".$_POST['partner_category'][$key]."' ";
+		mysql_query($sql);
+	}
+}
+
+if(isset($_POST['action']) && $_POST['action'] == 'delete_website')
+{
+	$sql = " DELETE FROM user_website WHERE id='".$_POST['id']."' ";
+	$query = mysql_query($sql);
+}
+
 /*add advertisement */
  if(isset($_POST['action']) && $_POST['action']=="tags")
 {
@@ -663,6 +678,10 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')
 	{
 		$$key = $value;
 	}
+	if(empty($user_id))
+	{
+	$user_id=0;
+	}
 	$condition = "";
 	$result = array();
 	$status = "error";
@@ -1081,7 +1100,7 @@ if(isset($_POST['action']) && $_POST['action']=="change_password")
 {
 	$current_pass      = mysql_real_escape_string(trim($_POST['current_pass']));
 	$new_pass   = mysql_real_escape_string(trim($_POST['new_pass']));
-	$user_id   = trim($_SESSION['db_session_id']);
+	$user_id   = trim($_SESSION['LoginUserId']);
 
 	$condition = " id='".$user_id."'   and password = '".$current_pass."' "; //and is_admin='no'
 	/* check if email id is alreadye exists or not */
@@ -1203,7 +1222,7 @@ if (isset($_GET['set']) && $_GET['set']==base64_encode("apply_expert"))
 	{
 		?>
 		<script>
-		window.location.href="<?php echo $root;?>account.php";
+		window.location.href="<?php echo $root;?>expert_info.php";
 		</script>
 	<?php
 	}

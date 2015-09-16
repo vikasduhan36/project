@@ -162,21 +162,22 @@ function registrationMail($fromMail,  $email  ,$password,$root)
 {
 	$emailTo = $email;
 	$subject = "Welcome to eyeask.com";
-
+//<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><b>Password:</b> ".$password."</p>
 	$body ="<html>
 	<div style='width:560px; height:auto; margin:0 auto;'>
-	<div style='text-align:center; padding-bottom:10px;'><img src='".$root."'images/eyeask1.png' alt='logo'/></div>
+	<div style='text-align:center; padding-bottom:10px;'><img src='".$root."images/eyeask2.png' alt='logo' width='200px'/></div>
 	<div style='float:left; background:#F0FAFF; border: 1px solid #006F9D; margin:0; padding:20px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; font-size:13px; color:#221E1F; font-family:Arial, Helvetica, sans-serif; width:560px;'>
 	<p style='font-size:12px; margin:0; margin-bottom:10px; line-height:normal;'>Welcome to eyeask.com,</p>
 	<p style='font-size:12px; margin:0; margin-bottom:10px; line-height:normal;'>We are cheering, applauding and jumping around in our office. You are our newest member. </p>
 	<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><b>Email:</b> ".$email."</p>
-	<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><b>Password:</b> ".$password."</p>
+	
 	<p style='font-size:12px; margin:0; margin-bottom:10px; line-height:normal;'><strong>About Eyeask.com</strong></p>
 	<p style='font-size:12px; margin:0; margin-bottom:10px; line-height:normal;'>Eyeask.com is the peer-to-peer marketplace for live business help. We want to inspire and help a million businesses worldwide by connecting them to the right expert via live video-chat sessions. </p>
 	<p style='font-size:12px; margin:0; margin-bottom:10px; line-height:normal;'>For experts, eyeask.com is a platform to help businesses, earn money and build reputation in a fun and efficient way. </p>
 	<p style='font-size:12px; padding-top:10px; margin:0; line-height:18px;'>Greetings,<br/>
 	<strong style='font-style:italic; color:#221E1F;'>Eyeask.com Team</strong></p>
 	</html>";
+	
 	if(sendMail($emailTo,$subject,$body,$fromMail))
 	{
 		return 'success';
@@ -185,6 +186,7 @@ function registrationMail($fromMail,  $email  ,$password,$root)
 	{
 		return 'fail';
 	}
+	
 }
 //random string generator
 function generateRandomString($length = 10) {
@@ -205,7 +207,7 @@ function forgotPasswordMail($fromMail,$email,$password,$root)
 	$link=$root;
 	$body="<html>
 	<div style='width:600px; height:auto; margin:0 auto;'>
-	<div style='text-align:left; padding-bottom:10px;'><img src='".$root."images/eyeask1.png' alt='logo'/></div>
+	<div style='text-align:left; padding-bottom:10px;'><img src='".$root."images/eyeask2.png' alt='logo' width='200px'/></div>
 	<div style='background:#f17d21; padding:4px; border:2px solid #25a8e0; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;'>
 	<div style='background:#F0FAFF; border:2px solid #25a8e0; margin:0; padding:10px; font-size:13px; color:#221E1F; font-family:Arial, Helvetica, sans-serif; width:564px;'>
 	<p style='font-size:12px; margin:0; margin-bottom:10px; line-height:normal;'>Hello!</p>
@@ -243,7 +245,7 @@ function schedulingMail($fromMail,$emailTo,$subject,$body,$root)
 
 	$body ="<html>
 	<div style='width:560px; height:auto; margin:0 auto;'>
-	<div style='text-align:center; padding-bottom:10px;'><img src='".$root."'images/eyeask1.png' alt='logo'/></div>
+	<div style='text-align:center; padding-bottom:10px;'><img src='".$root."images/eyeask1.png' alt='logo' wisth='200px'/></div>
 	<div style='float:left; background:#F0FAFF; border: 1px solid #006F9D; margin:0; padding:20px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; font-size:13px; color:#221E1F; font-family:Arial, Helvetica, sans-serif; width:560px;'>
 	<p style='font-size:12px; margin:0; margin-bottom:10px; line-height:normal;'>".$subject.",</p>
 	 ".$body."
@@ -259,5 +261,11 @@ function schedulingMail($fromMail,$emailTo,$subject,$body,$root)
 	{
 		return 'fail';
 	}
+}
+function addhttp($url) {
+    if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
+        $url = "http://" . $url;
+    }
+    return $url;
 }
 ?>

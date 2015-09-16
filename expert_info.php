@@ -126,7 +126,10 @@ if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){
                             </ul>
                             <!-- <a href="javascript:void(0);" class="submitbtn btn1">Proceed <i class="fa fa-angle-double-right"></i></a> -->
                              <input type="hidden" value="expert_info" name="action"/>
-                        	<input type="submit" value="Proceed" class="submitbtn btn1" />
+                        	<button type="submit" class="submitbtn btn1">Submit <i class="fa fa-check"></i></button>
+							<!--
+							<input type="submit" value="Proceed" class="submitbtn btn1" />
+							-->
                             </form>
                         </div><!-- Account information -->
                         

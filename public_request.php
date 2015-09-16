@@ -74,7 +74,7 @@ $applied_detail = getDetail($field,$table,$condition);
 													"></span>
                                                     <h4><a href="javascript:void(0);"><?php echo $applied['fname']." ".$applied['lname'];?></a></h4>
                                                     <ul class="MrgT0">
-                                                        <li><i class="fa fa-euro"></i> <span><?php echo (!empty($applied['exp_rate']))?$applied['exp_rate']:'Free';?></span></li>
+                                                        <li><i class="fa fa-dollar"></i> <span><?php echo (!empty($applied['exp_rate']))?$applied['exp_rate']:'Free';?></span></li>
                                                         <li><i class="fa fa-globe"></i> <?php echo $applied['language_id']; ?></li>
                                                     </ul>
                                                     <p><?php echo $applied['exp_about'];?></p>

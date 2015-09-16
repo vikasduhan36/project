@@ -31,7 +31,9 @@ require_once 'phpInclude/header.php';
                                         <input type="text" Placeholder="Enter your email" autocomplete="off" name="email" class="form-control valuefield" style="display:none;" value="<?php echo $email;?>"/>
                                     </div>
                                     <div class="col-xs-12 col-xss-2 col-sm-2">
+									<!--
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
+										-->
                                     </div>
                                 </li>
                                 <li>
@@ -100,14 +102,15 @@ require_once 'phpInclude/header.php';
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
                                     </div>
                                 </li>
-                                <li class="not_set">
+								<!-- not_set -->
+                                <li class="">
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Timezone</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
                                     	<span class="value" id="time_span">Not Set</span>
                                         <select class="form-control custom-select valuefield" name="timezone" id="timezone" style="display:none;" >
                                         <option value="">Select Timezone</option>
                                         <?php 
-                                        $cond = " ";
+                                        $cond = " ORDER BY order_id ASC ";
                                         $field=" * ";
                                         $table=" timezone ";
                                         $timezone = getDetail($field,$table,$cond);
@@ -126,7 +129,7 @@ require_once 'phpInclude/header.php';
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
                                     </div>
                                 </li>
-                                <li class="not_set">
+                                <li class="">
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Languages</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
                                     	<span class="value"><?php echo $language_id;?></span>
@@ -136,7 +139,7 @@ require_once 'phpInclude/header.php';
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
                                     </div>
                                 </li>
-                                <li class="not_set">
+                                <li class="">
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Birthdate</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
                                     	<span class="value"><?php echo $dob;?></span>
@@ -146,7 +149,7 @@ require_once 'phpInclude/header.php';
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
                                     </div>
                                 </li>
-                                <li class="not_set">
+                                <li class="">
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Phone</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
                                     	<span class="value"><?php echo $phone;?></span>
@@ -214,10 +217,57 @@ require_once 'phpInclude/header.php';
                         	<h4>Partner sites</h4>
                         	<ul class="row infolist">
                             	<li>
-                                	<div class="col-xs-12"><label><a href="javascript:void(0);">Add Link..</a></label></div>
+								<div class="col-xs-12" >
+								
+								<?php
+									$field = " w.id,w.link,c.name ";
+									$table = " user_website as w LEFT JOIN partner_category as c ON(w.cat_id=c.id) ";
+									$condition 	= " ";
+									$wb_details = getDetail($field,$table,$condition);
+									
+									if(count($wb_details  > 0))
+									{
+										foreach($wb_details as $wb_detail)
+										{
+										?>
+										<div>
+										<div class="col-xs-4" ><?php echo $wb_detail['name'];?></div>
+										<div class="col-xs-7" ><a href="<?php echo addhttp($wb_detail['link']);?>" target="_blank"><?php echo $wb_detail['link'];?></a></div>
+										<div class="col-xs-1" ><a href="jaavscript:void(0);" title="Click to delete" class="delete_website" alt="<?php echo $wb_detail['id'];?>">X</a></div>
+										</div>
+										<?php
+										}
+									}
+								
+								?>
+								<form id="partner_html">
+								
+								<?php
+									$field = " id,name ";
+									$table = " partner_category ";
+									$condition 	= " ";
+									$partner_detail = getDetail($field,$table,$condition);
+									?>
+									<select id='default_cat' style="display:none;">
+									<option value=''>Select a cetegory</option>
+									<?php
+									foreach($partner_detail as $partner)
+									{
+										echo "<option value='".$partner['id']."'>".$partner['name']."</option>";
+									}
+									?>
+									</select>
+									
+									<input type="hidden" name="action" value="add_partner_website">
+									</form>
+								</div>
+                                	<div class="col-xs-12">
+									<label>
+									<a href="javascript:void(0);" id="add_partner_category">Add Link..</a>
+									</label></div>
                                 </li>
                             </ul>
-                            <a href="javascript:void(0);" class="submitbtn btn1">Submit <i class="fa fa-check"></i></a>
+                            <a href="javascript:void(0);" class="submitbtn btn1" id="submit_website">Submit <i class="fa fa-check"></i></a>
                         </div><!-- Partner sites information -->
                         <?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="0"){?>
                         <div class="infoblks clearfix"><!-- Are you an expert -->
@@ -290,7 +340,7 @@ require_once 'phpInclude/header.php';
       	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times"></i></span></button>
       </div>
       <div class="modal-body">
-      <div id="errors"></div>
+      <div id="errors_pop"></div>
       	<div class="formOtr">
         	<div id="loginform" style="display:block;">
                 <form id="password_info">
@@ -366,9 +416,22 @@ $(document).ready(function() {
 	    });
 	    
 	$('.editlink').click(function(){
-		$(this).text('Submit');
-		$(this).parents('li').find('input,select').show();
-		$(this).parents('li').find('span').hide();
+		
+		if($(this).text() == 'cancel')
+		{
+			$(this).html('<i class="fa fa-edit"></i>Edit');
+			$(this).parents('li').find('input,select').hide();
+			$(this).parents('li').find('span').show();
+		
+		}
+		else
+		{
+			$(this).text('cancel');
+			$(this).parents('li').find('input,select').show().focus();
+			$(this).parents('li').find('span').hide();
+		}
+		
+		
 	});
 	// Testimonial //
 	$("#testislide").lightSlider({

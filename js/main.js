@@ -5,6 +5,93 @@ var month = (current.getMonth()+1);
 var year = current.getFullYear();
 $(document).ready(function(){
 
+	$("#add_partner_category").click(function(){
+	
+		var html = '<div style="margin-top:10px;"><div class="col-xs-4"><select class="partner_category form-control" name="partner_category[]">'+$('#default_cat').html()+'</select></div>';
+		html 	+= '<div class="col-xs-7"><input type="text" class="partner_link form-control" name="partner_link[]" placeholder="website_link"></div>';
+		html 	+= '<div class="col-xs-1"><a href="javacsript:void(0);" title="Click to remove" class="remove_website">X</a></div></div>';
+		$('#partner_html').append(html);
+	});
+
+	$("#submit_website").click(function(){
+		
+		var i = 0;
+		var error = 0;
+		$.each($(".partner_category"),function(){
+			
+			if($(".partner_category").eq(i).val() == '')
+			{
+				$(".partner_category").eq(i).focus();
+				error = 1;
+				return false;
+			}
+			if($(".partner_link").eq(i).val() == '')
+			{
+				$(".partner_link").eq(i).focus();
+				error = 1;
+				return false;
+			}
+			i++;
+		});
+		
+		if(i>0 && error == 0)
+		{
+			var datastring = $('#partner_html').serialize();
+			$.ajax({
+				url:root+'handler.php',
+				type:'post',
+				data:datastring,
+				beforeSend:function(){
+				},
+				success:function(response){
+					window.location.reload();
+				}
+			});
+		}
+	});
+	
+	
+	
+		$("body").on("click",".remove_website",function(){
+	
+		var r = confirm("Are you sure you want to remove this site link.");
+		if(r)
+		{
+		$(this).parents().eq(1).slideUp(function(){$(this).remove();});
+		}
+		
+		});
+	$(".delete_website").click(function(){
+	
+		var r = confirm("Are you sure you want to delete this site link.");
+		if(r)
+		{
+		var $this = $(this);
+		var id = $this.attr('alt');
+			$.ajax({
+				url:root+'handler.php',
+				type:'post',
+				data:{'action':'delete_website','id':id},
+				beforeSend:function(){
+				},
+				success:function(response){
+					$this.parents().eq(1).slideUp(function(){$(this).remove();});
+				}
+			});
+		
+		}
+	
+	});
+	
+   $('#photoimg').on('change', function()			{ 
+			           $("#preview").html('');
+			    $("#preview").html('<img src="images/loader.gif" alt="Uploading...."/>');
+			$("#imageform").ajaxForm({
+						target: '#preview'
+		}).submit();
+		
+			});
+			
 	$('.date_pick').datepicker({
 		
 		});
@@ -926,7 +1013,7 @@ html += '<span class="free">Always FREE<img src="images/round_arrow_blue.png" al
 }
 else
 {
-html += '<span><i class="fa fa-euro"></i> '+value.exp_rate+'</span>';
+html += '<span><i class="fa fa-dollar"></i> '+value.exp_rate+'</span>';
 }
 html += 'Book Me Now!</a>';
 
@@ -983,6 +1070,9 @@ html += '</li></ul></div></div></div>';
 				}
 				$("#serach_expert_result").html(html);
 				$("#expert_count").text(response.count);
+			},
+			complete:function(){
+			$('#loader').hide();
 			}
 		});
 }
@@ -1235,23 +1325,23 @@ $("#password_info").validate({
 			url: root+"handler.php",
 			data: dataString,
 			beforeSend: function(){
-			$('#showLoder').show();	
+			$('#loader').show();	
 		    },
 			success: function(data){
-				$('#showLoder').hide();	
+				$('#loader').hide();	
 				if($.trim(data)=="wrong_pass")
 				{
-					$('#errors').html('<span style="color:red;">Current password is wrong ,please check again.</span>');
+					$('#errors_pop').html('<span style="color:red;">Current password is wrong ,please check again.</span>');
 				}else 
 				if($.trim(data)=="success")
 				{
-					$('#errors').html('<span style="color:green;">Password changed successfully.</span>');
+					$('#errors_pop').html('<span style="color:green;">Password changed successfully.</span>');
 					setTimeout(function() {
 					  // Do something after 5 seconds
 						window.location.href = 'account.php';
 				}, 2000);
 				}else {
-				$('#errors').html('<span style="color:red;">Some error occur ,please try again later.</span>');
+				$('#errors_pop').html('<span style="color:red;">Some error occur ,please try again later.</span>');
 				}
 			}
 				

@@ -9,7 +9,7 @@ require_once("config/config.php");
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>practise</title>
+<title>Welcome to eyeask.com</title>
 
 <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
 <link href="css/lightSlider.css" rel="stylesheet" type="text/css" />
@@ -28,6 +28,7 @@ var root = "<?php echo $root;?>";
 <script src="<?php echo $root;?>js/jquery.min.js"></script>
 <script src="<?php echo $root;?>js/jquery-ui.min.js"></script>
 <script src="<?php echo $root;?>js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="<?php echo $root;?>js/jquery.form.js"></script>
 <script src="<?php echo $root;?>js/main.js"></script>
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -146,6 +147,10 @@ if ($user_detail[0]['facebook_url']!=""){	$facebook_url = $user_detail[0]['faceb
                        
 					   <li><a href="javascript:void(0);">About</a></li>
                     </ul>
+					<?php
+					if(isset($_SESSION['LoginUserId']))
+					{
+					?>
                    	<div class="userdropdown">
                     	<a href="javascript:void(0);">
                         	<h6><small>Welcome</small> <?php echo $username;?></h6>
@@ -171,6 +176,9 @@ if ($user_detail[0]['facebook_url']!=""){	$facebook_url = $user_detail[0]['faceb
                             </ul>
                         </div>
                     </div>
+					<?php
+					}
+					?>
                 </nav>
             </div>
         </div>

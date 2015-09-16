@@ -58,8 +58,8 @@
                             <?php
 							}
 							?>
-							<li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> Finance</a></li>
-                            <li><a href="javascript:void(0);"><i class="fa fa-caret-right"></i> Help</a></li>
+							<li><a href="<?php echo $root.'finance.php';?>" class="<?php if($pagename=='finance.php'){echo 'active';}?>"><i class="fa fa-caret-right"></i> Finance</a></li>
+                            <li><a href="<?php echo $root.'help.php';?>" class="<?php if($pagename=='help.php'){echo 'active';}?>"><i class="fa fa-caret-right"></i> Help</a></li>
                         </ul>					
                     </div><!-- FOR TOGGLED DASHBOARD -->
                 </div><!-- // SIDE BAR NAV // -->
