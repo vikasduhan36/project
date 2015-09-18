@@ -8,7 +8,7 @@ $(document).ready(function(){
 	$("#add_partner_category").click(function(){
 	
 		var html = '<div style="margin-top:10px;"><div class="col-xs-4"><select class="partner_category form-control" name="partner_category[]">'+$('#default_cat').html()+'</select></div>';
-		html 	+= '<div class="col-xs-7"><input type="text" class="partner_link form-control" name="partner_link[]" placeholder="website_link"></div>';
+		html 	+= '<div class="col-xs-7"><input type="text" class="partner_link form-control" name="partner_link[]" placeholder="Website Link"></div>';
 		html 	+= '<div class="col-xs-1"><a href="javacsript:void(0);" title="Click to remove" class="remove_website">X</a></div></div>';
 		$('#partner_html').append(html);
 	});
@@ -1225,7 +1225,7 @@ $(document).ready(function(){
 	    },
 	    messages: {
 	    	
-			    email_address :"Please enter email or username",
+			    email_address :"Please enter email.",
 			    password : "Please enter password"
 		   },
 	    submitHandler: function(form) {
@@ -1268,7 +1268,7 @@ $("#get_password").validate({
     },
     messages: {
     	
-    	email_address :"Please enter email or username"
+    	email_address :"Please enter email ."
 	   },
     submitHandler: function(form) {
     	var dataString = $('#get_password').serialize();

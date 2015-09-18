@@ -29,6 +29,7 @@ var root = "<?php echo $root;?>";
 <script src="<?php echo $root;?>js/jquery-ui.min.js"></script>
 <script src="<?php echo $root;?>js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="<?php echo $root;?>js/jquery.form.js"></script>
+<script type="text/javascript" src="<?php echo $root;?>js/gplus.js"></script>
 <script src="<?php echo $root;?>js/main.js"></script>
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -142,9 +143,11 @@ if ($user_detail[0]['facebook_url']!=""){	$facebook_url = $user_detail[0]['faceb
 							<li><a href="<?php echo $root;?>schedule_public.php" class="<?php if($pagename=='schedule_public.php'){echo 'active';}?>">Place Request</a></li>
 							<?php
 						}
-						?>
+						if(!isset($_SESSION['LoginUserId']) && empty($_SESSION['LoginUserId']))
+						{?>
 						
-                       
+                       <li><a href="javascript:void(0);" data-toggle="modal" data-target="#accountpopup" class="singinlink">My Account</a></li>
+                       <?php } ?>
 					   <li><a href="javascript:void(0);">About</a></li>
                     </ul>
 					<?php

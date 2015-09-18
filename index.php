@@ -531,10 +531,12 @@ $(document).ready(function() {
 	});
 	// LOGIN SIGN UP FORM //
 	$('.singinlink').click(function(){
+		$('#forgot_password').css('display','none');
 		$('#loginform').css('display','block');
 		$('#signupform').css('display','none');
 	});
 	$('.signuplink').click(function(){
+		$('#forgot_password').css('display','none');
 		$('#loginform').css('display','none');
 		$('#signupform').css('display','block');
 	});

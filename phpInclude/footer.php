@@ -39,7 +39,7 @@
 </section><!-- // MAIN INNER SECTION // -->
 </section><!-- // MAIN ID SECTION // -->
 
-
+<?php /*
 <div class="modal fade AccountModal" id="passwordmodal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"><!-- // CHANGE PASSWORD // -->
   <div class="modal-dialog">
     <div class="modal-content">
@@ -82,6 +82,124 @@
     </div>
   </div>
 </div><!-- // CHANGE PASSWORD MODAL // -->
+*/?>
+<div class="modal fade AccountModal" id="accountpopup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"><!-- // LOGIN & SIGNUP MODAL // -->
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times"></i></span></button>
+      </div>
+      <div class="modal-body">
+      	<div class="formOtr">
+        	<div id="loginform" style="display:block;">
+                <form id="login">
+                    <h5>Sign in to continue your account</h5>
+                    <div class="form-group">
+                    	<p class="text-center">Login with one click with LinkedIn, Facebook & Google+</p>
+                        <a href="javascript:void(0);" class="socialbtn"><i class="fa fa-linkedin"></i> Login with LinkedIn</a>
+                        <a href="javascript:void(0);" class="socialbtn FB_bg"><i class="fa fa-facebook"></i> Login with Facebook</a>
+                        <a href="javascript:void(0);" class="socialbtn GPlus_bg" onClick="login()"><i class="fa fa-google-plus"></i> Login with Google+</a>
+                        <p class="text-center">...or use your email address and password</p>
+                    </div>
+                    <div id="msg"></div>
+                    <div class="form-group">
+                    	<label class="lbl">Email address</label>
+                        <div class="fields">
+                        	<input type="text" class="form-control" placeholder="Enter you email here" name="email_address" id="email_address" value="<?php if (isset($_COOKIE['email']) && $_COOKIE['email']!=""){echo trim($_COOKIE['email']);}?>"/>
+                        	<i class="fa fa-user icons"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    	<label class="lbl">Password</label>
+                         <div class="fields">
+                        	<input type="password" class="form-control" placeholder="Enter password" name="password" value="<?php if (isset($_COOKIE['password']) && $_COOKIE['password']!=""){echo trim($_COOKIE['password']);}?>"/>
+                        	<i class="fa fa-key icons"></i>
+                         </div>
+                        <a href="javascript:void(0);" class="forgot_pass" id="send_pass">Forgot your password?</a>
+                    </div>
+                    <div class="form-group">
+                        <div class="switch">
+                            <input id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round" type="checkbox" value="select" name="remember_me">
+                            <label for="cmn-toggle-1"><i class="fa fa-times"></i><i class="fa fa-check"></i></label>
+                            <span class="rembrme">Remenber me!</span>
+                        </div>
+                        <input type="hidden" value="login" name="action"/>
+                        <input type="submit" value="Sign in" class="signin_btn" />
+                    </div>
+                    <span class="or_seprator"><span>OR</span></span>
+                </form>
+                <p class="content-text-outr">Not a registered user yet? &nbsp;&nbsp;<a href="javascript:void(0);" class="signuplink"> Sign up now!</a></p>
+            </div>
+            <div id="signupform" style="display:none;">
+                <form id="sign_up">
+                    <h5>Creat an account</h5>
+                    <div class="form-group">
+                    	<p class="text-center">Sign up with one click with LinkedIn, Facebook & Google+</p>
+                        <a href="javascript:void(0);" class="socialbtn"><i class="fa fa-linkedin"></i> Sign up with LinkedIn</a>
+                        <a href="javascript:void(0);" class="socialbtn FB_bg"><i class="fa fa-facebook"></i> Sign up with Facebook</a>
+                        <a href="javascript:void(0);" class="socialbtn GPlus_bg" onClick="login()"><i class="fa fa-google-plus"></i> Sign up with Google+</a>
+                        <p class="text-center">...or enter your email address and pick a password</p>
+                    </div>
+                    <div id="errors"></div>
+                    <div class="form-group">
+                    	<label class="lbl">Email address</label>
+                        <div class="fields">
+                        	<input type="text" class="form-control" placeholder="Enter you email here" name="email" id="email"/>
+                        	<i class="fa fa-user icons"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    	<label class="lbl">Password</label>
+                         <div class="fields">
+                        	<input type="password" class="form-control" placeholder="Enter password" name="password"  id="password"/>
+                        	<i class="fa fa-key icons"></i>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                    	<label class="lbl">Confirm Password</label>
+                         <div class="fields">
+                        	<input type="password" class="form-control" placeholder="Enter password" name="conf_password" id="conf_password"/>
+                        	<i class="fa fa-key icons"></i>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                    	<p class="trmtxt"><input type="checkbox" id="terms"/> I accept the <a href="javascript:void(0);">Terms & Conditions</a> and <a href="javascript:void(0);">Privacy Policy.</a></p>
+                    </div>
+                    <div class="form-group">
+                    <input type="hidden" value="register" name="action"/>
+                        <input type="submit" value="Sign Up" class="signin_btn" />
+                    </div>
+                    <span class="or_seprator"><span>OR</span></span>
+                </form>
+                <p class="content-text-outr">Already have an account?  &nbsp;&nbsp;<a href="javascript:void(0);" class="singinlink"> Login now!</a></p>
+            </div>
+            <div id="forgot_password" style="display:none;"><!-- FORGOT PASSWORD FORM -->
+                <form id="get_password">
+                    <h5>Forgot Password</h5>
+                    <div id="message"></div>
+                    <div class="form-group">
+                    	<p>Enter your email address below and we'll send you instructions on how to change your password.</p>
+                    </div>
+                    <div class="form-group">
+                    	<label class="lbl">Email address</label>
+                        <div class="fields">
+                        	<input type="text" class="form-control" placeholder="Enter you email here" name="email_address"/>
+                        	<i class="fa fa-user icons"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    <input type="hidden" name="action" value="send_password" />
+                        <input type="submit" value="Send" class="signin_btn" style="width:100%;" />
+                    </div>
+                    <span class="or_seprator"><span>OR</span></span>
+                </form>
+                <p class="content-text-outr">Already have password?  &nbsp;&nbsp;<a href="javascript:void(0);" class="singinlink"> Login now!</a></p>
+            </div><!-- FORGOT PASSWORD FORM -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- // LOGIN & SIGNUP MODAL // -->
 
 
 <!-- // JQUERY AT BOTTOM // -->
@@ -101,6 +219,12 @@ $(window).scroll(function() {
 	}
 });
 $(document).ready(function() {
+	
+	$("body").on("click",".forgot_pass",function(){
+		$('#loginform').css('display','none');
+		$('#forgot_password').css('display','block');
+		$('#signupform').css('display','none');
+	});
 	// Testimonial //
 	$("#testislide").lightSlider({
 		loop:true,
@@ -135,10 +259,12 @@ $(document).ready(function() {
 	});
 	// LOGIN SIGN UP FORM //
 	$('.singinlink').click(function(){
+		$('#forgot_password').css('display','none');
 		$('#loginform').css('display','block');
 		$('#signupform').css('display','none');
 	});
 	$('.signuplink').click(function(){
+		$('#forgot_password').css('display','none');
 		$('#loginform').css('display','none');
 		$('#signupform').css('display','block');
 	});
