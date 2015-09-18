@@ -40,7 +40,7 @@ function loginCallback(result)
                 }
             }
             
-            var str = "name=" + resp['displayName'] + "&image=" + resp['image']['url'] + "&lname=" + resp['name']['familyName'] + "&fname=" + resp['name']['givenName'] + "&email=" + email + "&gender="+ resp['gender'] + "&action=googleLogin";
+            var str = "name=" + resp['displayName'] +  "&id=" + resp['id'] + "&image=" + resp['image']['url'] + "&lname=" + resp['name']['familyName'] + "&fname=" + resp['name']['givenName'] + "&email=" + email + "&gender="+ resp['gender'] + "&action=googleLogin";
 			//var form="googleResp="+resp;
 			$.ajax({
 					type: "POST",

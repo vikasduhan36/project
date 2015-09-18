@@ -946,7 +946,7 @@ if(isset($_POST['action']) && $_POST['action']=="googleLogin")
 	$randomString = generateRandomString();
 	if($checkUserExists['count'] == 0)									//SIGN UP
 	{
-		$fb_login ="Insert into users set login_type='".mysql_real_escape_string(strip_tags(trim($login_type)))."'  ,username='".mysql_real_escape_string(strip_tags(trim($_POST['name'])))."' ,profile_image='".mysql_real_escape_string(strip_tags(trim($_POST['image'])))."' , ";
+		$fb_login ="Insert into users set login_type='".mysql_real_escape_string(strip_tags(trim($login_type)))."'  ,username='".mysql_real_escape_string(strip_tags(trim($_POST['name'])))."',google_url='"."https://plus.google.com/".mysql_real_escape_string(strip_tags(trim($_POST['id'])))."' ,profile_image='".mysql_real_escape_string(strip_tags(trim($_POST['image'])))."' , ";
 		$fb_login .="email='".mysql_real_escape_string(strip_tags(trim($_POST['email'])))."',gender='".mysql_real_escape_string(strip_tags(trim($_POST['gender'])))."' ,fname='".mysql_real_escape_string(strip_tags(trim($_POST['fname'])))."' ,lname='".mysql_real_escape_string(strip_tags(trim($_POST['lname'])))."' ";
 		$mysql=mysql_query($fb_login) or die(mysql_error());
 		if($mysql)
