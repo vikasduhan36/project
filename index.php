@@ -55,7 +55,6 @@ label.error{
                     </a>
                 	<ul class="navlist">
                     	<?php if (isset($_SESSION['LoginUserId']) && $_SESSION['LoginUserId']!=""){?>
-                	<li><a href="<?php echo $root;?>experts.php" class="<?php if($pagename=='experts.php'){echo 'active';}?>">Browse Experts</a></li>
                      <li><a href="<?php echo $root;?>account.php" class="<?php if($pagename=='account.php'){echo 'active';}?>">My Account</a></li>   
                         <?php
 						if($GLOBALS['is_expert'] == 1)
@@ -75,7 +74,7 @@ label.error{
 					   <li><a href="javascript:void(0);">About</a></li>
                 	
                 	<?php } else {?>
-                    	<li><a href="javascript:void(0);">Browse Experts</a></li>
+                    	<li><a href="<?php echo $root;?>experts.php" class="<?php if($pagename=='experts.php'){echo 'active';}?>">Browse Experts</a></li>
                         <li><a href="javascript:void(0);">Place Request</a></li>
                         <li><a href="javascript:void(0);" data-toggle="modal" data-target="#accountpopup" class="singinlink">My Account</a></li>
                         <!--<li><a href="javascript:void(0);" data-toggle="modal" data-target="#accountpopup" class="signuplink">Signup</a></li>-->
@@ -102,14 +101,15 @@ label.error{
                 <div class="searchbox">
                 	<input type="text" class="form-control" placeholder="e.g. yoga classes, legal help, interior decorator" id="tags" name="tags"/>
                 	<input type="hidden" name="tag_id" id="tag_id" />
-                    <select class="form-control custom-select" name="search_type" id="search_type">
+                    <!-- <select class="form-control custom-select" name="search_type" id="search_type">
                     	<option value="tag">Tag</option>
                         <option value="expert">Expert</option>
-                    </select>
+                    </select> -->
                 	<!-- <a href="javascript:void(0);" class="btn1 searchbtn">Search <i class="fa fa-search"></i></a> -->
                 	<button type="submit" class="btn1 searchbtn">Search <i class="fa fa-search"></i></button>
                     <img src="images/round_arrow.png" alt="arrow" class="img-responsive arrw hidden-xs hidden-sm" />
                 </div>
+                 <input type="hidden" name="search_type" value="tag"  id="search_type" />
                 </form>
                 <ul class="tagslist">
                 	<li>

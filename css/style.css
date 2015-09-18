@@ -126,7 +126,7 @@ header.innerhead nav.nav1 ul.navlist li a.active:after,header.innerhead nav.nav1
 .bannercont .h5{font-size:26px; line-height:29px; color:#ffffff; margin:15px 0 40px; font-family:'proxima_nova_ltlight';}
 .bannercont .h5 span{display:block;}
 .bannercont .searchbox{background-color:rgba(0,0,0,0.4); border-radius:5px; padding:10px; float:left; width:100%; margin:50px 0 20px; position:relative;}
-.bannercont .searchbox input.form-control{float:left; width:57%; height:62px; font-size:20px; border-right:none; border-radius:3px 0 0 3px;}
+.bannercont .searchbox input.form-control{float:left; width:78%; height:62px; font-size:20px; border-right:none; border-radius:3px 0 0 3px;}
 .bannercont .searchbox .select-wrapper{float:left; width:20%; height:62px; font-size:18px; border-radius:0 3px 3px 0; line-height:62px; text-align:left;}
 .bannercont .searchbox .select-wrapper:before{top:10px;}
 .bannercont .searchbox .select-wrapper select{top:0; bottom:0; height:auto;}

@@ -35,7 +35,7 @@ header nav.nav1 ul.navlist li a:hover, header nav.nav1 ul.navlist li a.active, h
 header nav.nav1 ul.navlist li a:after, header nav.nav1 ul.navlist li a:before{border:none;}
 header nav.nav1 ul.expendnav{right:0;}
 .bannercont{min-height:auto; padding-bottom:50px;}
-.bannercont .searchbox input.form-control{width:70%; margin-bottom:10px;}
+.bannercont .searchbox input.form-control{width:100%; margin-bottom:10px;}
 .bannercont .searchbox .select-wrapper{width:30%;}
 .bannercont .searchbox .searchbtn{width:100%;}
 .bannercont .tagslist li{width:100%; text-align:left; margin:0 0 5px;}
