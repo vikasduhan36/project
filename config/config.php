@@ -23,7 +23,9 @@ $fromMail = "sricky555@gmail.com";
 $tokboxApi = 45331532;
 $tokboxApiSecret = '1216ee36e813250d5d3ad1a94c81fdb14946bbb6';
 
-
+#### TWITTER Authentication ####
+define('YOUR_CONSUMER_KEY', 'HLRGHrhYdKE6lW9QDvf5EVI0f');
+define('YOUR_CONSUMER_SECRET', 'pERV0hWVL7mFr2fKMftUkVC0tB6CnjnVy207TUgb3LHj6qfVDY');
 
 
 ?>

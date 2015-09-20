@@ -1501,6 +1501,27 @@ $("#expert_search").autocomplete({
 		search_expert(datastring);
     }
 });
+/**delete social link**/
+$("body").on("click", ".delete_link", function() {
+    var my = $(this);
+    var alt = $(this).attr('alt');
+    var user_id = $(this).attr('data-id');
+    //alert(alt);return false;
+    var dataString = "link_type=" + alt + "&user_id=" + user_id+ "&action=deleteLink";
+    
+        $.ajax({
+            data: dataString,
+            url: root+"handler_next.php",
+            type: "POST",
+            //dataType:'json',
+            success:  function(data){
+				if($.trim(data=="success"))
+				{
+					window.location.href = 'account.php#social_acc'; 
+				}
+            }
+        });
+});
 });
 
 

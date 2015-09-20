@@ -173,7 +173,7 @@ require_once 'phpInclude/header.php';
                             	<li>
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>LinkedIn</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
-                                    	<a href="javascript:void(0);"><span class="value">https://www.linkedin.com/pub/amit-rawat/b2/116/462</span></a>
+                                    	<a href="javascript:void(0);"><span class="value">--</span></a>
                                     </div>
                                     <div class="col-xs-12 col-xss-2 col-sm-2">
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-chain-broken"></i> Disconnet</a>
@@ -182,10 +182,10 @@ require_once 'phpInclude/header.php';
                                 <li>
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Twitter</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
-                                    	<a href="javascript:void(0);"><span class="value">--</span></a>
+                                    	<a href="<?php if ($twitter_url!=""){ echo $twitter_url; }else {echo "javascript:void(0);";}?>" target="_blank"><span class="value"><?php echo $twitter_url;?></span></a>
                                     </div>
                                     <div class="col-xs-12 col-xss-2 col-sm-2">
-                                    	<a href="javascript:void(0);" class="editlink"><i class="fa fa-chain"></i> Connect</a>
+                                    	<a href="<?php if ($twitter_url==""){ echo $root."handler_next.php?userSignUp=twitter"; }else {echo "javascript:void(0);";}?>" class="editlink <?php if ($twitter_url!=""){echo "delete_link";}?>" data-id="<?php echo $_SESSION['LoginUserId'];?>" alt="twitter"><i class="fa fa-chain"></i> <?php if ($twitter_url==""){echo "Connect";}else {echo "Disconnect";}?></a>
                                     </div>
                                 </li>
                                 <li>
@@ -198,18 +198,18 @@ require_once 'phpInclude/header.php';
                                     </div>
                                 </li>
                                 <li>
-                                	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Google+</label></div>
+                                	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3" ><label>Google+</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
-                                    	<a href="javascript:void(0);"><span class="value">--</span></a>
+                                    	<a href="javascript:void(0);"><span class="value"><?php echo $google_url;?></span></a>
                                     </div>
                                     <div class="col-xs-12 col-xss-2 col-sm-2">
-                                    	<a href="javascript:void(0);" class="editlink"><i class="fa fa-chain"></i> Connect</a>
+                                    	<a href="javascript:void(0);" class="editlink <?php if ($google_url!=""){echo "delete_link";}?>" <?php if ($google_url==""){?>onClick="google_social();"  <?php  }else {echo 'alt="gplus"';} ?> data-id="<?php echo $_SESSION['LoginUserId'];?>"/><i class="fa fa-chain"></i> <?php if ($google_url==""){echo "Connect";}else {echo "Disconnect";}?></a>
                                     </div>
                                 </li>
                             </ul>
                             <!-- <a href="javascript:void(0);" class="submitbtn btn1">Submit <i class="fa fa-check"></i></a> -->
                             <input type="hidden" value="social_accounts" name="action"/>
-                        <button type="submit" class="submitbtn btn1">Submit <i class="fa fa-check"></i></button>
+                       <!--  <button type="submit" class="submitbtn btn1">Submit <i class="fa fa-check"></i></button> -->
                             </form>
                         </div><!-- Social Account information -->
                         

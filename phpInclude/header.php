@@ -30,6 +30,7 @@ var root = "<?php echo $root;?>";
 <script src="<?php echo $root;?>js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="<?php echo $root;?>js/jquery.form.js"></script>
 <script type="text/javascript" src="<?php echo $root;?>js/gplus.js"></script>
+<script type="text/javascript" src="<?php echo $root;?>js/google_social.js"></script>
 <script src="<?php echo $root;?>js/main.js"></script>
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -182,8 +183,8 @@ if ($user_detail[0]['facebook_url']!=""){	$facebook_url = $user_detail[0]['faceb
 									echo $root.'user_sessions.php';	
 								}?>">My Session</a></li>
                                 <li><a href="<?php echo $root;?>wishlist.php">Expert Wishlist</a></li>
-                                <li><a href="javascript:void(0);">Finance</a></li>
-                                <li><a href="javascript:void(0);">Help</a></li>
+                                <li><a href="<?php echo $root;?>finance.php">Finance</a></li>
+                                <li><a href="<?php echo $root;?>help.php">Help</a></li>
                                 <li><a href="handler.php?method=<?php echo base64_encode("logout");?>">Logout <i class="fa fa-sign-out pull-right"></i></a></li>
                             </ul>
                         </div>
