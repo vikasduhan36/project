@@ -93,6 +93,7 @@
       	<div class="formOtr">
         	<div id="loginform" style="display:block;">
                 <form id="login">
+				<input type="hidden" id="pagename">
                     <h5>Sign in to continue your account</h5>
                     <div class="form-group">
                     	<p class="text-center">Login with one click with LinkedIn, Facebook & Google+</p>

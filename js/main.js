@@ -172,8 +172,8 @@ $(document).ready(function(){
 
 		var html = '<div class="row availability_inner">';
 			html += '<div class="col-xs-12 col-md-4">'
-			html += '<label class="lbl">Choose Date</label>';
-			html += '<input type="text" name="date_avail[]" class="date_pick_icon form-control" readonly="readonly"/>';
+			html += '<label class="lbl">On</label>';
+			html += '<Select name="date_avail[]" class="form-control">'+$("[name='date_avail[]']").html()+'</select>';
 			html += '<div id="date_schedule"  class="date_schedule"></div>';
 			html += '</div>';
 			html += '<div class="col-xs-12 col-md-3">';
@@ -893,6 +893,10 @@ $(document).ready(function(){
 	
 	});
 	
+	$("body").on("click",".login_page",function(){
+		$("#pagename").val($(this).attr("data-login"));
+	});
+	
 });
 
 function getUserAvailability(user_id,date)
@@ -1016,7 +1020,14 @@ else
 html += '<span><i class="fa fa-dollar"></i> '+value.exp_rate+'</span>';
 }
 html += 'Book Me Now!</a>';
-
+if($.trim($("#hidden_user_id").text()) == '')
+	{
+		//html += '<a href="javascript:void(0);" class="wishlistbtn signinlink" data-toggle="modal" fata-target="#accountpopup">';
+		html += '<a href="javascript:void(0);" data-toggle="modal" data-target="#accountpopup" class="singinlink wishlistbtn login_page" data-login="reload">';
+		html += '<i class="fa fa-heart"></i>Add to wishlist</a>';
+	}
+	else
+	{
 if(value.wished == null)
 {
 	html += '<a href="javascript:void(0);" class="wishlistbtn wishlist" data-type="add" data-id="'+value.id+'">';
@@ -1027,7 +1038,7 @@ else
 html += '<a href="javascript:void(0);" class="wishlistbtn wishlist remove_list_btn" data-type="remove" data-id="'+value.id+'" title="Remove From wishlist">';
 	html += '<i class="fa fa-heart"></i>wishlist</a>';
 }
-
+}
 html += '</div><div class="col-xs-12 has_reviews">';
 html += '<ul class="haslist">';
 html += '<li><a href="javascript:void(0);" class="haslink" data-toggle="tooltip" title="Number of reviews"><i class="fa fa-thumbs-o-up"></i> <span>50</span></a>';
@@ -1248,7 +1259,19 @@ $(document).ready(function(){
 						$('#msg').html('<span style="color:green;">You have been logged in successfully.</span>');
 						setTimeout(function() {
 						  // Do something after 5 seconds
+						  if($("#pagename").val() == 'reload')
+						  {
+							window.location.reload();
+						  }
+						  else if($("#pagename").val() == 'request')
+						  {
+							window.location.href = 'schedule_public.php';
+						  }
+						  else
+						  {
 							window.location.href = 'account.php';
+						  }
+							
 					}, 2000);
 					}else {
 					$('#msg').html('<span style="color:red;">Some error occur ,please try again later.</span>');

@@ -19,7 +19,7 @@ function convertTimezone($dateTime,$from_tz,$to_tz)
 function getDetail($field,$table,$condition)
 {
 	$result = array();
-	$sql = " SELECT ".$field." FROM ".$table." WHERE 1=1 ".$condition;
+	 $sql = " SELECT ".$field." FROM ".$table." WHERE 1=1 ".$condition;
 	$query = mysql_query($sql);
 	if($query)
 	{
@@ -70,13 +70,25 @@ function getWeekday($selected = null)
 	$day_name = array("1"=>"Monday","2"=>"Tuesday","3"=>"Wednesday","4"=>"Thursday","5"=>"Friday","6"=>"Saturday","7"=>"Sunday");
 	foreach($day_name as $key => $value)
 	{
-		echo "<option value='".$key."' ";
-		if(!empty($selected) && $key == $selected)
+		echo "<option value='".$value."' ";
+		if(!empty($selected) && $value == $selected)
 		{
 			echo " selected='selected' ";
 		}
 		echo " >".$value."</option>";
 	}
+}
+
+function changeWeekday($value,$change)
+{
+
+	$weekday_lazy 	= array("0"=>"Sunday","1"=>"Monday","2"=>"Tuesday","3"=>"Wednesday","4"=>"Thursday","5"=>"Friday","6"=>"Saturday","7"=>"Sunday","8"=>"Monday");
+	$weekday 	= array("1"=>"Monday","2"=>"Tuesday","3"=>"Wednesday","4"=>"Thursday","5"=>"Friday","6"=>"Saturday","7"=>"Sunday");
+	$flip 		= array_flip($weekday);
+	$key 		= (int)$flip[$value]+$change;
+	//echo $key 		= (($key == 0) || ()$key > count($weekday))?1:$key;
+	return $weekday_lazy[$key];
+
 }
 
 ///// Check user already registered   /////

@@ -69,17 +69,32 @@ if(isset($_POST['action']) && $_POST['action'] == 'submit_add_avail')
 	
 	$sql = " DELETE FROM user_availability WHERE user_id='".$user_id."' "; 
 	$query = mysql_query($sql);
+	
 	foreach($date_avail as $key_val => $date_val)
 	{
 
-		$from_dtime = date("Y-m-d H:i:s",strtotime((string)$date_val." ".(string)$timefrom[$key_val]));
-		$to_dtime = date("Y-m-d H:i:s",strtotime((string)$date_val." ".(string)$timeto[$key_val]));
+		$from_dtime = date("Y-m-d H:i:s",strtotime((string)$timefrom[$key_val]));
+		$to_dtime = date("Y-m-d H:i:s",strtotime((string)$timeto[$key_val]));
 		
 		$from = convertTimezone($from_dtime, $userTimezone['timezone'],$default_tz);
 		$to = convertTimezone($to_dtime, $userTimezone['timezone'],$default_tz);
 		
-		//$default_tz
-		$sql = " INSERT INTO user_availability SET user_id='".$user_id."', `from`='".$from."', `to`='".$to."',created='".$date."' ";
+		
+		//echo $from_dtime." || ".$from;
+		
+		$change = 0;
+		if(date("Y-m-d",strtotime($from)) < date("Y-m-d",strtotime($from_dtime)))
+		{
+			$change = "-1";
+		}
+		else if(date("Y-m-d",strtotime($from)) > date("Y-m-d",strtotime($from_dtime)))
+		{
+			$change = "+1";
+		}
+		//echo " || ".$date_val;
+		$dayname = changeWeekday($date_val,$change);
+		
+		$sql = " INSERT INTO user_availability SET user_id='".$user_id."', day='".$dayname."', `from`='".date("H:i:s",strtotime($from))."', `to`='".date("H:i:s",strtotime($to))."',created='".$date."' ";
 		$qry = mysql_query($sql) or die(mysql_error());
 		if(!$qry)
 		{
@@ -100,10 +115,6 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_user_avail')
 {
 	//$user_id = $_POST['user_id'];
 	$date_selected = $_POST['date'];
-	$field = "`from`,`to`";
-	$table = "user_availability";
-	$condition = "and user_id = '".$_POST['user_id']."' ";
-	$get_avail = getDetail($field,$table,$condition);
 	
 	$default_availability = default_availability();
 	$available = array();
@@ -111,34 +122,71 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_user_avail')
 	$userTimezone = getUserTimezone($user_id);
 	$current_time = convertTimezone($date,$default_tz,$userTimezone['timezone']);
 	$all = array();
+	
+	$dayname_cr = date("l",strtotime($date_selected));
+	
+	$dayname_next = changeWeekday($dayname_cr,"+1");
+	$dayname_prev = changeWeekday($dayname_cr,"-1");
+		
+		
+	
+	$field = "day,`from`,`to`";
+	$table = "user_availability";
+	$condition = "and day IN('".$dayname_prev."','".$dayname_cr."','".$dayname_next."') ";
+	$get_avail = getDetail($field,$table,$condition);
+			
+	$available_day = array();		
+		$i = 0;
 	foreach($get_avail as  $datetime)
 	{
-		$from_dtime = $datetime['from'];
-		$to_dtime = $datetime['to'];
+		$from_dtime 	= date("Y-m-d",strtotime($date_selected))." ".$datetime['from'];
+		$to_dtime 		= date("Y-m-d",strtotime($date_selected))." ".$datetime['to'];
+		$dayname_db 	= $datetime['day'];
 
-		$from = convertTimezone($from_dtime,$default_tz,$userTimezone['timezone']);
-		$to = convertTimezone($to_dtime,$default_tz,$userTimezone['timezone']);
-
+		$from 			= convertTimezone($from_dtime,$default_tz,$userTimezone['timezone']);
+		$to 			= convertTimezone($to_dtime,$default_tz,$userTimezone['timezone']);
 		
 		
-		foreach($default_availability as $time_val)
+		$change = "0";
+		if(date("Y-m-d",strtotime($from)) > date("Y-m-d",strtotime($from_dtime)))
 		{
-			$time = $date_selected." ".$time_val;
-			if( (strtotime($time) >= strtotime($from)) && (strtotime($time) < strtotime($to)) )
-			{
-				$available[] = date("Y-m-d H:i:s",strtotime($time));
-			}
+			$change = "+1";
 		}
+		else if(date("Y-m-d",strtotime($from)) < date("Y-m-d",strtotime($from_dtime)))
+		{
+			$change = "-1";
+		}
+		
+		
+		$dayname_vl = changeWeekday($datetime['day'],$change);
+		//echo $from_dtime." | ".$from." | ".$datetime['day']."<br>";
+		$available_day[$dayname_vl][$i]['from'] = date("H:i:s",strtotime($from));
+		$available_day[$dayname_vl][$i]['to'] = date("H:i:s",strtotime($to));
+		$i++;
 	}
-	
+	//print "<pre>";print_r($available_day);print "</pre>";
+	//die;
 	foreach($default_availability as $time_val)
 	{
 		$time = $date_selected." ".$time_val;
 		if(strtotime($time) > strtotime($current_time))
 		{
 			$all[] = date("Y-m-d H:i:s",strtotime($time));
+			
+			if(isset($available_day[$dayname_cr]) && count($available_day[$dayname_cr])>0)
+			{
+				foreach($available_day[$dayname_cr] as $key => $value)
+				{
+					if( (strtotime($time_val) >= strtotime($available_day[$dayname_cr][$key]['from'])) && (strtotime($time_val) < strtotime($available_day[$dayname_cr][$key]['to'])) )
+					{
+						$available[] = date("Y-m-d H:i:s",strtotime($time));
+					}
+				}
+			}
 		}
+			
 	}
+	
 		
 	echo json_encode(array('all'=>array_unique($all),'available'=>array_unique($available)));
 }

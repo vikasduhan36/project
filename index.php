@@ -54,6 +54,7 @@ label.error{
                     	<span></span><span></span><span></span>
                     </a>
                 	<ul class="navlist">
+					<li><a href="<?php echo $root;?>experts.php" class="<?php if($pagename=='experts.php'){echo 'active';}?>">Browse Experts</a></li>
                     	<?php if (isset($_SESSION['LoginUserId']) && $_SESSION['LoginUserId']!=""){?>
                      <li><a href="<?php echo $root;?>account.php" class="<?php if($pagename=='account.php'){echo 'active';}?>">My Account</a></li>   
                         <?php
@@ -74,8 +75,8 @@ label.error{
 					   <li><a href="javascript:void(0);">About</a></li>
                 	
                 	<?php } else {?>
-                    	<li><a href="<?php echo $root;?>experts.php" class="<?php if($pagename=='experts.php'){echo 'active';}?>">Browse Experts</a></li>
-                        <li><a href="javascript:void(0);">Place Request</a></li>
+                    	
+                        <li><a href="javascript:void(0);" data-toggle="modal" data-target="#accountpopup" class="login_page" data-login="request">Place Request</a></li>
                         <li><a href="javascript:void(0);" data-toggle="modal" data-target="#accountpopup" class="singinlink">My Account</a></li>
                         <!--<li><a href="javascript:void(0);" data-toggle="modal" data-target="#accountpopup" class="signuplink">Signup</a></li>-->
                         <li><a href="javascript:void(0);">About</a></li>
@@ -360,6 +361,7 @@ label.error{
       	<div class="formOtr">
         	<div id="loginform" style="display:block;">
                 <form id="login">
+				<input type="hidden" id="pagename">
                     <h5>Sign in to continue your account</h5>
                     <div class="form-group">
                     	<p class="text-center">Login with one click with LinkedIn, Facebook & Google+</p>

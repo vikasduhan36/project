@@ -6,7 +6,8 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 $field = "`from`,`to`";
 $table = "user_availability";
 $condition = "and user_id = '".$_SESSION['LoginUserId']."' and `to` >='".$date."' ";
-$get_avail = getDetail($field,$table,$condition);	
+$get_avail = getDetail($field,$table,$condition);
+
 ?>
 <section class="midsection accountsection"><!-- // MID MAIN SECTION // -->
 	<div class="container">
@@ -46,22 +47,34 @@ $get_avail = getDetail($field,$table,$condition);
 							foreach($get_avail as $avail)
 							{
 								
-								$from = convertTimezone($avail['from'],$default_tz,$userTimezone['timezone']);
-								$to = convertTimezone($avail['to'],$default_tz,$userTimezone['timezone']);
+								$from = convertTimezone(date("Y-m-d")." ".$avail['from'],$default_tz,$userTimezone['timezone']);
+								$to = convertTimezone(date("Y-m-d")." ".$avail['to'],$default_tz,$userTimezone['timezone']);
 								
 							?>							
                                 <div class="row availability_inner">
                                     <div class="col-xs-12 col-md-4">
-                                        <label class="lbl">Choose Date</label>
+                                        <label class="lbl">On</label>
 										<!--
-										<input type="text" name="date_schedule" id="date_schedule" readonly="readonly"  class="date_schedule" value=""/>
-										-->
-										
 										<input type="text" name="date_avail[]" class="date_pick_icon form-control pre_select" readonly="readonly" value="<?php echo date('d-m-Y',strtotime($from));?>"/>
-										
-										<!--
-										<div id="date_schedule"  class="date_schedule"></div>
 										-->
+										<Select name="date_avail[]" class="form-control">
+										<?php
+										
+										$change = 0;
+										if(date("Y-m-d",strtotime($from)) < date("Y-m-d",strtotime(date("Y-m-d")." ".$avail['from'])))
+										{
+											$change = "-1";
+										}
+										else if(date("Y-m-d",strtotime($from)) > date("Y-m-d",strtotime(date("Y-m-d")." ".$avail['from'])))
+										{
+											$change = "+1";
+										}
+										//echo " || ".$date_val;
+										$dayname = changeWeekday($date_val,$change);
+										
+										getWeekday($dayname);
+										?>
+										</select>
 									</div>
                                     <div class="col-xs-12 col-md-3">
                                         <label class="lbl">Time from</label>
@@ -117,16 +130,12 @@ $get_avail = getDetail($field,$table,$condition);
 						?>
 								<div class="row availability_inner">
                                     <div class="col-xs-12 col-md-4">
-                                        <label class="lbl">Choose Date</label>
-										<!--
-										<input type="text" name="date_schedule" id="date_schedule" readonly="readonly"  class="date_schedule" value=""/>
-										-->
-										
-										<input type="text" name="date_avail[]" class="date_pick_icon form-control " readonly="readonly" />
-										
-										<!--
-										<div id="date_schedule"  class="date_schedule"></div>
-										-->
+                                        <label class="lbl">On</label>
+										<Select name="date_avail[]" class="form-control">
+									<?php
+										getWeekday();
+										?>
+										</select>
 									</div>
                                     <div class="col-xs-12 col-md-3">
                                         <label class="lbl">Time from</label>
@@ -184,7 +193,7 @@ $get_avail = getDetail($field,$table,$condition);
                                 <div class="col-xs-6">
 								<a href="javascript:void(0);" class="btn1 proceedbtn" id="add_more_avail">+Add more</a>
                                 </div><div class="col-xs-6">
-								<a href="javascript:void(0);" class="btn1 proceedbtn" id="submit_add_avail">Update <i class="fa fa-angle-double-right"></i></a>
+								<a href="javascript:void(0);" class="btn1 proceedbtn" id="submit_add_avail">Save <i class="fa fa-angle-double-right"></i></a>
                                 </div>
                             </div>
                         </div>

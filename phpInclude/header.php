@@ -139,9 +139,18 @@ if ($user_detail[0]['facebook_url']!=""){	$facebook_url = $user_detail[0]['faceb
 						}
 						else
 						{
+							if(!isset($_SESSION['LoginUserId']) && empty($_SESSION['LoginUserId']))
+							{
+							?>
+							<li><a href="javascript:void(0);" data-toggle="modal" data-target="#accountpopup" class="<?php if($pagename=='schedule_public.php'){echo 'active';}?> login_page" data-login="request">Place Request</a></li>
+							<?php
+							}
+							else
+							{
 							?>
 							<li><a href="<?php echo $root;?>schedule_public.php" class="<?php if($pagename=='schedule_public.php'){echo 'active';}?>">Place Request</a></li>
 							<?php
+							}
 						}
 						if(!isset($_SESSION['LoginUserId']) && empty($_SESSION['LoginUserId']))
 						{?>
@@ -186,6 +195,12 @@ if ($user_detail[0]['facebook_url']!=""){	$facebook_url = $user_detail[0]['faceb
             </div>
         </div>
     </div>
+	<div id="hidden_user_id" style="display:none;"><?php
+	if (isset($_SESSION['LoginUserId']) && $_SESSION['LoginUserId']!="")
+	{
+		echo $_SESSION['LoginUserId'];
+	}
+	?></div>
 </header><!-- ////// HEADER ////// -->
 
 
