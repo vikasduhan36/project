@@ -1009,8 +1009,16 @@ html += '</ul>';
 }
 html += '<p>'+value.exp_about+'</p>';
 html += '</div><div class="col-xs-12 col-md-4 col-lg-3">';
+if($.trim($("#hidden_user_id").text()) == '')
+	{
+		
+		html += '<a href="javascript:void(0);" data-toggle="modal" data-target="#accountpopup" class="bookme_btn bookfree login_page" data-login="reload">';
+		
+	}
+	else
+	{
 html += '<a href="'+root+'schedule.php?id='+value.id+'" class="bookme_btn bookfree">';
-
+}
 if(value.exp_rate == '0')
 {
 html += '<span class="free">Always FREE<img src="images/round_arrow_blue.png" alt="arrow" class="img-responsive" /></span>';
