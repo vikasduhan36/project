@@ -88,6 +88,10 @@ require_once 'phpInclude/header.php';
                                         $table=" country ";
                                         $country = getDetail($field,$table,$cond);
                                         foreach ($country as $key=>$value){
+                                        	if(trim($value['country_code'])== "US"){
+                                        		$selected='selected="selected"';
+                                        	}
+                                        	else
                                         	if(trim($value['country_code'])== trim($country_id)){
                                         		$selected='selected="selected"';
                                         	} else {
@@ -110,12 +114,15 @@ require_once 'phpInclude/header.php';
                                         <select class="form-control custom-select valuefield" name="timezone" id="timezone" style="display:none;" >
                                         <option value="">Select Timezone</option>
                                         <?php 
-                                        $cond = " ORDER BY order_id ASC ";
+                                        $cond = " ORDER BY id ASC ";
                                         $field=" * ";
                                         $table=" timezone ";
                                         $timezone = getDetail($field,$table,$cond);
                                         foreach ($timezone as $key=>$value){
-                                        	if(trim($value['id'])== trim($timezone_id)){
+                                        	if(trim($value['id'])== "151"){
+                                        		$selected='selected="selected"';
+                                        	}
+                                        else if(trim($value['id'])== trim($timezone_id)){
                                         		$selected='selected="selected"';
                                         	} else {
                                         		$selected='';
@@ -176,7 +183,7 @@ require_once 'phpInclude/header.php';
                                     	<a href="javascript:void(0);"><span class="value">--</span></a>
                                     </div>
                                     <div class="col-xs-12 col-xss-2 col-sm-2">
-                                    	<a href="javascript:void(0);" class="editlink"><i class="fa fa-chain-broken"></i> Disconnet</a>
+                                    	<a href="javascript:void(0);" class="editlink"><i class="fa fa-chain-broken"></i> Connect</a>
                                     </div>
                                 </li>
                                 <li>
@@ -416,7 +423,7 @@ $(document).ready(function() {
 	    });
 	    
 	$('.editlink').click(function(){
-		
+		//alert($(this).text());
 		if($(this).text() == 'cancel')
 		{
 			$(this).html('<i class="fa fa-edit"></i>Edit');
@@ -424,7 +431,14 @@ $(document).ready(function() {
 			$(this).parents('li').find('span').show();
 		
 		}
-		else
+		if($(this).text() == ' Disconnect')
+		{
+			$(this).html('<i class="fa fa-edit"></i>Connect');
+			$(this).parents('li').find('input,select').hide();
+			$(this).parents('li').find('span').html("");
+		
+		}
+		else if($(this).text() == ' Edit')
 		{
 			$(this).text('cancel');
 			$(this).parents('li').find('input,select').show().focus();

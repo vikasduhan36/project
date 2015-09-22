@@ -7,7 +7,7 @@ if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){
 	$help_offered   		= trim($user_detail[0]['exp_help']);
 	$category  				= trim($user_detail[0]['exp_category_id']);
 	$hourly_rate			= trim($user_detail[0]['exp_rate']);
-	$profile_url  			= trim($user_detail[0]['username']);
+	$profile_url  			= trim($user_detail[0]['profile_url']);
 	if ($user_detail[0]['exp_tag_id']!="") {
 		$exp_tag_id   			= trim($user_detail[0]['exp_tag_id']);
 		$diff_lang=array();
@@ -116,8 +116,8 @@ if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){
                                 <li>
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Profile URL</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
-                                    	<span class="value"><?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $profile_url;}?></span>
-                                        <input type="text" value="24sessions.com/vikasduhan" name="profile_url" class="form-control valuefield" style="display:none;" value="<?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $profile_url;}?>"/>
+                                    	<span class="value">www.eyeask.com/<?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $profile_url;}?></span>
+                                        <input type="text" value="eyeask.com/<?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $profile_url;}?>" name="profile_url" class="form-control valuefield" style="display:none;" value="<?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $profile_url;}?>"/>
                                     </div>
                                     <div class="col-xs-12 col-xss-2 col-sm-2">
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
@@ -201,10 +201,24 @@ $(window).scroll(function() {
 	}
 });
 $(document).ready(function() {
-	$('.editlink').click(function(){
-		$(this).text('Submit');
-		$(this).parents('li').find('input,select,textarea,div').show();
-		$(this).parents('li').find('span').hide();
+	
+$('.editlink').click(function(){
+		
+		if($(this).text() == 'cancel')
+		{
+			$(this).html('<i class="fa fa-edit"></i>Edit');
+			$(this).parents('li').find('input,select,textarea').hide();
+			$(this).parents('li').find('span').show();
+		
+		}
+		else
+		{
+			$(this).text('cancel');
+			$(this).parents('li').find('input,select,textarea,div').show().focus();
+			$(this).parents('li').find('span').hide();
+		}
+		
+		
 	});
 	// Testimonial //
 	$("#testislide").lightSlider({

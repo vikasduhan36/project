@@ -1319,39 +1319,49 @@ if(isset($_POST['action']) && $_POST['action']=="expert_info")
 	$category  				= mysql_real_escape_string(trim($_POST['category']));
 	$hourly_rate			= mysql_real_escape_string(trim($_POST['hourly_rate']));
 	$profile_url  			= mysql_real_escape_string(trim($_POST['profile_url']));
-
-	if($hourly_rate=="free")
+	$uname = explode("/",$profile_url);
+	$uname = $uname[1];
+	/* check if profile username is alreday exists or not  */
+	//echo "SELECT count(id) as num from users WHERE profile_url='".$uname."' AND id!='".$_SESSION['LoginUserId']."' ";
+	$check_url=mysql_query("SELECT count(id) as num from users WHERE profile_url='".$uname."' AND id!='".$_SESSION['LoginUserId']."' ");
+	$rec=mysql_fetch_assoc($check_url);
+	if(trim($rec['num'])==0)
 	{
-		$hourly_rate="0";
-	}
-	if (isset($_POST['tags']) && $_POST['tags']!="")
-	{
-		$languages  	= explode(",",mysql_real_escape_string(trim($_POST['tags'])));
-		$id_array = array();
-		foreach ($languages as $lang)
+		if($hourly_rate=="free")
 		{
-			if (trim($lang)!="" && trim($lang)!="No record")
-			{
-				//echo "SELECT id from languages WHERE name='".trim($lang)."' ";
-				$get_id = mysql_query("SELECT id from tags WHERE name='".trim($lang)."' ");
-				$res = mysql_fetch_assoc($get_id);
-				$id_array[]=$res['id'];
-			}
+			$hourly_rate="0";
 		}
-		$languages = implode(',',$id_array);
+		if (isset($_POST['tags']) && $_POST['tags']!="")
+		{
+			$languages  	= explode(",",mysql_real_escape_string(trim($_POST['tags'])));
+			$id_array = array();
+			foreach ($languages as $lang)
+			{
+				if (trim($lang)!="" && trim($lang)!="No record")
+				{
+					//echo "SELECT id from languages WHERE name='".trim($lang)."' ";
+					$get_id = mysql_query("SELECT id from tags WHERE name='".trim($lang)."' ");
+					$res = mysql_fetch_assoc($get_id);
+					$id_array[]=$res['id'];
+				}
+			}
+			$languages = implode(',',$id_array);
+		}else {
+			$languages = "";
+		}
+		$update_pass = "UPDATE users set exp_description='".$short_description."',exp_help='".$help_offered."',exp_category_id='".$category."' ,";
+		$update_pass .= " exp_tag_id='".$languages."',exp_rate='".$hourly_rate."',profile_url='".$uname."' WHERE id='".$user_id."' ";
+		$update_query = mysql_query($update_pass);
+		if($update_query)
+		{
+			echo "success";
+		}
+		else
+		{
+			echo "error";
+		}
 	}else {
-		$languages = "";
-	}
-	$update_pass = "UPDATE users set exp_description='".$short_description."',exp_help='".$help_offered."',exp_category_id='".$category."' ,";
-	$update_pass .= " exp_tag_id='".$languages."',exp_rate='".$hourly_rate."' WHERE id='".$user_id."' ";
-	$update_query = mysql_query($update_pass);
-	if($update_query)
-	{
-		echo "success";
-	}
-	else
-	{
-		echo "error";
+		echo "purl_exists";
 	}
 }
 /* search experts by name */

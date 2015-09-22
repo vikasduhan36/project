@@ -1471,7 +1471,13 @@ $("#expert_info").validate({
 					  // Do something after 5 seconds
 						window.location.href = 'expert_info.php';
 				}, 2000);
-				}else {
+				} else if($.trim(data)=="purl_exists"){
+					$('html,body').animate({
+				        scrollTop: $(".breadcrumb").offset().top},
+				        'slow');
+				$('#errors').html('<span style="color:red;">Profile url must be unique,please try another.</span>');
+				}
+				else {
 				$('#errors').html('<span style="color:red;">Some error occur ,please try again later.</span>');
 				}
 			}
@@ -1508,7 +1514,7 @@ $("body").on("click", ".delete_link", function() {
     var user_id = $(this).attr('data-id');
     //alert(alt);return false;
     var dataString = "link_type=" + alt + "&user_id=" + user_id+ "&action=deleteLink";
-    
+    //alert(alt);
         $.ajax({
             data: dataString,
             url: root+"handler_next.php",
@@ -1517,7 +1523,7 @@ $("body").on("click", ".delete_link", function() {
             success:  function(data){
 				if($.trim(data=="success"))
 				{
-					window.location.href = 'account.php#social_acc'; 
+					window.location.href = root+'account.php#social_acc'; 
 				}
             }
         });
