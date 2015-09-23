@@ -615,7 +615,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_cancel_session')
 		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>TO view session detail, Click on the link below:</p>";
 		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><a href='".$root."session_request.php?id=".$session_id."'>".$root."session_request.php?id=".$session_id."</a></p>";
 		
-		$emailTo = $get_user[0]['email'];
+		$emailTo = (!empty($get_user[0]['email']))?$get_user[0]['email']:'';
 		schedulingMail($fromMail,$emailTo,$subject,$body,$root);
 
 
@@ -679,15 +679,31 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_book_schedule_pub
 	{
 		if(!is_array($value))
 		{
+			$value = (empty($value))?'':$value;
 			$$key = mysql_real_escape_string(trim($value));
 		}
 		else
 		{
+			$value = (empty($value))?array():$value;
 			$$key = $value;
 		}
 	}
 	$userTimezone = getUserTimezone($user_id);
 	//exp_id
+	if (!isset($tag_selected))
+	{
+	$tag_selected = array();
+	}
+	if (!isset($language_selected))
+	{
+	$language_selected = array();
+	}
+	if (!isset($slot_selected))
+	{
+	$slot_selected = array();
+	}
+	//$tag_selected = (isset(($tag_selected)))?array():$tag_selected;
+	//$language_selected = (isset(($language_selected)))?array():$language_selected;
 	
 	$sql = " INSERT INTO sessions SET user_id='".$user_id."',category_id='".$category_id."', tag_id='".implode($tag_selected,',')."',language_id='".implode($language_selected,',')."', type='request',duration='".$duration."',title='".$title."',description='".$description."',question='".$question."',other='".$other."',status='1',created='".$date."' ";
 	$query = mysql_query($sql);

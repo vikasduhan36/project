@@ -88,7 +88,7 @@
 										  	<?php
 										$field = " name ";
 										$table = "tags";
-										$condition 	= "and id IN(".$session_detail[0]['language_id'].") ";
+										$condition 	= "and id IN(".$session_detail[0]['tag_id'].") ";
 										$tag_detail = getDetail($field,$table,$condition);
 										if(!empty($tag_detail))
 										{

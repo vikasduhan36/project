@@ -1,6 +1,6 @@
 	<div class="sidebarnav sidebar2"><!-- // SIDE BAR NAV // -->
                 	<span class="dashbar clearfix">
-                    	<i class="fa fa-gears"></i> Choose Filter
+                    	<i class="fa fa-info-circle"></i>  Information
                         <a href="javascript:void(0);" class="togglebtn2 visible-xs" data-toggle="tooltip" title="Click me">
                         	<i class="fa fa-circle"></i><i class="fa fa-circle"></i><i class="fa fa-circle"></i>
                         </a>
@@ -36,12 +36,14 @@
                                 <li>
                                     <h5>Languages <i class="fa fa-angle-down"></i></h5>
                                     <ul class="taglist" id="language_search_ui">
+									<li>English<a href="javascript:void(0);" class="remove_language " alt="1"><i class="fa fa-times"></i></a></li>
 									</ul>
 									<div class="autocomp_blk">
 										<input type="text" name="language_search" id="language_search" placeholder="Add Languages" class="form-control" >
 										<ul id="language_result" class="autocomp_list">
 										</ul>
 										<div id="language_selected">
+										<input type="hidden" name="language_selected[]" value="1">
 										</div>
 									</div>	
                                 </li>

@@ -272,26 +272,27 @@ $(document).ready(function(){
 		var description = $('#description');
 		var question = $('#question');
 		var other = $('#other');
-		
+		$('.error').removeClass('error');
 		if(title.val() == '')
 		{
 			message = "Please enter session title.";
-			//title.focus();
+			title.addClass('error');
 			error = 1;
 		}
 		else if(description.val() == '')
 		{
 			message = "Please enter session description.";
-			//description.focus();
+			description.addClass('error');
 			error = 1;
 		}
+		/*
 		else if(question.val() == '')
 		{
 			message = "Please enter session question.";
 			//question.focus();
 			error = 1;
 		}
-		
+		*/
 		
 	
 	if(error == 1)
@@ -304,6 +305,14 @@ $(document).ready(function(){
 		}
 		else
 		{
+		if(question.val() == '')
+		{
+		question.parent().hide();
+		}
+		else
+		{
+			question.parent().show();
+		}
 			$("#notification").removeClass("error success").text('').hide();
 			$(".progresslist li:eq(1)").addClass("stepcomp").find(".count").html('<i class="fa fa-check"></i>');
 			var datetime_html = '';
@@ -379,7 +388,7 @@ $(document).ready(function(){
 		var message = "";
 		$("#notification").hide();
 		if($(this).attr("id") == "request_schedule")
-		{
+		{$("[name='type']").val('request');
 			if($("#hidden_date_schedule").val() == '')
 			{
 				message = "Please select the session date.";
@@ -393,6 +402,7 @@ $(document).ready(function(){
 		}
 		else
 		{
+		$("[name='type']").val('accept');
 			if($(this).hasClass('public') && !$(this).hasClass('exp_hired'))
 			{
 				if($("[name='slot[]']:checked").length == 0)
@@ -511,8 +521,8 @@ $(document).ready(function(){
 		var category = $("#category");
 		var tag = $("[name='tag_selected[]']").length;
 		var language = $("[name='language_selected[]']").length;
-	
-	
+		$('.error').removeClass('error');
+	/*
 		if(category.val() == '')
 		{
 			message = "Please select category.";
@@ -528,17 +538,19 @@ $(document).ready(function(){
 			message = "Please select language.";
 			error = 1;
 		}
-		else if(duration.val() == '')
+		else*/ if(duration.val() == '')
 		{
 			message = "Please select session duration.";
 			error = 1;
+			duration.addClass('error');
 			//duration.focus();
 		}
+		/*
 		else if($(".is_date_selected:checked").length == 0)
 		{
 			message = "Please select a method to schedule session date.";
 			error = 1;
-		}
+		}*/
 		else if($(".is_date_selected:checked").val() == "1")
 		{
 			if(date_schedule.val() == '')
@@ -573,6 +585,7 @@ $(document).ready(function(){
 	
 	$("#alternative_dates").click(function(){
 		
+
 		$("[name='type']").val('request');
 		$("#public_select_date").slideDown();
 		
@@ -916,6 +929,16 @@ function getUserAvailability(user_id,date)
 				var avail_class = '';
 				var i=0;
 				
+				if((response.all).length == 0)
+				{
+					$("#notification").addClass("error").removeClass("success").text("Please select next day.").show();
+			
+					$('html, body').animate({
+							scrollTop: $("#notification").offset().top
+					}, 800);
+						
+					return false;
+				}
 				$.each(response.all,function(key,value){
 					if($.inArray(value,response.available) != '-1')
 					{

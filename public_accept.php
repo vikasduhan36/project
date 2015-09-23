@@ -56,6 +56,9 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 								
 								<?php
 								$time_request = explode(",",$session_detail[0]['time_request']);
+								
+								if(!empty($time_request[0]))
+								{
 								foreach($time_request as $req)
 								{
 									$request = convertTimezone($req,$default_tz,$userTimezone['timezone']);
@@ -70,14 +73,21 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 								}
 								?>
 								
-								<a class="bookme_btn apply_btn request_slot public <?php if(!empty($exp)){echo 'exp_hired';}?>" href="javascript:void(0);">Accept </a>
+								<a class="Acceptbtn bookme_btn apply_btn request_slot public <?php if(!empty($exp)){echo 'exp_hired';}?>" href="javascript:void(0);">Accept </a>
 								
-								<br>
 								
-								<a class="bookme_btn apply_btn" id="alternative_dates" href="javascript:void(0);">Request Alternative time</a>
 								
- <section class="ChooseDatesCont" id="public_select_date" style="display:none;"><!-- CHOOSE DATE CONTAINER -->
-                                <p><strong class="txt_lt_it">Select at least 1 (preferably 3) time slots that suit you.</strong><br/><small>(All times are in your local timezone AsialKolkata)</small></p>
+								<a class="Acceptbtn alternate_btn bookme_btn apply_btn" id="alternative_dates" href="javascript:void(0);">Request Alternative time</a>
+								<?php
+								}
+								?>
+ <section class="ChooseDatesCont" id="public_select_date" style="display:<?php if(empty($time_request[0])){echo 'block';}else{echo 'none';}?>;"><!-- CHOOSE DATE CONTAINER -->
+                                <p><strong class="txt_lt_it">Select at least 1 (preferably 3) time slots that suit you.</strong><br/><small>(All times are in your selected timezone 
+								"<?php
+								$timezone = getUserTimezone($_SESSION['LoginUserId']);
+								echo $timezone['name'];
+								?>"
+								)</small></p>
                                 
                                 <div class="row">
                                     <div class="col-xs-12 col-md-5">
@@ -87,9 +97,9 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 										-->
 										<input type="hidden" name="date_schedule" id="hidden_date_schedule" value=""/>
 										<div id="date_schedule"  class="date_schedule"></div>
-										<a href="javascript:void(0);" class="sess_btn canceled_btn date_schedule request_slot public" id="request_schedule" />Request Reschedule</a>
-								<a href="javascript:void(0);" class="sess_btn canceled_btn" id="alternative_dates_cancel" >Cancel</a>
-								<input type="hidden" name="type" value="accept">
+										
+								
+								<input type="hidden" name="type" value="<?php if(empty($time_request[0])){echo 'request';}else{echo 'accept';}?>">
 								<input type="hidden" name="action" value="submit_accept_public">
 								<input type="hidden" name="session_id" value="<?php echo $session_id;?>">
 								
@@ -105,7 +115,26 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 										</div>
 										
                                     </div>
-								
+									
+									<div class="col-xs-12 ">
+									<div class="reschdl_grp"> 
+									<?php
+										if(!empty($time_request[0]))
+										{
+										?>
+										<a href="javascript:void(0);" class="Acceptbtn sess_btn  date_schedule request_slot public" id="request_schedule" />Request Reschedule</a>
+										<a href="javascript:void(0);" class="Acceptbtn sess_btn " id="alternative_dates_cancel" >Cancel</a>
+										<?php
+										}
+										else
+										{
+										?>
+										<a href="javascript:void(0);" class="Acceptbtn sess_btn  date_schedule request_slot public" id="request_schedule" />Request Time</a>
+										<?php
+										}
+										?>
+										</div>
+									</div>
                                 </div>
                                 
                             </section><!-- CHOOSE DATE CONTAINER -->

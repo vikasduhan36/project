@@ -61,7 +61,11 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
                                 </div>
 								
 								<section class="ChooseDatesCont" id="public_select_date" style="display:none;"><!-- CHOOSE DATE CONTAINER -->
-                                <p><strong class="txt_lt_it">Select at least 1 (preferably 3) time slots that suit you.</strong><br/><small>(All times are in your local timezone AsialKolkata)</small></p>
+                                <p><strong class="txt_lt_it">Select at least 1 (preferably 3) time slots that suit you.</strong><br/><small>(All times are in your local timezone 
+								"<?php
+								$timezone = getUserTimezone($_SESSION['LoginUserId']);
+								echo $timezone['name'];
+								?>")</small></p>
                                 
                                 <div class="row">
                                     <div class="col-xs-12 col-md-5">

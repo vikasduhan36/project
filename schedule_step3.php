@@ -33,7 +33,7 @@
                             
                             <div class="confirmdetail">
                             	<h4>Payment Method</h4>
-                                <p>experts will provide you with a quote for a session. If you select a paid session, you will need to provide your <a href="javascript:void(0);">creditcard details</a> before accepting the proposal.</p>
+                                <p>experts will provide you with a quote for a session. If you select a paid session, you will need to provide your <a href="<?php echo $root;?>finance_detail.php" target="_blank">creditcard details</a> before accepting the proposal.</p>
                             </div>
                             
                             <div class="row">
