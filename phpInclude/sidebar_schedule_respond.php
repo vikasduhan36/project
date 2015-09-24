@@ -18,7 +18,7 @@
                                         <h6><?php echo $session_detail[0]['fname']." ".$session_detail[0]['lname'];?>
 										<small>On: <?php 
 										$datetime = convertTimezone($session_detail[0]['created'],$default_tz,$userTimezone['timezone']);
-										echo $datetime;
+										echo formatDate($datetime);
 										/*
 										if(!empty(strtotime($session_detail[0]['session_datetime'])))
 										{

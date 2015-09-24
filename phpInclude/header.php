@@ -71,6 +71,9 @@ header.innerhead nav.nav1 ul.navlist li a.active{
     float: right;
     margin-top: 4px;
 }
+.disable_button{
+background-color: #555555 !important;
+}
 </style>
 </head>
 <body>

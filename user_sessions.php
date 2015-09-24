@@ -32,7 +32,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 						if(empty($_GET['tab']) || (isset($_GET['tab']) && $_GET['tab'] == 'schedule'))
 						{
 							$sql = " SELECT s.id as s_id,s.title,s.status,s.session_datetime,s.duration,u.fname,u.lname,s.exp_applied_id,s.video_duration FROM sessions as s LEFT JOIN users as u ";
-							$sql .= " ON(s.user_id = u.id) WHERE s.user_id='".$_SESSION['LoginUserId']."'  ORDER BY s.id DESC";//and s.status='2'
+							$sql .= " ON(s.user_id = u.id) WHERE s.user_id='".$_SESSION['LoginUserId']."'  and s.status IN ('2','3') ORDER BY s.id DESC";//
 
 							$query = mysql_query($sql) or die(mysql_error());
 							
@@ -50,7 +50,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 										<div class="col-xs-12 col-sm-2 col-xss-2"><h5>
 										<?php 
 										$datetime = convertTimezone($fetch['session_datetime'],$default_tz,$userTimezone['timezone']);
-										echo $datetime;
+										echo formatDate($datetime);
 										
 										?></h5></div>
 										<?php
@@ -84,7 +84,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 										<div class="col-xs-12 col-sm-3 date">
 										
 										<?php
-										
+										//echo $date."> ".$fetch['session_datetime']."+".$fetch['duration']." MINUTES ";
 										if($fetch['status'] == '3')
 										{
 											echo '<a href="javascript:void(0);" class="sess_btn">Completed</a>';
@@ -170,7 +170,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 					{
 						$exp_applied = mysql_num_rows($query1);
 					}
-					echo "<a href='javascript:void(0);' class='sess_btn'>Request: ".$exp_applied." Replies</a>";
+					echo "<a href='".$root.$url."?id=".$fetch['s_id']."' class='sess_btn'>Request: ".$exp_applied." Replies</a>";
 					}
 					else
 					{

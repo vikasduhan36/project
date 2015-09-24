@@ -280,4 +280,9 @@ function addhttp($url) {
     }
     return $url;
 }
+
+function formatDate($value)
+{
+	return date("d M Y h:i a",strtotime($value));
+}
 ?>

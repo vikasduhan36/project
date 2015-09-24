@@ -122,6 +122,8 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_user_avail')
 	$userTimezone = getUserTimezone($user_id);
 	$current_time = convertTimezone($date,$default_tz,$userTimezone['timezone']);
 	$all = array();
+	$format_all = array();
+	
 	
 	$dayname_cr = date("l",strtotime($date_selected));
 	
@@ -172,7 +174,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_user_avail')
 		if(strtotime($time) > strtotime($current_time))
 		{
 			$all[] = date("Y-m-d H:i:s",strtotime($time));
-			
+			$format_all[] = formatDate($time);
 			if(isset($available_day[$dayname_cr]) && count($available_day[$dayname_cr])>0)
 			{
 				foreach($available_day[$dayname_cr] as $key => $value)
@@ -188,7 +190,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_user_avail')
 	}
 	
 		
-	echo json_encode(array('all'=>array_unique($all),'available'=>array_unique($available)));
+	echo json_encode(array('all'=>array_unique($all),'format_all'=>array_unique($format_all),'available'=>array_unique($available)));
 }
 else if(isset($_POST['action']) && $_POST['action'] == 'submit_book_schedule')
 {
@@ -887,7 +889,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_public_request')
 	$sql  .= " s.tag_id,u.fname,u.lname,u.profile_image ";
 	$sql  .= ", ( SELECT name FROM categories WHERE id = s.category_id) as category "; 
 	$sql  .= " FROM sessions as s LEFT JOIN users as u ON(s.user_id = u.id)";
-	$sql  .= " WHERE s.status = '1' and s.exp_hired='0' and s.type='request' ".$condition." ";
+	$sql  .= " WHERE s.status = '1' and s.exp_hired='0' and s.type='request' ".$condition." ORDER BY s.id DESC";
 
 	$query = mysql_query($sql) or die(mysql_error());
 	if($query)

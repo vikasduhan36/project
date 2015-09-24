@@ -45,7 +45,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 								{
 									?>
 										
-										<a href="javascript:void(0);" class="sess_btn canceled_btn">Canceled</a>
+										<a href="javascript:void(0);" class="sess_btn canceled_btn  Acceptbtn disable_button">Canceled</a>
 									<?php
 								}
 								else if($session_detail[0]['type'] == 'schedule' && $session_detail[0]['exp_applied_id'] == $_SESSION['LoginUserId'])
@@ -53,28 +53,28 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 									if($session_detail[0]['status'] == '2')
 									{
 										?>
-										<a href="javascript:void(0);" class="sess_btn">Scheduled</a>
+										<a href="javascript:void(0);" class="sess_btn  Acceptbtn disable_button">Scheduled</a>
 										<?php
 									}
 									else if($session_detail[0]['exp_reschedule'] == '1')
 									{
 										?>
 										
-										<a href="javascript:void(0);" class="sess_btn waitbtn">Waiting for reply</a>
+										<a href="javascript:void(0);" class="sess_btn waitbtn  Acceptbtn disable_button">Waiting for reply</a>
 										<?php
 									}
 									else if($session_detail[0]['exp_reschedule'] == '0' && $session_detail[0]['user_reschedule'] == '1' )
 									{
 										?>
 										
-										<a href="<?php echo $root.'session_accept.php?id='.$session_id;?>" class="btn1 proceedbtn">Accept Reschedule<i class="fa fa-angle-double-right"></i></a>
+										<a href="<?php echo $root.'session_accept.php?id='.$session_id;?>" class="btn1 proceedbtn  Acceptbtn">Accept Reschedule<i class="fa fa-angle-double-right"></i></a>
 										<?php
 									}
 									else 
 									{
 										?>
 										
-										<a href="<?php echo $root.'session_accept.php?id='.$session_id;?>" class="btn1 proceedbtn">Accept<i class="fa fa-angle-double-right"></i></a>
+										<a href="<?php echo $root.'session_accept.php?id='.$session_id;?>" class="btn1 proceedbtn  Acceptbtn ">Accept<i class="fa fa-angle-double-right"></i></a>
 										<?php
 									}
 								}
@@ -84,19 +84,19 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 									{
 										?>
 										
-										<a href="javascript:void(0);" class="sess_btn">Scheduled</a>
+										<a href="javascript:void(0);" class="sess_btn Acceptbtn disable_button">Scheduled</a>
 										<?php
 									}
 									else if($session_detail[0]['exp_reschedule'] == '0')
 									{
 										?>
-										<a href="javascript:void(0);" class="sess_btn waitbtn">Waiting for reply</a>
+										<a href="javascript:void(0);" class="sess_btn waitbtn  Acceptbtn disable_button">Waiting for reply</a>
 										<?php
 									}
 									else if($session_detail[0]['exp_reschedule'] == '1')
 									{
 										?>
-										<a href="<?php echo $root.'session_accept.php?id='.$session_id;?>" class="btn1 proceedbtn">Accept Reschedule<i class="fa fa-angle-double-right"></i></a>	
+										<a href="<?php echo $root.'session_accept.php?id='.$session_id;?>" class="btn1 proceedbtn  Acceptbtn">Accept Reschedule<i class="fa fa-angle-double-right"></i></a>	
 										<?php
 									}
 								}

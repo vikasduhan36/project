@@ -51,7 +51,7 @@
 			<div class="SessionMsg" style="display:table;"><!-- Session Message -->
             	<div class="sessiontext">
                 	
-                	<p>Your session will start at: <?php echo $datetime;?><a href="<?php echo $root?>user_sessions.php?tab=schedule">Return to dashboard</a></p>	
+                	<p>Your session will start at: <?php echo formatDate($datetime);?><a href="<?php echo $root?>user_sessions.php?tab=schedule">Return to dashboard</a></p>	
                 </div>
             </div><!-- Session Message -->
              </div><!-- ALL SCREEN OUTER -->

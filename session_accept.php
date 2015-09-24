@@ -52,7 +52,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 								foreach($time_request as $req)
 								{
 									$request = convertTimezone($req,$default_tz,$userTimezone['timezone']);
-									echo "<div class='timeslot2'><input type='checkbox' name='slot' value='".$request."'>".$request."</div>";
+									echo "<div class='timeslot2'><input type='checkbox' name='slot' value='".$request."'>".formatDate($request)."</div>";
 								}
 								?>
 								<div class="Mrg30 clearfix">

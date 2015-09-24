@@ -32,7 +32,7 @@ $get_avail = getDetail($field,$table,$condition);
                         
                         <div class="schedulemain">
                             <p>Tip: You can add multiple available hours per day by clicking 'Add more available hours' below<br/><br/>
-							<strong>Your timezone is set to <?php echo $userTimezone['abbrevation'];?></strong><br/>
+							<strong>Your timezone is set to "<?php echo $userTimezone['name'];?>"</strong><br/>
 							</p>
                          	
                            

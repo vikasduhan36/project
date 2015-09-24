@@ -319,11 +319,11 @@ $(document).ready(function(){
 			$.each($(".slot_selected:checked"),function(){
 				if($.trim($(this).val()) != '')
 				{
-					datetime_html += '<li>'+$(this).val()+'</li>';
+					datetime_html += '<li>'+$(this).attr('alt')+'</li>';
 				}
 				
 			});
-			console.log(datetime_html);
+			//console.log(datetime_html);
 			if(datetime_html == '')
 			{
 				datetime_html = '<li>Experts will propose possible dates for this session.</li>';
@@ -931,12 +931,12 @@ function getUserAvailability(user_id,date)
 				
 				if((response.all).length == 0)
 				{
-					$("#notification").addClass("error").removeClass("success").text("Please select next day.").show();
+					$("#notification").addClass("error").removeClass("success").text("No time slots available. Please select another day.").show();
 			
 					$('html, body').animate({
 							scrollTop: $("#notification").offset().top
 					}, 800);
-						
+						$('#display_slot').fadeOut(function(){$(this).html('').fadeIn()});
 					return false;
 				}
 				$.each(response.all,function(key,value){
@@ -954,7 +954,7 @@ function getUserAvailability(user_id,date)
 						html += '</ul><ul class="timelist" >';
 					}
 					//html += "<div class='"+avail_class+"'><input type='checkbox' name='slot_selected[]' class='slot_selected' value='"+value+"'>"+value+"</div>"
-					html += '<li><input type="checkbox" id="t'+i+'"  name="slot_selected[]" class="slot_selected" value="'+value+'"/>';
+					html += '<li><input type="checkbox" id="t'+i+'"  name="slot_selected[]" class="slot_selected" value="'+value+'" alt="'+response.format_all[key]+'"/>';
                     html += '<label class="checkbox '+avail_class+'" for="t'+i+'">';
 					html += '<img src="images/check.png" alt="check" />'+formatAMPM(value)+'</label></li>';
 					i++;

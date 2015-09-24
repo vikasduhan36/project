@@ -34,7 +34,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 						if(empty($_GET['tab']) || (isset($_GET['tab']) && $_GET['tab'] == 'schedule'))
 						{
 							$sql = " SELECT s.id as s_id,s.title,s.session_datetime, s.status,s.duration,s.video_duration, u.fname,u.lname FROM sessions as s LEFT JOIN users as u ";
-							$sql .= " ON(s.user_id = u.id) WHERE exp_applied_id='".$_SESSION['LoginUserId']."' ORDER BY s.id DESC ";// and s.status='2'
+							$sql .= " ON(s.user_id = u.id) WHERE exp_applied_id='".$_SESSION['LoginUserId']."' and s.status IN ('2','3') ORDER BY s.id DESC ";// and s.status='2'
 
 							$query = mysql_query($sql) or die(mysql_error());
 							
@@ -52,7 +52,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 										<div class="col-xs-12 col-sm-2 col-xss-2"><h5>
 										<?php 
 										$datetime = convertTimezone($fetch['session_datetime'],$default_tz,$userTimezone['timezone']);
-										echo $datetime;
+										echo formatDate($datetime);
 										?></h5></div>
 											<?php
 										if($fetch['status'] == '3')
