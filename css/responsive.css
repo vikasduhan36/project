@@ -1,6 +1,8 @@
 @media (min-width:992px) and (max-width:1199px){
 /*-- ACCOUNT PAGE --*/
 .midsection .right_main{padding-left:0;}
+/*-- TAG PAGE --*/
+.tagsection .MainTagsOtr ul li{width:50%;}
 }
 
 @media (max-width:991px){
@@ -18,6 +20,14 @@ footer.footer .ft_blks .qlinkslist li{margin:0 20px;}
 .myaccountinfo .infoblks .infolist li .editlink{font-size:11px; white-space:nowrap;}
 /*-- BROWSE EXPERT PAGE --*/
 .browsemain .listcont .bookfree{margin-top:25px;}
+/*-- TAG PAGE --*/
+.tagsection .MainTagsOtr ul li{width:50%;}
+.tagsection .MainTagsOtr ul li a{height:80px;}
+}
+
+@media (min-width:768px) and (max-width:991px){
+/*-- TAG PAGE --*/
+.tagsection .MainTagsOtr ul li a{height:80px;}
 }
 
 @media (min-width:768px){
@@ -92,6 +102,9 @@ footer.footer .ft_blks .qlinkslist li{margin-bottom:15px;}
 .expertsection .expertreviews .reviewblk .imgblk{position:relative; display:block; height:50px; width:50px;}
 .expertsection .expertreviews .reviewblk .imgblk img{min-height:50px; min-width:50px;}
 .expertsection .exprtrating{padding-left:15px;}
+/*-- TAG PAGE --*/
+.tagsection .MainTagsOtr ul li{width:100%;}
+.tagsection .MainTagsOtr ul li a{height:auto;}
 }
 
 @media (min-width:480px) and (max-width:559px){

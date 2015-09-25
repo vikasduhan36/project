@@ -731,3 +731,22 @@ header.sessionheader{background-color:#fff; position:relative;}
 .financeOtr .financeblks h2{font-size:24px; font-family:'roboto_condensedregular'; color:#222; margin:0 0 20px;}
 .financeOtr hr{border-color:#e7e7e7;}
 /*====================== FINANCE PAGE ======================*/
+/*====================== ABOUT PAGE ======================*/
+.aboutsection{}
+.aboutsection h2{font-size:30px; padding:0 0 20px; border-bottom:1px solid #f5f5f5; margin-bottom:15px; font-family:'roboto_condensedregular';}
+.aboutsection p{font-size:15px; line-height:25px; color:#777; margin-bottom:10px;}
+.aboutsection .abtblk{margin-top:30px;}
+.aboutsection .abtblk h4{margin-bottom:10px; font-size:20px; color:#333; font-family:'roboto_condensedlight';}
+/*====================== ABOUT PAGE ======================*/
+/*====================== Popular tags PAGE ======================*/
+.tagsection .tagsCat_list{}
+.tagsection .tagsCat_list li a{line-height:normal !important; padding:10px 15px !important; font-size:15px;}
+.tagsection .tagsCat_list li span.counts{display:block; font-size:12px; color:#777; padding-top:3px; line-height:normal; transition:all 0.3s ease-in-out 0s;}
+.tagsection .tagsCat_list li a:hover span.counts{color:#eee;}
+.tagsection .MainTagsOtr{margin-top:30px;}
+.tagsection .MainTagsOtr ul{display:table; width:100%;}
+.tagsection .MainTagsOtr ul li{width:33.33%; padding-right:15px; margin-bottom:15px; float:left;}
+.tagsection .MainTagsOtr ul li a{display:block; height:70px; overflow:hidden; padding:10px 10px; font-size:16px; font-family:'roboto_condensedregular'; background-color:#eee; border:1px solid #ccc; color:#333; border-radius:3px;}
+.tagsection .MainTagsOtr ul li a span.counts{display:block; font-size:13px; color:#333; padding-top:3px; font-family:'roboto_condensedlight'; transition:all 0.45s ease-in-out 0s;}
+.tagsection .MainTagsOtr ul li a:hover{background-color:#58bde7; border-color:#58bde7; color:#fff;}
+.tagsection .MainTagsOtr ul li a:hover span.counts{color:#fff;}
