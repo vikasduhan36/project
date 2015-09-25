@@ -158,7 +158,7 @@ if ($user_detail[0]['facebook_url']!=""){	$facebook_url = $user_detail[0]['faceb
 						
                        <li><a href="javascript:void(0);" data-toggle="modal" data-target="#accountpopup" class="singinlink">My Account</a></li>
                        <?php } ?>
-					   <li><a href="javascript:void(0);">About</a></li>
+					   <li><a href="<?php echo $root;?>about.php">About</a></li>
                     </ul>
 					<?php
 					if(isset($_SESSION['LoginUserId']))

@@ -5,10 +5,10 @@
         	<div class="col-xs-12 ft_blks text-center">
             	<h4>Quick Links</h4>
                 <ul class="qlinkslist">
-                	<li><a href="javascript:void(0);">Home</a></li>
-                    <li><a href="javascript:void(0);">About us</a></li>
+                	<li><a href="<?php echo $root;?>">Home</a></li>
+                    <li><a href="<?php echo $root;?>about.php">About us</a></li>
                     <li><a href="javascript:void(0);">The team</a></li>
-                    <li><a href="javascript:void(0);">FAQ and support</a></li>
+                    <li><a href="<?php echo $root;?>help.php">FAQ and support</a></li>
                     <li><a href="javascript:void(0);">Partnerships & opportunities</a></li>
                     <li><a href="javascript:void(0);">Press</a></li>
                     <li><a href="javascript:void(0);">Our blog</a></li>

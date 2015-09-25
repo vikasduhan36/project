@@ -28,7 +28,13 @@ $categories = getDetail($field,$table,$condition);
 										<?php
 										foreach($categories as $category)
 										{
-											echo "<option value='".$category['id']."'>".$category['name']."</option>";
+											if (isset($_GET['category']) && $_GET['cat_id']==$category['id'])
+											{
+												$selected='selected="selected"';
+											} else {
+												$selected='';
+											}
+											echo "<option value='".$category['id']."' ".$selected.">".$category['name']."</option>";
 										}
 										?>
 										</select>
