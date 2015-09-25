@@ -2,6 +2,7 @@
 require_once("config/config.php");
 	require_once 'config/dbconnection.php';
 	db_open();
+	require_once('phpInclude/function.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -72,14 +73,14 @@ label.error{
 						}
 						?>
 						
-					   <li><a href="javascript:void(0);">About</a></li>
+					   <li><a href="<?php echo $root;?>about.php">About</a></li>
                 	
                 	<?php } else {?>
                     	
                         <li><a href="javascript:void(0);" data-toggle="modal" data-target="#accountpopup" class="login_page" data-login="request">Place Request</a></li>
                         <li><a href="javascript:void(0);" data-toggle="modal" data-target="#accountpopup" class="singinlink">My Account</a></li>
                         <!--<li><a href="javascript:void(0);" data-toggle="modal" data-target="#accountpopup" class="signuplink">Signup</a></li>-->
-                        <li><a href="javascript:void(0);">About</a></li>
+                        <li><a href="<?php echo $root;?>about.php">About</a></li>
                         
                         <?php } ?>
                     </ul>
@@ -114,14 +115,22 @@ label.error{
                 </form>
                 <ul class="tagslist">
                 	<li>
-                    	<a href="javascript:void(0);">Tutors, </a>
-                    	<a href="javascript:void(0);">Doctors, </a>
+                	<?php 
+                	$field= " * ";
+                	$table = " tags " ;
+                	$condition = " AND status='1' LIMIT 0,4" ;
+                	$tags = getDetail($field,$table,$condition);
+                	foreach($tags as $key=>$value){
+                	?>
+                    	<a href="<?php echo $root."experts.php?tags=".$tags[$key]['short_name']."&tag_id=".$tags[$key]['id']."&search_type=tag";?>"><?php echo $tags[$key]['name']?>, </a>
+                    	<!-- <a href="javascript:void(0);">Doctors, </a>
                         <a href="javascript:void(0);">Plumbers, </a>
                         <a href="javascript:void(0);">Electricions, </a>
-                        <a href="javascript:void(0);">Mechanics, </a>
+                        <a href="javascript:void(0);">Mechanics, </a> -->
+                        <?php } ?>
                         <span> whatever you need help with. Just Ask!</span>
                     </li>
-                    <li><a href="javascript:void(0);">See More Popular <i class="fa fa-angle-double-right"></i></a></li>
+                    <li><a href="<?php echo $root;?>popular_tags.php">See More Popular <i class="fa fa-angle-double-right"></i></a></li>
                 </ul>
             </div>
             
