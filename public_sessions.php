@@ -32,7 +32,7 @@ $(document).ready(function(){
                                 </div> 
                             </div>
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
                         	<div class="col-xs-12">
                             	<span class="pull-right sortbyOtr">
                                 	<label>Sort By:</label>
@@ -46,7 +46,7 @@ $(document).ready(function(){
                                 </span>
                             </div>
                         </div>
-                        <hr/>
+                        <hr/> -->
                         <div id="serach_public_result"><!-- // BROWSE PUBLIC LIST // -->
                     </div>
                     </section><!-- // BROWSER EXPERTS MAIN // -->
