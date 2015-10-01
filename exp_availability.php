@@ -5,7 +5,7 @@ require_once 'phpInclude/header.php';
 $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 $field = "`from`,`to`";
 $table = "user_availability";
-$condition = "and user_id = '".$_SESSION['LoginUserId']."' and `to` >='".$date."' ";
+$condition = "and user_id = '".$_SESSION['LoginUserId']."'  "; //and `to` >='".$date."'
 $get_avail = getDetail($field,$table,$condition);
 
 ?>
@@ -42,8 +42,10 @@ $get_avail = getDetail($field,$table,$condition);
                             <section class="ChooseDatesCont availability_outer" ><!-- CHOOSE DATE CONTAINER -->
                                 
                             <?php
+							
 						if(count($get_avail)>0)
 						{
+							
 							foreach($get_avail as $avail)
 							{
 								

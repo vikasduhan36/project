@@ -10,7 +10,7 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 
 $field = " u.id,u.exp_about,u.exp_rate,u.fname,u.lname,u.profile_image,u.language_id ";
 $table = "session_time as st LEFT JOIN users as u ON(st.user_id=u.id) ";
-$condition 	= "and st.session_id='".$session_id."' and st.user_id NOT IN('".$_SESSION['LoginUserId']."','".$session_detail[0]['user_id']."') GROUP BY st.user_id ";
+$condition 	= "and st.session_id='".$session_id."' and st.user_id NOT IN('".$session_detail[0]['user_id']."') GROUP BY st.user_id ";//'".$_SESSION['LoginUserId']."',
 $applied_detail = getDetail($field,$table,$condition);
 
 
@@ -98,13 +98,13 @@ $applied_detail = getDetail($field,$table,$condition);
                                                 </ul>
 											-->	
 											<?php
-											if($session_detail[0]['status'] == '2' && $session_detail[0]['exp_applied_id'] == $applied['id'])
+											if($session_detail[0]['status'] == '2' && $session_detail[0]['exp_applied_id'] == $applied['id']  && $GLOBALS['is_expert'] != 1)
 											{
 											?>
                                             	<a class="bookme_btn apply_btn" href="javascript:void(0);">Booked </a>
 											<?php
 											}
-											else if($session_detail[0]['status'] == '1')
+											else if($session_detail[0]['status'] == '1' && $GLOBALS['is_expert'] != 1)
 											{
 												?>
 												<a class="bookme_btn apply_btn" href="<?php echo $root.'public_accept.php?id='.$session_id.'&exp='.$applied['id'];?>">Accept </a>

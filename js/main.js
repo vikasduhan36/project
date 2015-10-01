@@ -651,15 +651,24 @@ $(document).ready(function(){
 				
 			},
 			success:function(response){
-				
+				var selected = [];
+				$.each($("#tag_selected").find("[name='tag_selected[]']"),function(){
+					selected.push($(this).val());
+				});
+
 				if(response.status == 'success')
 				{
 					var html = '';
 					$.each(response.result,function(key,value){
-						
-						html += '<li><a href="javascript:void(0);" class="select_tag '+session_public+'" data-id="'+value.id+'" >'+value.name+'</a></li>';
+						if($.inArray(value.id,selected) == "-1")
+						{
+							html += '<li><a href="javascript:void(0);" class="select_tag '+session_public+'" data-id="'+value.id+'" >'+value.name+'</a></li>';
+						}
 					});
-					
+					if(html == '')
+					{
+						html = '<li><a href="javascript:void(0);">No tags found.</a></li>';
+					}
 					tag_result.html(html);
 				}
 				else
@@ -702,12 +711,21 @@ $(document).ready(function(){
 				
 				if(response.status == 'success')
 				{
+					var selected = [];
+					$.each($("#language_selected").find("[name='language_selected[]']"),function(){
+						selected.push($(this).val());
+					});
 					var html = '';
 					$.each(response.result,function(key,value){
-						
-						html += '<li ><a href="javascript:void(0);" class="select_language '+session_public+'" data-id="'+value.id+'" >'+value.name+'</a></li>';
+						if($.inArray(value.id,selected) == "-1")
+						{
+							html += '<li ><a href="javascript:void(0);" class="select_language '+session_public+'" data-id="'+value.id+'" >'+value.name+'</a></li>';
+						}
 					});
-					
+					if(html == '')
+					{
+						html = '<li><a href="javascript:void(0);">No language found.</a></li>';
+					}
 					language_result.html(html);
 				}
 				else

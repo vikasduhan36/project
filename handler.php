@@ -564,7 +564,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_public')
 
 		//to expert
 		$subject = "Reschedule Request";
-		$body = "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>You have been requested for resvhedule by user <b>".$get_user[0]['fname']." ".$get_user[0]['lname']."</b> for public session <b>".$get_session[0]['title']."</b>.</p>";
+		$body = "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>You have been requested for reschedule by user <b>".$get_user[0]['fname']." ".$get_user[0]['lname']."</b> for public session <b>".$get_session[0]['title']."</b>.</p>";
 		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'>TO view the session detail, Click on the link below:</p>";
 		$body .= "<p style='font-size:12px; margin:0; margin-bottom:20px; line-height:normal;'><a href='".$root."public_request.php?id=".$session_id."'>".$root."public_request.php?id=".$session_id."</a></p>";
 		$emailTo = $get_exp[0]['email'];

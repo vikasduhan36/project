@@ -1,26 +1,26 @@
 1-login check on different pages .
 
-2-Without any serach parameter no result found.
+2-Without any serach parameter no result found.  //DONE
 
-3-Expert name not showing on browse expert page.
+3-Expert name not showing on browse expert page. //DONE
 
 4- Description not showing on browse expert page and search on description text.//done
 
 5-Social icon values on browse expert page.//done
 
-6-Multiple select tags and languages issue,select only once .
+6-Multiple select tags and languages issue,select only once .  //DONE
 
 7-Share on social icons on schedule_confirmed page after successfull schedules session.//done
 
 8-date fromat on public_sessions.php page and also check requested by (name not showing).//done
 
-9-Not to apply on own session.
+9-Not to apply on own session. //DONE
 
-10-Expert compulsory on apply check to.
+10-Expert compulsory on apply check to.//DONE
 
 11 - remove sorting om public_sessions.php page//done
 
-12-once accepted public request ,not to show accept Button again on public_accept.php page.
+12-once accepted public request ,not to show accept Button again on public_accept.php page.//DONE
 
 13- Logo not showing propoerly in mail in public request.//done
 
@@ -34,4 +34,6 @@
 
 18-Question mark showing un footer section before 2015.
 
-19- Expert availability issue on exp_availability.php
+19- Expert availability issue on exp_availability.php   //DONE
+
+public request, user datetime default show to other expert after rescheduling to other user, currently deleting all other.

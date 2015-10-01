@@ -37,7 +37,7 @@ require_once("phpInclude/header.php");
                                 <li>You can enter your session by clicking "Enter Session" on the session pages (always be there 5-10 min earlier)</li>
                             </ol>
                             <h6>What's Next?</h6>
-                            <a href="<?php echo $root;?>" class="gohome_btn proceedbtn btn1">Go Back To Home Page <i class="fa fa-home"></i></a>
+                            <a href="<?php echo $root;?>account.php" class="gohome_btn proceedbtn btn1">Go Back To Home Page <i class="fa fa-home"></i></a>
                         </div><!-- CONFIRMATION CONTAINER -->
                     </div>
                     

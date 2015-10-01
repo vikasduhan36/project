@@ -43,7 +43,7 @@ $categories = getDetail($field,$table,$condition);
                                     <h5>Tags <i class="fa fa-angle-down"></i></h5>
 									<ul class="taglist" id="tag_search_ui">
 									<?php 
-									if (isset($_GET['tags']) && $_GET['search_type']=="tag")
+									if (isset($_GET['tags']) && !empty($_GET['tags']) && $_GET['search_type']=="tag")
 									{
 									?>
 									<li><?php echo trim($_GET['tags']);?><a href="javascript:void(0);" class="remove_tag" alt="<?php echo trim($_GET['tag_id']);?>"><i class="fa fa-times"></i></a></li>
@@ -80,7 +80,7 @@ $categories = getDetail($field,$table,$condition);
 				
 				<div id="tag_selected">
 				<?php 
-				if (isset($_GET['tags']) && $_GET['search_type']=="tag")
+				if (isset($_GET['tags']) && !empty($_GET['tags']) && $_GET['search_type']=="tag")
 				{
 				?>
 				<input type="hidden" name="tag_selected[]" value="<?php echo trim($_GET['tag_id']);?>">

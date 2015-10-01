@@ -8,9 +8,14 @@
 		$exp = $_GET['exp'];
 	}
 $field = " sessions.*,u.fname,u.lname,u.profile_image, (select GROUP_CONCAT(datetime) FROM session_time WHERE session_time.session_id=sessions.id ";
+
 if(!empty($exp))
 {
 	$field .= " and session_time.user_id='".$exp."' ";
+}
+else
+{
+	$field .= " and session_time.user_id=sessions.user_id ";
 }
 $field .= " ) as time_request ";
 $table = "sessions LEFT JOIN users as u ON(sessions.user_id=u.id) ";
@@ -18,6 +23,8 @@ $condition 	= "and sessions.id='".$session_id."' ";
 $session_detail = getDetail($field,$table,$condition);
 $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 
+$sql = " SELECT id FROM session_time WHERE session_time.session_id='".$session_id."' and session_time.user_id = '".$_SESSION['LoginUserId']."' and session_time.user_id != '".$session_detail[0]['user_id']."' ";
+$is_app = mysql_num_rows(mysql_query($sql));
 ?>
 <form id="form_accept_public">
 <input type="hidden" name="exp_hired" value="<?php echo $exp;?>">
@@ -59,29 +66,31 @@ $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 								
 								if(!empty($time_request[0]))
 								{
+								
+					if($session_detail[0]['status'] == '1' && $is_app == 0)
+					{
 								foreach($time_request as $req)
 								{
 									$request = convertTimezone($req,$default_tz,$userTimezone['timezone']);
 									if(!empty($exp))
 									{
-										echo "<div><input type='checkbox' name='slot' value='".$request."'>".$request."</div>";
+										echo "<div><input type='checkbox' name='slot' value='".$request."'>".formatDate($request)."</div>";
 									}
 									else if($session_detail[0]['user_id'] != $_SESSION['LoginUserId'])
 									{
-										echo "<div><input type='checkbox' name='slot[]' value='".$request."'>".$request."</div>";
+										echo "<div><input type='checkbox' name='slot[]' value='".$request."'>".formatDate($request)."</div>";
 									}
 								}
-								?>
 								
-								<a class="Acceptbtn bookme_btn apply_btn request_slot public <?php if(!empty($exp)){echo 'exp_hired';}?>" href="javascript:void(0);">Accept </a>
-								
-								
-								
-								<a class="Acceptbtn alternate_btn bookme_btn apply_btn" id="alternative_dates" href="javascript:void(0);">Request Alternative time</a>
-								<?php
+				 
+					?>		
+					<a class="Acceptbtn bookme_btn apply_btn request_slot public <?php if(!empty($exp)){echo 'exp_hired';}?>" href="javascript:void(0);">Accept </a>
+					<a class="Acceptbtn alternate_btn bookme_btn apply_btn" id="alternative_dates" href="javascript:void(0);">Request Alternative time</a>
+					<?php
+				}				
 								}
 								?>
- <section class="ChooseDatesCont" id="public_select_date" style="display:<?php if(empty($time_request[0])){echo 'block';}else{echo 'none';}?>;"><!-- CHOOSE DATE CONTAINER -->
+								<section class="ChooseDatesCont" id="public_select_date" style="display:<?php if(empty($time_request[0])){echo 'block';}else{echo 'none';}?>;"><!-- CHOOSE DATE CONTAINER -->
                                 <p><strong class="txt_lt_it">Select at least 1 (preferably 3) time slots that suit you.</strong><br/><small>(All times are in your selected timezone 
 								"<?php
 								$timezone = getUserTimezone($_SESSION['LoginUserId']);
