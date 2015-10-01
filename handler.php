@@ -798,7 +798,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')
 	}
 	
 	
-	$sql  = " SELECT SQL_CALC_FOUND_ROWS u.exp_tag_id,u.id,u.language_id, u.fname,u.lname, u.profile_image, u.city,u.country_id,u.exp_about,u.exp_rate, ";
+	$sql  = " SELECT SQL_CALC_FOUND_ROWS u.exp_tag_id,u.id,u.language_id, u.fname,u.lname, u.profile_image, u.city,u.country_id,u.exp_about,u.exp_rate,u.exp_description, ";
 	$sql .= " ( SELECT name FROM categories WHERE id = u.exp_category_id) as category "; 
 	//$sql .= " ( SELECT GROUP_CONCAT(name) FROM languages WHERE id IN(l_id)) as language, "; 
 	$sql .= " , ( SELECT wished_id FROM wishlist WHERE  user_id='".$user_id."' and wishlist.wished_id=u.id)as wished "; 
@@ -1337,11 +1337,11 @@ if(isset($_POST['action']) && $_POST['action']=="expert_info")
 	$category  				= mysql_real_escape_string(trim($_POST['category']));
 	$hourly_rate			= mysql_real_escape_string(trim($_POST['hourly_rate']));
 	$profile_url  			= mysql_real_escape_string(trim($_POST['profile_url']));
-	$uname = explode("/",$profile_url);
-	$uname = $uname[1];
+	//$uname = explode("/",$profile_url);
+	//$uname = $uname[1];
 	/* check if profile username is alreday exists or not  */
 	//echo "SELECT count(id) as num from users WHERE profile_url='".$uname."' AND id!='".$_SESSION['LoginUserId']."' ";
-	$check_url=mysql_query("SELECT count(id) as num from users WHERE profile_url='".$uname."' AND id!='".$_SESSION['LoginUserId']."' ");
+	$check_url=mysql_query("SELECT count(id) as num from users WHERE profile_url='".$profile_url."' AND id!='".$_SESSION['LoginUserId']."' ");
 	$rec=mysql_fetch_assoc($check_url);
 	if(trim($rec['num'])==0)
 	{
@@ -1368,7 +1368,7 @@ if(isset($_POST['action']) && $_POST['action']=="expert_info")
 			$languages = "";
 		}
 		$update_pass = "UPDATE users set exp_description='".$short_description."',exp_help='".$help_offered."',exp_category_id='".$category."' ,";
-		$update_pass .= " exp_tag_id='".$languages."',exp_rate='".$hourly_rate."',profile_url='".$uname."' WHERE id='".$user_id."' ";
+		$update_pass .= " exp_tag_id='".$languages."',exp_rate='".$hourly_rate."',profile_url='".$profile_url."' WHERE id='".$user_id."' ";
 		$update_query = mysql_query($update_pass);
 		if($update_query)
 		{

@@ -1030,7 +1030,7 @@ html += '<li><a href="javascript:void(0);">'+tag_val+'</a></li>';
 //html += '<li><a href="javascript:void(0);">+ 3 more...</a></li>';
 html += '</ul>';
 }
-html += '<p>'+value.exp_about+'</p>';
+html += '<p>'+value.exp_description+'</p>';
 html += '</div><div class="col-xs-12 col-md-4 col-lg-3">';
 if($.trim($("#hidden_user_id").text()) == '')
 	{

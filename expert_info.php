@@ -116,8 +116,8 @@ if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){
                                 <li>
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Profile URL</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
-                                    	<span class="value">www.eyeask.com/<?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $profile_url;}?></span>
-                                        <input type="text" value="eyeask.com/<?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $profile_url;}?>" name="profile_url" class="form-control valuefield" style="display:none;" value="<?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $profile_url;}?>"/>
+                                    	<span class="value"><?php echo $root;?><?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $profile_url;}?></span>
+                                        <input type="text" value="<?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $profile_url;}?>" name="profile_url" class="form-control valuefield" style="display:none;" />
                                     </div>
                                     <div class="col-xs-12 col-xss-2 col-sm-2">
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
