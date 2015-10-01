@@ -48,7 +48,7 @@ require_once 'phpInclude/header.php';
                             </ul>
                            <!--  <a href="javascript:void(0);" class="submitbtn btn1">Submit <i class="fa fa-check"></i></a> -->
                            <input type="hidden" value="update_email" name="action"/>
-                        <button type="submit" class="submitbtn btn1">Submit <i class="fa fa-check"></i></button>
+                        <!-- <button type="submit" class="submitbtn btn1">Submit <i class="fa fa-check"></i></button> -->
                         </div><!-- Account information -->
                         </form>
                         

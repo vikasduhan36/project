@@ -1000,11 +1000,11 @@ html += '<div class="socialdrop">';
 html += '<a href="javascript:void(0);" class="dropicon"><i class="fa fa-ellipsis-v"></i></a>';
 
 html += '<div class="hovertip"><ul class="shareTip">';
-html += '<li><a href="javascript:void(0);" data-toggle="tooltip" title="Facebook" class="FB_bg"><i class="fa fa-facebook"></i></a></li>';
-html += '<li><a href="javascript:void(0);" data-toggle="tooltip" title="Twitter" class="TW_bg"><i class="fa fa-twitter"></i></a></li>';
-html += '<li><a href="javascript:void(0);" data-toggle="tooltip" title="Google +" class="GPlus_bg"><i class="fa fa-google-plus"></i></a></li>';
-html += '<li><a href="javascript:void(0);" data-toggle="tooltip" title="Linkedin" class="LKN_bg"><i class="fa fa-linkedin"></i></a></li>';
-html += '<li><a href="javascript:void(0);" data-toggle="tooltip" title="Website" class=""><i class="fa fa-home"></i></a></li>';
+html += '<li><a href="'+value.facebook_url+'" data-toggle="tooltip" title="Facebook" class="FB_bg" target="_blank"><i class="fa fa-facebook"></i></a></li>';
+html += '<li><a href="'+value.twitter_url+'" data-toggle="tooltip" title="Twitter" class="TW_bg" target="_blank"><i class="fa fa-twitter"></i></a></li>';
+html += '<li><a href="'+value.google_url+'" data-toggle="tooltip" title="Google +" class="GPlus_bg" target="_blank"><i class="fa fa-google-plus"></i></a></li>';
+html += '<li><a href="'+value.linkedin_url+'" data-toggle="tooltip" title="Linkedin" class="LKN_bg" target="_blank"><i class="fa fa-linkedin"></i></a></li>';
+html += '<li><a href="javascript:void(0);" data-toggle="tooltip" title="Website" class="" target="_blank"><i class="fa fa-home"></i></a></li>';
 html += '</ul>';
 html += '</div>';
 html += '</div>';

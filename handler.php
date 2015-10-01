@@ -798,7 +798,7 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')
 	}
 	
 	
-	$sql  = " SELECT SQL_CALC_FOUND_ROWS u.exp_tag_id,u.id,u.language_id, u.fname,u.lname, u.profile_image, u.city,u.country_id,u.exp_about,u.exp_rate,u.exp_description, ";
+	$sql  = " SELECT SQL_CALC_FOUND_ROWS u.exp_tag_id,u.id,u.language_id, u.fname,u.lname, u.profile_image, u.city,u.country_id,u.exp_about,u.exp_rate,u.exp_description,u.linkedin_url,u.twitter_url,u.google_url,u.facebook_url, ";
 	$sql .= " ( SELECT name FROM categories WHERE id = u.exp_category_id) as category "; 
 	//$sql .= " ( SELECT GROUP_CONCAT(name) FROM languages WHERE id IN(l_id)) as language, "; 
 	$sql .= " , ( SELECT wished_id FROM wishlist WHERE  user_id='".$user_id."' and wishlist.wished_id=u.id)as wished "; 
