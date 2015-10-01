@@ -1217,7 +1217,7 @@ if(isset($_POST['action']) && $_POST['action']=="personal_details")
 	}else {
 		$languages = "";
 	}
-	$update_pass = "UPDATE users set username='".$full_name."',city='".$city."',country_id='".$country."' ,phone='".$phone."',";
+	$update_pass = "UPDATE users set username='".$full_name."',fname='".$full_name."',city='".$city."',country_id='".$country."' ,phone='".$phone."',";
 	$update_pass .= " dob='".$dateofbirth."',language_id='".$languages."',timezone_id='".$timezone."' WHERE id='".$user_id."' ";
 	$update_query = mysql_query($update_pass);
 	if($update_query)
