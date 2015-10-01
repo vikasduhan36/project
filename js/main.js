@@ -1137,7 +1137,9 @@ function search_public_request(datastring)
 				{
 				
 				$.each(response.result,function(key,value){
-					
+					var now = value.created;
+
+					//alert(dateFormat(now, "m-d-yy"));
                         html += '<div class="listcont browserreqlist"><div class="row">';
                         html += '<div class="col-xs-12"><h2><a href="'+root+'session_request.php?id='+value.id+'">'+value.title+'</a></h2>';
 						html += '<p>'+value.description+'</p>';
@@ -1159,7 +1161,7 @@ function search_public_request(datastring)
 						html += '<div class="expertinforow"><span class="expertimg">';
 						html += '<img src="'+profile_image+'" alt="expert1" class="img-responsive"/></span>';
 						html += '<ul>';
-						html += '<li><i class="fa fa-user"></i> Requested by : <span>'+value.fname+' '+value.lname+'</span> '+value.created+'</li>';
+						html += '<li><i class="fa fa-user"></i> Requested by : <span>'+value.fname+' '+value.lname+'</span> '+dateFormat(now, "m/d/yy")+'</li>';
 						html += '<li><i class="fa fa-globe"></i>'+value.language+'</li>';
 						html += '</ul>';
 						html += '<a href="'+root+'public_accept.php?id='+value.id+'" class="bookme_btn apply_btn">Apply </a>';

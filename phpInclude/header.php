@@ -31,6 +31,7 @@ var root = "<?php echo $root;?>";
 <script type="text/javascript" src="<?php echo $root;?>js/jquery.form.js"></script>
 <script type="text/javascript" src="<?php echo $root;?>js/gplus.js"></script>
 <script type="text/javascript" src="<?php echo $root;?>js/google_social.js"></script>
+<script type="text/javascript" src="<?php echo $root;?>js/dateFormat.js"></script>
 <script src="<?php echo $root;?>js/main.js"></script>
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
