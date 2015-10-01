@@ -257,7 +257,7 @@ function schedulingMail($fromMail,$emailTo,$subject,$body,$root)
 
 	$body ="<html>
 	<div style='width:560px; height:auto; margin:0 auto;'>
-	<div style='text-align:center; padding-bottom:10px;'><img src='".$root."images/eyeask1.png' alt='logo' wisth='200px'/></div>
+	<div style='text-align:center; padding-bottom:10px;'><img src='".$root."images/eyeask2.png' alt='logo' wisth='200px'/></div>
 	<div style='float:left; background:#F0FAFF; border: 1px solid #006F9D; margin:0; padding:20px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; font-size:13px; color:#221E1F; font-family:Arial, Helvetica, sans-serif; width:560px;'>
 	<p style='font-size:12px; margin:0; margin-bottom:10px; line-height:normal;'>".$subject.",</p>
 	 ".$body."
