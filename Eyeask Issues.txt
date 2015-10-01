@@ -4,29 +4,29 @@
 
 3-Expert name not showing on browse expert page.
 
-4- Description not showing on browse expert page and search on description text.
+4- Description not showing on browse expert page and search on description text.//done
 
-5-Social icon values on browse expert page.
+5-Social icon values on browse expert page.//done
 
 6-Multiple select tags and languages issue,select only once .
 
-7-Share on social icons on schedule_confirmed page after successfull schedules session.
+7-Share on social icons on schedule_confirmed page after successfull schedules session.//done
 
-8-date fromat on public_sessions.php page and also check requested by (name not showing).
+8-date fromat on public_sessions.php page and also check requested by (name not showing).//done
 
 9-Not to apply on own session.
 
 10-Expert compulsory on apply check to.
 
-11 - remove sorting om public_sessions.php page
+11 - remove sorting om public_sessions.php page//done
 
 12-once accepted public request ,not to show accept Button again on public_accept.php page.
 
-13- Logo not showing propoerly in mail in public request.
+13- Logo not showing propoerly in mail in public request.//done
 
-14-Open social link profile page on click on account.php
+14-Open social link profile page on click on account.php//done
 
-15-remove submit button from Account detail section.
+15-remove submit button from Account detail section.//done
 
 16-profile url issue.on expert info page.
 
