@@ -1571,6 +1571,34 @@ $("body").on("click", ".delete_link", function() {
             }
         });
 });
+
+$("#edit_search_desc").click(function(){
+	if($(this).attr("alt") == "edit")
+	{
+		$("#text_search_desc").hide();
+		$("#input_search_desc").css("display","inline-block").focus();
+		$(this).attr({"alt":"search","title":"Search"});
+	}
+	else if($(this).attr("alt") == "search")
+	{
+		$("#text_search_desc").show();
+		$("#input_search_desc").hide();
+		$(this).attr({"alt":"edit","title":"Edit"});
+		$("[name='description']").val($("#input_search_desc").val());
+		$("#text_search_desc").html("<u>"+$("#input_search_desc").val()+"</u>");
+		var datastring = $("#form_search_expert").serialize();
+		search_expert(datastring);
+	}
+	
+});
+
+$("#input_search_desc").keyup(function(e){
+	if(e.which == 13 || e.keyCode == 13)
+	{
+		$("#edit_search_desc").trigger('click');
+	}
+});
+
 });
 
 

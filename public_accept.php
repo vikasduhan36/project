@@ -7,7 +7,27 @@
 	{
 		$exp = $_GET['exp'];
 	}
-$field = " sessions.*,u.fname,u.lname,u.profile_image, (select GROUP_CONCAT(datetime) FROM session_time WHERE session_time.session_id=sessions.id ";
+	
+$sq = " SELECT * FROM session_time WHERE session_id='".$session_id."' and session_time.user_id = '".$_SESSION['LoginUserId']."' and requested_by!='".$_SESSION['LoginUserId']."' and requested_to != '".$_SESSION['LoginUserId']."' ";
+
+$app_query = mysql_query($sq);
+$app_detail = mysql_fetch_assoc($app_query);
+$is_app =  mysql_num_rows($app_query);
+
+$sqr = " SELECT * FROM session_time WHERE session_id='".$session_id."'  and (requested_by='".$_SESSION['LoginUserId']."' OR requested_to = '".$_SESSION['LoginUserId']."') ";
+
+$rq_query = mysql_query($sqr);
+$req_detail = mysql_fetch_assoc($rq_query);
+$is_req =  mysql_num_rows($rq_query);
+
+$field = " sessions.*,u.fname,u.lname,u.profile_image, ";
+$field .= " (select GROUP_CONCAT(datetime) FROM session_time WHERE "; 
+$field .= " session_time.session_id=sessions.id ";
+
+if($GLOBALS['is_expert'] == 1 && $is_req > 0)
+{
+	$field .= " and session_time.requested_to = '".$_SESSION['LoginUserId']."' ";
+}
 
 if(!empty($exp))
 {
@@ -23,8 +43,8 @@ $condition 	= "and sessions.id='".$session_id."' ";
 $session_detail = getDetail($field,$table,$condition);
 $userTimezone = getUserTimezone($_SESSION['LoginUserId']);
 
-$sql = " SELECT id FROM session_time WHERE session_time.session_id='".$session_id."' and session_time.user_id = '".$_SESSION['LoginUserId']."' and session_time.user_id != '".$session_detail[0]['user_id']."' ";
-$is_app = mysql_num_rows(mysql_query($sql));
+
+
 ?>
 <form id="form_accept_public">
 <input type="hidden" name="exp_hired" value="<?php echo $exp;?>">
@@ -63,12 +83,24 @@ $is_app = mysql_num_rows(mysql_query($sql));
 								
 								<?php
 								$time_request = explode(",",$session_detail[0]['time_request']);
-								
-								if(!empty($time_request[0]))
-								{
-								
-					if($session_detail[0]['status'] == '1' && $is_app == 0)
-					{
+	if($GLOBALS['is_expert'] == '1' && $is_app >0 && $is_req == 0)
+	{
+	?>
+		<a class="Acceptbtn bookme_btn apply_btn disable_button " href="javascript:void(0);">Applied</a>
+		<?php
+	}
+	else if($GLOBALS['is_expert'] == '0'  && $is_req > 0)
+	{
+	?>
+		<a class="Acceptbtn bookme_btn apply_btn disable_button " href="javascript:void(0);">Waiting for reply</a>
+		<?php
+	}
+	else if($session_detail[0]['status'] == '1' )
+	{							
+		if(!empty($time_request[0]))
+		{
+			
+					//&& $is_app == 0
 								foreach($time_request as $req)
 								{
 									$request = convertTimezone($req,$default_tz,$userTimezone['timezone']);
@@ -87,8 +119,8 @@ $is_app = mysql_num_rows(mysql_query($sql));
 					<a class="Acceptbtn bookme_btn apply_btn request_slot public <?php if(!empty($exp)){echo 'exp_hired';}?>" href="javascript:void(0);">Accept </a>
 					<a class="Acceptbtn alternate_btn bookme_btn apply_btn" id="alternative_dates" href="javascript:void(0);">Request Alternative time</a>
 					<?php
-				}				
-								}
+			}				
+	}
 								?>
 								<section class="ChooseDatesCont" id="public_select_date" style="display:<?php if(empty($time_request[0])){echo 'block';}else{echo 'none';}?>;"><!-- CHOOSE DATE CONTAINER -->
                                 <p><strong class="txt_lt_it">Select at least 1 (preferably 3) time slots that suit you.</strong><br/><small>(All times are in your selected timezone 

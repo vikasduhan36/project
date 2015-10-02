@@ -18,7 +18,40 @@
                 	<section class="browsemain" ><!-- // BROWSER EXPERTS MAIN // -->
                        
                         <div class="brwstoprow">
+						<?php
+						if (isset($_GET['tags']) && empty($_GET['tag_id']) && !empty($_GET['tags']))
+						{
+						?>
+						 <div class="row">
+							<div class="col-xs-12 col-xss-12 col-sm-12">
+									
+                                    <h2>
+									Search results for <strong id="text_search_desc"><u><?php echo trim($_GET['tags']);?></u></strong>
+									
+									
+									
+									
+									<input type="text" class="form-control" id="input_search_desc" value="<?php echo trim($_GET['tags']);?>" style="width:45%;display:none;">
+									&nbsp;
+									<a href="javascript:void(0);" class="fa fa-pencil-square-o" title="Edit" id="edit_search_desc" alt="edit"></a>
+									
+									</h2>                               
+							   </div>
+							</div>
+							<!--
+							<div class="row">
+							<div class="col-xs-12 col-xss-6 col-sm-6">
+									<input type="text" class="form-control" id="input_search_desc" value="<?php echo trim($_GET['tags']);?>">
+							</div>
+							</div>
+							-->
+						<?php
+						}
+						?>						
                             <div class="row">
+							
+							
+								
                                 <div class="col-xs-12 col-xss-6 col-sm-6">
                                     <h2>Browse <strong id="expert_count"></strong> Experts</h2>
                                 </div>

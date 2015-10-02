@@ -66,7 +66,7 @@
                                	<?php
 										$field = " name ";
 										$table = "categories ";
-										$condition 	= "and id = '".$session_detail[0]['language_id']."' ";
+										$condition 	= "and id = '".$session_detail[0]['category_id']."' ";
 										$category_detail = getDetail($field,$table,$condition);
 										if(!empty($category_detail))
 										{

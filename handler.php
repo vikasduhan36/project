@@ -429,7 +429,8 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_public')
 	if($is_expert == "1")
 	{
 		$tab = "open";
-		$sql 	= " DELETE FROM session_time WHERE session_id='".$session_id."' and user_id='".$user_id."' ";
+		
+		$sql 	= " DELETE FROM session_time WHERE session_id='".$session_id."' and (user_id='".$user_id."' OR requested_to='".$user_id."') ";
 		$query 	= mysql_query($sql);
 		if($query)
 		{
@@ -538,19 +539,32 @@ else if(isset($_POST['action']) && $_POST['action'] == 'submit_accept_public')
 			}
 			else
 			{
+			/*
 				$tab = "open";
 				$sql 	= " DELETE FROM session_time WHERE session_id='".$session_id."' ";
 				$query 	= mysql_query($sql);
 				if($query)
 				{
+				*/
+				$sql = " SELECT id FROM session_time WHERE user_id='".$user_id."' and session_id='".$session_id."' and requested_to='".$exp_hired."'";
+				$is_requested = mysql_num_rows(mysql_query($sql));
+				
 					$slot_val = $slot_selected;
 					foreach($slot_val as $key => $value)
 					{
 						$datetime = convertTimezone($value,$userTimezone['timezone'],$default_tz);
-						$sql = " INSERT INTO session_time SET user_id='".$user_id."', session_id='".$session_id."', datetime='".$datetime."' ";
+						if($is_requested == 0)
+						{
+							$sql = " INSERT INTO session_time SET user_id='".$user_id."', session_id='".$session_id."', datetime='".$datetime."', requested_to='".$exp_hired."', requested_by='".$user_id."' ";
+						}
+						else
+						{
+							$sql = " UPDATE session_time SET  datetime='".$datetime."' WHERE user_id='".$user_id."' and session_id='".$session_id."' and requested_to='".$exp_hired."' ";
+						}
+						
 						$query = mysql_query($sql);
 					}
-				}
+				//}
 				
 	
 		//to user
@@ -796,7 +810,10 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')
 	{
 		$condition .= " and w.user_id = '".$user_id."' ";
 	}
-	
+	if(!empty($description))
+	{
+		$condition .= " and u.exp_description LIKE '%".mysql_real_escape_string(trim($description))."%' ";
+	}
 	
 	$sql  = " SELECT SQL_CALC_FOUND_ROWS u.exp_tag_id,u.id,u.language_id, u.fname,u.lname, u.profile_image, u.city,u.country_id,u.exp_about,u.exp_rate,u.exp_description,u.linkedin_url,u.twitter_url,u.google_url,u.facebook_url, ";
 	$sql .= " ( SELECT name FROM categories WHERE id = u.exp_category_id) as category "; 
@@ -834,6 +851,11 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_search_exp')
 				
 				$fetch['tag'] = (!empty($tags[0]['name']))?$tags[0]['name']:'';
 				$fetch['language'] = (!empty($languages[0]['name']))?$languages[0]['name']:'';
+				
+				if(!empty($description))
+				{
+					$fetch['exp_description'] = str_replace($description, "<b class='highlight'>".$description."</b>" ,$fetch['exp_description']);
+				}
 				$result[] = $fetch;
 				//$result[]
 	
@@ -889,8 +911,8 @@ else if(isset($_POST['action']) && $_POST['action'] == 'get_public_request')
 	$sql  .= " s.tag_id,u.fname,u.lname,u.profile_image ";
 	$sql  .= ", ( SELECT name FROM categories WHERE id = s.category_id) as category "; 
 	$sql  .= " FROM sessions as s LEFT JOIN users as u ON(s.user_id = u.id)";
-	$sql  .= " WHERE s.status = '1' and s.exp_hired='0' and s.type='request' ".$condition." ORDER BY s.id DESC";
-
+	$sql  .= " WHERE s.status = '1'  and s.type='request' ".$condition." ORDER BY s.id DESC";
+//and s.exp_hired='0'
 	$query = mysql_query($sql) or die(mysql_error());
 	if($query)
 	{

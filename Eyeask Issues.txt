@@ -36,4 +36,6 @@
 
 19- Expert availability issue on exp_availability.php   //DONE
 
-public request, user datetime default show to other expert after rescheduling to other user, currently deleting all other.
+20 - public request, user datetime default show to other expert after rescheduling to other user, currently deleting all other.  //DONE
+
+21 - description search //DONE
