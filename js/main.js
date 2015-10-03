@@ -1033,7 +1033,7 @@ if(value.profile_image != '')
 }
 html += '<span class="expertimg">';
 html += '<img src="'+profile_image+'" alt="expert1" class="img-responsive"/>';
-html += '</span><h4><a href="javascript:void(0);">'+value.fname+' '+value.lname+'</a></h4>';
+html += '</span><h4><a href="'+root+"expert_profile.php?id="+value.profile_url+'">'+value.fname+' '+value.lname+'</a></h4>';
 html += '<ul>';
 html += '<li><i class="fa fa-map-marker"></i> '+value.city+' '+value.country_id+'</li>';
 html += '<li><i class="fa fa-globe"></i>'+value.language+'</li>';

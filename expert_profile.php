@@ -2,7 +2,14 @@
  ////// HEADER ////// 
 require_once 'phpInclude/header.php';
 //print_r($user_detail);
-if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){
+/* echo "<pre>";
+	print_r($_GET);
+	die; */
+if (isset($_GET['id']) && $_GET['id']!=""){
+$field = " * ";
+$table = " users ";
+$condition = " AND profile_url='".trim($_GET['id'])."' ";
+$user_detail = getDetail($field,$table,$condition);
 	$short_description     	= trim($user_detail[0]['exp_description']);
 	$help_offered   		= trim($user_detail[0]['exp_help']);
 	$category  				= trim($user_detail[0]['exp_category_id']);
@@ -25,9 +32,72 @@ if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){
 	<div class="container">
     	<div class="row">
         	<div class="col-xs-12 col-sm-4 col-md-3">
-         <?php
-				require_once('phpInclude/sidebar_expert_profile.php');
-				?>
+         	<div class="sidebarnav"><!-- // SIDE BAR NAV // -->
+                	<span class="dashbar clearfix">
+                    	<i class="fa fa-dashboard"></i> Dashboard
+                        <a href="javascript:void(0);" class="togglebtn2 visible-xs" data-toggle="tooltip" title="Click me">
+                        	<i class="fa fa-circle"></i><i class="fa fa-circle"></i><i class="fa fa-circle"></i>
+                        </a>
+                    </span>
+                    <div class="toggle_db"><!-- FOR TOGGLED DASHBOARD -->
+                    <form id="imageform" method="post" enctype="multipart/form-data" action='handler.php'>
+                        <div class="accountimgblk">
+                            <span class="imgcont" id='preview'><img src="<?php echo $prof_pic;?>" alt="user" class="responsiveimg" id="output"/></span>
+                            <!-- <span class="uploadimgotr">
+                                <input type="file"  name="photoimg" id="photoimg" />
+                                <span><i class="fa fa-camera"></i> Upload Image</span>
+                            </span> -->
+                        </div>
+                        </form>
+                         <?php 
+                            $count=0;
+                            //print_r($user_detail[0]);
+                            foreach($user_detail[0] as $key => $value){//echo $key;
+                           	if($value!=""){
+                            	 $count+=5;
+                            	}
+                            } $count=$count-30;
+                             ?>
+							 <!--
+                        <div class="accountprogress">
+                            <h6 class="progresstxt">Profile completeness: <span><?php echo trim($count);?>%</span></h6>
+                            <div class="progress">
+                           
+                            	<div class="progress-bar progress-bar-striped active progress-bar-info" role="progressbar" aria-valuenow="<?php echo trim($count);?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo trim($count);?>%">
+                                <span class="sr-only"></span>
+                              </div>
+                            </div>
+                        </div>
+						-->
+                        <ul class="navlist">
+                            <li><a href="<?php echo $root.'account.php';?>" class="<?php if($pagename=='account.php'){echo 'active';}?>"><i class="fa fa-caret-right"></i> My Account</a></li>
+                            <?php /*<li><a href="
+							<?php
+							if($GLOBALS['is_expert'] == '1')
+							{
+								echo $root.'exp_sessions.php';	
+							}
+							else
+							{
+								echo $root.'user_sessions.php';	
+							}
+							?>" class="<?php if($pagename=='exp_sessions.php' || $pagename=='user_sessions.php'){echo 'active';}?>"><i class="fa fa-caret-right"></i> My Sessions</a></li>
+                            <li><a href="<?php echo $root.'wishlist.php';?>" class="<?php if($pagename=='wishlist.php'){echo 'active';}?>"><i class="fa fa-caret-right"></i> Expert Wishlist</a></li>
+							<?php
+							if($GLOBALS['is_expert'] == 1)
+							{
+							?>
+							<li><a href="<?php echo $root.'expert_info.php';?>" class="<?php if($pagename=='expert_info.php'){echo 'active';}?>"><i class="fa fa-caret-right"></i>Expert Profile</a></li>
+							<li><a href="<?php echo $root.'exp_availability.php';?>" class="<?php if($pagename=='exp_availability.php'){echo 'active';}?>"><i class="fa fa-caret-right"></i> Expert Availability</a></li>
+                            <?php
+							}
+							?>
+							<li><a href="<?php echo $root.'finance.php';?>" class="<?php if($pagename=='finance.php'){echo 'active';}?>"><i class="fa fa-caret-right"></i> Finance</a></li>
+                            <li><a href="<?php echo $root.'help.php';?>" class="<?php if($pagename=='help.php'){echo 'active';}?>"><i class="fa fa-caret-right"></i> Help</a></li>
+                            */?>
+                        </ul>					
+                    </div><!-- FOR TOGGLED DASHBOARD -->
+                </div><!-- // SIDE BAR NAV // -->
             </div>
             
             <div class="col-xs-12 col-sm-8 col-md-9">
@@ -36,22 +106,22 @@ if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){
                         <li><a href="javascript:void(0);">Home</a></li>
                         <li>Expert</li>
                     </ul>
-                    <h2 class="accountheading"><small>Become an</small> expert</h2>
+                    <!-- <h2 class="accountheading"><small>Become an</small> expert</h2> -->
                     <div id="errors"></div>
                     <div class="myaccountinfo"><!-- // MY ACCOUNT INFORMATION // -->
                         <div class="infoblks clearfix"><!-- Account information -->
-                        	<h4>Expert Detail</h4>
+                        	<h4>Short Description</h4>
                         	<form id="expert_info">
                         	<ul class="row infolist">
                             	<li>
-                                	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Short description</label></div>
-                                    <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
+                                	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label><?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $short_description;}?></label></div>
+                                   <?php /* <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
                                     	<span class="value"><?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $short_description;}?></span>
                                         <textarea class="form-control valuefield" placeholder="Short Description" style="display:none;" name="short_description"><?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $short_description;}?></textarea>
                                     </div>
-                                    <div class="col-xs-12 col-xss-2 col-sm-2">
+                                    <!-- <div class="col-xs-12 col-xss-2 col-sm-2">
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
-                                    </div>
+                                    </div> -->
                                 </li>
                                 <li>
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>How you can help out</label></div>
@@ -59,9 +129,9 @@ if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){
                                     	<span class="value"><?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $help_offered;}?></span>
                                         <textarea class="form-control valuefield" name="help_offered" placeholder="Shortly describe the services or help your offering on 24sessions. For example: Book a session with me to receive advice on..." style="display:none;"><?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $help_offered;}?></textarea>
                                     </div>
-                                    <div class="col-xs-12 col-xss-2 col-sm-2">
+                                   <!--  <div class="col-xs-12 col-xss-2 col-sm-2">
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
-                                    </div>
+                                    </div> -->
                                 </li>
                                 <li>
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Area of expertise</label></div>
@@ -85,9 +155,9 @@ if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){
                                         <?php } ?>
                                         </select>
                                     </div>
-                                    <div class="col-xs-12 col-xss-2 col-sm-2">
+                                    <!-- <div class="col-xs-12 col-xss-2 col-sm-2">
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
-                                    </div>
+                                    </div> -->
                                 </li>
                                 <li>
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Expertise tags</label></div>
@@ -95,9 +165,9 @@ if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){
                                     	<span class="value"><?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $exp_tag_id;}?></span>
                                         <input type="text" id="tags" name="tags" value="<?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $exp_tag_id;}?>" Placeholder="Choose up to 10 areas of expertise that you have" class="form-control valuefield" style="display:none;" />
                                     </div>
-                                    <div class="col-xs-12 col-xss-2 col-sm-2">
+                                    <!-- <div class="col-xs-12 col-xss-2 col-sm-2">
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
-                                    </div>
+                                    </div> -->
                                 </li>
                                 <li>
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Hourly rate</label></div>
@@ -109,24 +179,24 @@ if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){
                                             <input type="text" class="form-control valuefield" style="width:100px;" name="hourly_rate" value="<?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $hourly_rate;}else {echo "0";}?>"/> <i class="fa fa-usd"></i>/hour</div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-xss-2 col-sm-2">
+                                    <!-- <div class="col-xs-12 col-xss-2 col-sm-2">
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
-                                    </div>
+                                    </div> -->
                                 </li>
                                 <li>
                                 	<div class="col-xs-12 col-xss-10 col-sm-4 col-md-3"><label>Profile URL</label></div>
                                     <div class="col-xs-12 col-xss-10 col-sm-6 col-md-7">
-                                    	<span class="value"><a href="<?php echo $root;?>expert_profile.php?id=<?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $profile_url;}?>"><?php echo $root;?><?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $profile_url;}?></a></span>
+                                    	<span class="value"><?php echo $root;?><?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $profile_url;}?></span>
                                         <input type="text" value="<?php if(isset($user_detail[0]['is_expert']) && $user_detail[0]['is_expert']=="1"){echo $profile_url;}?>" name="profile_url" class="form-control valuefield" style="display:none;" />
                                     </div>
-                                    <div class="col-xs-12 col-xss-2 col-sm-2">
+                                    <!-- <div class="col-xs-12 col-xss-2 col-sm-2">
                                     	<a href="javascript:void(0);" class="editlink"><i class="fa fa-edit"></i> Edit</a>
-                                    </div>
-                                </li>
+                                    </div> -->
+                                </li>*/?>
                             </ul>
                             <!-- <a href="javascript:void(0);" class="submitbtn btn1">Proceed <i class="fa fa-angle-double-right"></i></a> -->
                              <input type="hidden" value="expert_info" name="action"/>
-                        	<button type="submit" class="submitbtn btn1">Submit <i class="fa fa-check"></i></button>
+                        	<!-- <button type="submit" class="submitbtn btn1">Submit <i class="fa fa-check"></i></button> -->
 							<!--
 							<input type="submit" value="Proceed" class="submitbtn btn1" />
 							-->
